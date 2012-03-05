@@ -1,0 +1,1305 @@
+start.o: ../system/start.S
+intr.o: ../system/intr.S
+ctxsw.o: ../system/ctxsw.S
+irq.o: ../system/irq.S
+userstart.o: ../system/userstart.S
+bufinit.o: ../system/bufinit.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+chprio.o: ../system/chprio.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+panic.o: ../system/panic.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+close.o: ../system/close.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+control.o: ../system/control.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+freebuf.o: ../system/freebuf.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+freemem.o: ../system/freemem.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+getbuf.o: ../system/getbuf.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+getc.o: ../system/getc.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+getdev.o: ../system/getdev.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h \
+ ../include/string.h
+getitem.o: ../system/getitem.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+getmem.o: ../system/getmem.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+getpid.o: ../system/getpid.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+getprio.o: ../system/getprio.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+getstk.o: ../system/getstk.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+insert.o: ../system/insert.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+insertd.o: ../system/insertd.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+ioerr.o: ../system/ioerr.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+ionull.o: ../system/ionull.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+kill.o: ../system/kill.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+main.o: ../system/main.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h \
+ ../include/stdio.h
+mkbufpool.o: ../system/mkbufpool.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+newqueue.o: ../system/newqueue.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+open.o: ../system/open.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+putc.o: ../system/putc.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+queue.o: ../system/queue.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+read.o: ../system/read.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+ready.o: ../system/ready.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+receive.o: ../system/receive.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+recvclr.o: ../system/recvclr.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+recvtime.o: ../system/recvtime.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+resched.o: ../system/resched.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+resume.o: ../system/resume.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+sched_cntl.o: ../system/sched_cntl.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+seek.o: ../system/seek.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+semcount.o: ../system/semcount.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+semcreate.o: ../system/semcreate.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+semdelete.o: ../system/semdelete.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+semreset.o: ../system/semreset.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+send.o: ../system/send.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+signal.o: ../system/signal.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+signaln.o: ../system/signaln.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+sleep.o: ../system/sleep.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+suspend.o: ../system/suspend.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+unsleep.o: ../system/unsleep.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+userret.o: ../system/userret.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+wait.o: ../system/wait.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+wakeup.o: ../system/wakeup.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+write.o: ../system/write.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+xdone.o: ../system/xdone.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+yield.o: ../system/yield.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+isr.o: ../system/isr.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h \
+ ../include/MC1322x-include/mc1322x.h ../include/MC1322x-include/isr.h \
+ ../include/MC1322x-include/gpio.h ../include/MC1322x-include/crm.h \
+ ../include/MC1322x-include/nvm.h ../include/MC1322x-include/tmr.h \
+ ../include/MC1322x-include/utils.h ../include/MC1322x-include/kbi.h \
+ ../include/MC1322x-include/maca.h ../include/MC1322x-include/packet.h \
+ ../include/MC1322x-include/utils.h ../include/MC1322x-include/packet.h \
+ ../include/MC1322x-include/uart.h ../include/MC1322x-include/asm.h \
+ ../include/MC1322x-include/i2c.h ../include/MC1322x-include/rtc.h \
+ ../include/MC1322x-include/pwm.h
+kprintf.o: ../system/kprintf.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h \
+ ../include/stdarg.h
+initialize.o: ../system/initialize.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h \
+ ../include/string.h ../include/MC1322x-include/mc1322x.h \
+ ../include/MC1322x-include/isr.h ../include/MC1322x-include/gpio.h \
+ ../include/MC1322x-include/crm.h ../include/MC1322x-include/nvm.h \
+ ../include/MC1322x-include/tmr.h ../include/MC1322x-include/utils.h \
+ ../include/MC1322x-include/kbi.h ../include/MC1322x-include/maca.h \
+ ../include/MC1322x-include/packet.h ../include/MC1322x-include/utils.h \
+ ../include/MC1322x-include/packet.h ../include/MC1322x-include/uart.h \
+ ../include/MC1322x-include/asm.h ../include/MC1322x-include/i2c.h \
+ ../include/MC1322x-include/rtc.h ../include/MC1322x-include/pwm.h
+blink_red.o: ../system/blink_red.c ../include/MC1322x-include/mc1322x.h \
+ ../include/MC1322x-include/isr.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/MC1322x-include/gpio.h ../include/MC1322x-include/crm.h \
+ ../include/MC1322x-include/nvm.h ../include/MC1322x-include/tmr.h \
+ ../include/MC1322x-include/utils.h ../include/MC1322x-include/kbi.h \
+ ../include/MC1322x-include/maca.h ../include/MC1322x-include/packet.h \
+ ../include/MC1322x-include/utils.h ../include/MC1322x-include/packet.h \
+ ../include/MC1322x-include/uart.h ../include/MC1322x-include/asm.h \
+ ../include/MC1322x-include/i2c.h ../include/MC1322x-include/rtc.h \
+ ../include/MC1322x-include/pwm.h \
+ ../include/MC1322x-include/redbee-econotag.h \
+ ../include/MC1322x-include/std_conf.h \
+ ../include/MC1322x-include/default_lowlevel.h
+clkinit.o: ../system/clkinit.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h \
+ ../include/MC1322x-include/mc1322x.h ../include/MC1322x-include/isr.h \
+ ../include/MC1322x-include/gpio.h ../include/MC1322x-include/crm.h \
+ ../include/MC1322x-include/nvm.h ../include/MC1322x-include/tmr.h \
+ ../include/MC1322x-include/utils.h ../include/MC1322x-include/kbi.h \
+ ../include/MC1322x-include/maca.h ../include/MC1322x-include/packet.h \
+ ../include/MC1322x-include/utils.h ../include/MC1322x-include/packet.h \
+ ../include/MC1322x-include/uart.h ../include/MC1322x-include/asm.h \
+ ../include/MC1322x-include/i2c.h ../include/MC1322x-include/rtc.h \
+ ../include/MC1322x-include/pwm.h
+gpio.o: ../system/gpio.c ../include/MC1322x-include/mc1322x.h \
+ ../include/MC1322x-include/isr.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/MC1322x-include/gpio.h ../include/MC1322x-include/crm.h \
+ ../include/MC1322x-include/nvm.h ../include/MC1322x-include/tmr.h \
+ ../include/MC1322x-include/utils.h ../include/MC1322x-include/kbi.h \
+ ../include/MC1322x-include/maca.h ../include/MC1322x-include/packet.h \
+ ../include/MC1322x-include/utils.h ../include/MC1322x-include/packet.h \
+ ../include/MC1322x-include/uart.h ../include/MC1322x-include/asm.h \
+ ../include/MC1322x-include/i2c.h ../include/MC1322x-include/rtc.h \
+ ../include/MC1322x-include/pwm.h
+blink_green.o: ../system/blink_green.c \
+ ../include/MC1322x-include/mc1322x.h ../include/MC1322x-include/isr.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/MC1322x-include/gpio.h ../include/MC1322x-include/crm.h \
+ ../include/MC1322x-include/nvm.h ../include/MC1322x-include/tmr.h \
+ ../include/MC1322x-include/utils.h ../include/MC1322x-include/kbi.h \
+ ../include/MC1322x-include/maca.h ../include/MC1322x-include/packet.h \
+ ../include/MC1322x-include/utils.h ../include/MC1322x-include/packet.h \
+ ../include/MC1322x-include/uart.h ../include/MC1322x-include/asm.h \
+ ../include/MC1322x-include/i2c.h ../include/MC1322x-include/rtc.h \
+ ../include/MC1322x-include/pwm.h \
+ ../include/MC1322x-include/redbee-econotag.h \
+ ../include/MC1322x-include/std_conf.h \
+ ../include/MC1322x-include/default_lowlevel.h
+blink_red_once.o: ../system/blink_red_once.c \
+ ../include/MC1322x-include/mc1322x.h ../include/MC1322x-include/isr.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/MC1322x-include/gpio.h ../include/MC1322x-include/crm.h \
+ ../include/MC1322x-include/nvm.h ../include/MC1322x-include/tmr.h \
+ ../include/MC1322x-include/utils.h ../include/MC1322x-include/kbi.h \
+ ../include/MC1322x-include/maca.h ../include/MC1322x-include/packet.h \
+ ../include/MC1322x-include/utils.h ../include/MC1322x-include/packet.h \
+ ../include/MC1322x-include/uart.h ../include/MC1322x-include/asm.h \
+ ../include/MC1322x-include/i2c.h ../include/MC1322x-include/rtc.h \
+ ../include/MC1322x-include/pwm.h \
+ ../include/MC1322x-include/redbee-econotag.h \
+ ../include/MC1322x-include/std_conf.h \
+ ../include/MC1322x-include/default_lowlevel.h
+create.o: ../system/create.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+blink_green_once.o: ../system/blink_green_once.c \
+ ../include/MC1322x-include/mc1322x.h ../include/MC1322x-include/isr.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/MC1322x-include/gpio.h ../include/MC1322x-include/crm.h \
+ ../include/MC1322x-include/nvm.h ../include/MC1322x-include/tmr.h \
+ ../include/MC1322x-include/utils.h ../include/MC1322x-include/kbi.h \
+ ../include/MC1322x-include/maca.h ../include/MC1322x-include/packet.h \
+ ../include/MC1322x-include/utils.h ../include/MC1322x-include/packet.h \
+ ../include/MC1322x-include/uart.h ../include/MC1322x-include/asm.h \
+ ../include/MC1322x-include/i2c.h ../include/MC1322x-include/rtc.h \
+ ../include/MC1322x-include/pwm.h \
+ ../include/MC1322x-include/redbee-econotag.h \
+ ../include/MC1322x-include/std_conf.h \
+ ../include/MC1322x-include/default_lowlevel.h
+clkint.o: ../system/clkint.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h \
+ ../include/MC1322x-include/mc1322x.h ../include/MC1322x-include/isr.h \
+ ../include/MC1322x-include/gpio.h ../include/MC1322x-include/crm.h \
+ ../include/MC1322x-include/nvm.h ../include/MC1322x-include/tmr.h \
+ ../include/MC1322x-include/utils.h ../include/MC1322x-include/kbi.h \
+ ../include/MC1322x-include/maca.h ../include/MC1322x-include/packet.h \
+ ../include/MC1322x-include/utils.h ../include/MC1322x-include/packet.h \
+ ../include/MC1322x-include/uart.h ../include/MC1322x-include/asm.h \
+ ../include/MC1322x-include/i2c.h ../include/MC1322x-include/rtc.h \
+ ../include/MC1322x-include/pwm.h \
+ ../include/MC1322x-include/redbee-econotag.h \
+ ../include/MC1322x-include/std_conf.h \
+ ../include/MC1322x-include/default_lowlevel.h
+ttyControl.o: ../device/ttyMC1322x/ttyControl.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+ttyGetc.o: ../device/ttyMC1322x/ttyGetc.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+ttyInit.o: ../device/ttyMC1322x/ttyInit.c \
+ ../include/MC1322x-include/mc1322x.h ../include/MC1322x-include/isr.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/MC1322x-include/gpio.h ../include/MC1322x-include/crm.h \
+ ../include/MC1322x-include/nvm.h ../include/MC1322x-include/tmr.h \
+ ../include/MC1322x-include/utils.h ../include/MC1322x-include/kbi.h \
+ ../include/MC1322x-include/maca.h ../include/MC1322x-include/packet.h \
+ ../include/MC1322x-include/utils.h ../include/MC1322x-include/packet.h \
+ ../include/MC1322x-include/uart.h ../include/MC1322x-include/asm.h \
+ ../include/MC1322x-include/i2c.h ../include/MC1322x-include/rtc.h \
+ ../include/MC1322x-include/pwm.h ../include/xinu.h ../include/kernel.h \
+ conf.h ../include/process.h ../include/queue.h ../include/sched.h \
+ ../include/semaphore.h ../include/MC1322x-include/memory.h \
+ ../include/bufpool.h ../include/clock.h ../include/mark.h \
+ ../include/ports.h ../include/MC1322x-include/uart.h ../include/tty.h \
+ ../include/device.h ../include/interrupt.h ../include/file.h \
+ ../include/rfilesys.h ../include/rdisksys.h ../include/lfilesys.h \
+ ../include/radio.h ../include/MC1322x-include/gpio.h ../include/ip6.h \
+ ../include/net6.h ../include/netiface6.h ../include/udp.h \
+ ../include/prototypes.h
+ttyInter_in.o: ../device/ttyMC1322x/ttyInter_in.c \
+ ../include/MC1322x-include/mc1322x.h ../include/MC1322x-include/isr.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/MC1322x-include/gpio.h ../include/MC1322x-include/crm.h \
+ ../include/MC1322x-include/nvm.h ../include/MC1322x-include/tmr.h \
+ ../include/MC1322x-include/utils.h ../include/MC1322x-include/kbi.h \
+ ../include/MC1322x-include/maca.h ../include/MC1322x-include/packet.h \
+ ../include/MC1322x-include/utils.h ../include/MC1322x-include/packet.h \
+ ../include/MC1322x-include/uart.h ../include/MC1322x-include/asm.h \
+ ../include/MC1322x-include/i2c.h ../include/MC1322x-include/rtc.h \
+ ../include/MC1322x-include/pwm.h ../include/xinu.h ../include/kernel.h \
+ conf.h ../include/process.h ../include/queue.h ../include/sched.h \
+ ../include/semaphore.h ../include/MC1322x-include/memory.h \
+ ../include/bufpool.h ../include/clock.h ../include/mark.h \
+ ../include/ports.h ../include/MC1322x-include/uart.h ../include/tty.h \
+ ../include/device.h ../include/interrupt.h ../include/file.h \
+ ../include/rfilesys.h ../include/rdisksys.h ../include/lfilesys.h \
+ ../include/radio.h ../include/MC1322x-include/gpio.h ../include/ip6.h \
+ ../include/net6.h ../include/netiface6.h ../include/udp.h \
+ ../include/prototypes.h
+ttyInter_out.o: ../device/ttyMC1322x/ttyInter_out.c \
+ ../include/MC1322x-include/mc1322x.h ../include/MC1322x-include/isr.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/MC1322x-include/gpio.h ../include/MC1322x-include/crm.h \
+ ../include/MC1322x-include/nvm.h ../include/MC1322x-include/tmr.h \
+ ../include/MC1322x-include/utils.h ../include/MC1322x-include/kbi.h \
+ ../include/MC1322x-include/maca.h ../include/MC1322x-include/packet.h \
+ ../include/MC1322x-include/utils.h ../include/MC1322x-include/packet.h \
+ ../include/MC1322x-include/uart.h ../include/MC1322x-include/asm.h \
+ ../include/MC1322x-include/i2c.h ../include/MC1322x-include/rtc.h \
+ ../include/MC1322x-include/pwm.h ../include/xinu.h ../include/kernel.h \
+ conf.h ../include/process.h ../include/queue.h ../include/sched.h \
+ ../include/semaphore.h ../include/MC1322x-include/memory.h \
+ ../include/bufpool.h ../include/clock.h ../include/mark.h \
+ ../include/ports.h ../include/MC1322x-include/uart.h ../include/tty.h \
+ ../include/device.h ../include/interrupt.h ../include/file.h \
+ ../include/rfilesys.h ../include/rdisksys.h ../include/lfilesys.h \
+ ../include/radio.h ../include/MC1322x-include/gpio.h ../include/ip6.h \
+ ../include/net6.h ../include/netiface6.h ../include/udp.h \
+ ../include/prototypes.h
+ttyInterrupt.o: ../device/ttyMC1322x/ttyInterrupt.c \
+ ../include/MC1322x-include/mc1322x.h ../include/MC1322x-include/isr.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/MC1322x-include/gpio.h ../include/MC1322x-include/crm.h \
+ ../include/MC1322x-include/nvm.h ../include/MC1322x-include/tmr.h \
+ ../include/MC1322x-include/utils.h ../include/MC1322x-include/kbi.h \
+ ../include/MC1322x-include/maca.h ../include/MC1322x-include/packet.h \
+ ../include/MC1322x-include/utils.h ../include/MC1322x-include/packet.h \
+ ../include/MC1322x-include/uart.h ../include/MC1322x-include/asm.h \
+ ../include/MC1322x-include/i2c.h ../include/MC1322x-include/rtc.h \
+ ../include/MC1322x-include/pwm.h ../include/xinu.h ../include/kernel.h \
+ conf.h ../include/process.h ../include/queue.h ../include/sched.h \
+ ../include/semaphore.h ../include/MC1322x-include/memory.h \
+ ../include/bufpool.h ../include/clock.h ../include/mark.h \
+ ../include/ports.h ../include/MC1322x-include/uart.h ../include/tty.h \
+ ../include/device.h ../include/interrupt.h ../include/file.h \
+ ../include/rfilesys.h ../include/rdisksys.h ../include/lfilesys.h \
+ ../include/radio.h ../include/MC1322x-include/gpio.h ../include/ip6.h \
+ ../include/net6.h ../include/netiface6.h ../include/udp.h \
+ ../include/prototypes.h
+ttyKickOut.o: ../device/ttyMC1322x/ttyKickOut.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+ttyPutc.o: ../device/ttyMC1322x/ttyPutc.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+ttyRead.o: ../device/ttyMC1322x/ttyRead.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+ttyWrite.o: ../device/ttyMC1322x/ttyWrite.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h
+ttyDispatch.o: ../device/ttyMC1322x/ttyDispatch.c
+radioInit.o: ../device/radio/radioInit.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h \
+ ../include/MC1322x-include/maca.h ../include/MC1322x-include/packet.h \
+ ../include/MC1322x-include/utils.h ../include/MC1322x-include/crm.h \
+ ../include/MC1322x-include/redbee-econotag.h \
+ ../include/MC1322x-include/std_conf.h \
+ ../include/MC1322x-include/default_lowlevel.h \
+ ../include/MC1322x-include/crm.h
+radioIsr.o: ../device/radio/radioIsr.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h \
+ ../include/MC1322x-include/maca.h ../include/MC1322x-include/packet.h \
+ ../include/MC1322x-include/utils.h
+radioRead.o: ../device/radio/radioRead.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h \
+ ../include/MC1322x-include/packet.h ../include/MC1322x-include/maca.h \
+ ../include/MC1322x-include/utils.h
+radioWrite.o: ../device/radio/radioWrite.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h \
+ ../include/MC1322x-include/packet.h ../include/MC1322x-include/maca.h \
+ ../include/MC1322x-include/utils.h
+maca.o: ../device/radio/maca.c ../include/MC1322x-include/mc1322x.h \
+ ../include/MC1322x-include/isr.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/MC1322x-include/gpio.h ../include/MC1322x-include/crm.h \
+ ../include/MC1322x-include/nvm.h ../include/MC1322x-include/tmr.h \
+ ../include/MC1322x-include/utils.h ../include/MC1322x-include/kbi.h \
+ ../include/MC1322x-include/maca.h ../include/MC1322x-include/packet.h \
+ ../include/MC1322x-include/utils.h ../include/MC1322x-include/packet.h \
+ ../include/MC1322x-include/uart.h ../include/MC1322x-include/asm.h \
+ ../include/MC1322x-include/i2c.h ../include/MC1322x-include/rtc.h \
+ ../include/MC1322x-include/pwm.h ../include/xinu.h ../include/kernel.h \
+ conf.h ../include/process.h ../include/queue.h ../include/sched.h \
+ ../include/semaphore.h ../include/MC1322x-include/memory.h \
+ ../include/bufpool.h ../include/clock.h ../include/mark.h \
+ ../include/ports.h ../include/MC1322x-include/uart.h ../include/tty.h \
+ ../include/device.h ../include/interrupt.h ../include/file.h \
+ ../include/rfilesys.h ../include/rdisksys.h ../include/lfilesys.h \
+ ../include/radio.h ../include/MC1322x-include/gpio.h ../include/ip6.h \
+ ../include/net6.h ../include/netiface6.h ../include/udp.h \
+ ../include/prototypes.h
+nvm.o: ../device/radio/nvm.c ../include/MC1322x-include/nvm.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h
+rad_in.o: ../device/radio/rad_in.c ../include/xinu.h \
+ /usr/lib/i386-linux-gnu/gcc/i686-linux-gnu/4.5.2/include/stdint.h \
+ /usr/include/stdint.h /usr/include/features.h \
+ /usr/include/bits/predefs.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
+ /usr/include/gnu/stubs-32.h /usr/include/bits/wchar.h \
+ ../include/kernel.h conf.h ../include/process.h ../include/queue.h \
+ ../include/sched.h ../include/semaphore.h \
+ ../include/MC1322x-include/memory.h ../include/bufpool.h \
+ ../include/clock.h ../include/mark.h ../include/ports.h \
+ ../include/MC1322x-include/uart.h ../include/tty.h ../include/device.h \
+ ../include/interrupt.h ../include/file.h ../include/rfilesys.h \
+ ../include/rdisksys.h ../include/lfilesys.h ../include/radio.h \
+ ../include/MC1322x-include/gpio.h ../include/ip6.h ../include/net6.h \
+ ../include/netiface6.h ../include/udp.h ../include/prototypes.h \
+ ../include/MC1322x-include/mc1322x.h ../include/MC1322x-include/isr.h \
+ ../include/MC1322x-include/gpio.h ../include/MC1322x-include/crm.h \
+ ../include/MC1322x-include/nvm.h ../include/MC1322x-include/tmr.h \
+ ../include/MC1322x-include/utils.h ../include/MC1322x-include/kbi.h \
+ ../include/MC1322x-include/maca.h ../include/MC1322x-include/packet.h \
+ ../include/MC1322x-include/utils.h ../include/MC1322x-include/packet.h \
+ ../include/MC1322x-include/uart.h ../include/MC1322x-include/asm.h \
+ ../include/MC1322x-include/i2c.h ../include/MC1322x-include/rtc.h \
+ ../include/MC1322x-include/pwm.h \
+ ../include/MC1322x-include/redbee-econotag.h \
+ ../include/MC1322x-include/std_conf.h \
+ ../include/MC1322x-include/default_lowlevel.h

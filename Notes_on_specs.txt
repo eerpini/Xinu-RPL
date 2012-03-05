@@ -1,0 +1,68 @@
+Spec questions:
+* What addresses for PANA?
+
+
+6.2.1	MAC configuration
+A node that is administratively configured to form a new IEEE 802.15.4
+PAN will perform the following steps.
+
+***Note - this is method for *forming* a PAN
+  
+ * The node conducts a MAC energy detect scan on all the
+   preconfigured channels and identifies channels with energy level below
+   a configured threshold.
+  * The node conducts a MAC active scan using the standard beacon
+   request on the channels selected in the previous step. 
+ * The node then selects a channel with the least number of existing
+   IEEE 802.15.4 networks.
+ * The node chooses a PAN identifier that does not conflict with any
+   networks discovered in the previous steps and also configures a
+   randomly generated 16-bit short address. 
+ * The node starts an IEEE 802.15.4 PAN on the selected channel and
+   PAN identifier.
+
+ZIP spec join process:
+
+Send beacon request - MAC command frame with Beacon Request
+Beacon frame format
+MHR (MAC header) (see fig 62)
+MHR: 7 octets
+FCF
+DAM == 2
+SAM == 0
+Frame Pending, ACK Request, Security Enabled all set to 0
+DST PANID = 0xffff
+DST addr = 0xffff
+
+FCF = 2 octets
+Seq Num = 1 octet
+DST PANID = 2 octets
+DST addr = 2 octets
+
+Active device sends beacon (can send beacon async?)
+
+
+Node in network sends beacon
+Payload: 
+protocol ID == 2
+control field == 1
+network ID = "ZigBee IP"
+appInfo - 0 bytes
+
+Joining device receives beacon, extracts info and joins net
+
+PANA exchange for network key
+What addresses to use for network key?
+What is PANA exchange to obtain network key?
+6.9.3.3 - what destination addresses?
+
+(skip for now)
+
+
+=====
+
+Questions:
+
+* What order for extension headers?
+* How does new hop-by-hop option work?
+
