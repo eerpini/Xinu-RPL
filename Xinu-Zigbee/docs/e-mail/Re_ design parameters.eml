@@ -1,0 +1,98 @@
+Received: from xbh-rcd-202.cisco.com ([72.163.62.201]) by xmb-rcd-202.cisco.com with Microsoft SMTPSVC(6.0.3790.4675);
+	 Wed, 25 Jan 2012 06:54:26 -0600
+Received: from rcdn-iport-1.cisco.com ([173.37.86.72]) by xbh-rcd-202.cisco.com with Microsoft SMTPSVC(6.0.3790.4675);
+	 Wed, 25 Jan 2012 06:54:26 -0600
+Received: from rcdn-core2-5.cisco.com ([173.37.113.192])
+  by rcdn-iport-1.cisco.com with ESMTP; 25 Jan 2012 12:54:26 +0000
+Received: from rcdn-inbound-f.cisco.com (rcdn-inbound-f.cisco.com [72.163.7.175])
+	by rcdn-core2-5.cisco.com (8.14.3/8.14.3) with ESMTP id q0PCs6DS029418
+	for <rdroms@cisco.com>; Wed, 25 Jan 2012 12:54:26 GMT
+Authentication-Results: rcdn-inbound-f.cisco.com; dkim=neutral (message not signed) header.i=none
+X-from-outside-Cisco: 128.10.2.6
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Al4HAJP6H0+ACgIG/2dsb2JhbABCniABkB2BBYFyAQEBAxMBgQGBWIdamESBJwGVOIkFiSsBAgEEAgUGEQIJglIDARF7GSGDHASIP59N
+X-IronPort-AV: E=Sophos;i="4.71,568,1320624000"; 
+   d="scan'208";a="23822288"
+Received: from newman.cs.purdue.edu ([128.10.2.6])
+  by rcdn-inbound-f.cisco.com with ESMTP; 25 Jan 2012 12:54:26 +0000
+Received: from lancelot.cs.purdue.edu (lancelot.cs.purdue.edu [128.10.2.26])
+	by newman.cs.purdue.edu (8.13.6.20060614/8.13.6/PURDUE_CS-2.0) with ESMTP id q0PCsPW4006528
+	for <rdroms@cisco.com>; Wed, 25 Jan 2012 07:54:25 -0500 (EST)
+Received: from lancelot.cs.purdue.edu (localhost [127.0.0.1])
+	by lancelot.cs.purdue.edu (8.13.6.20060614/8.13.6/PURDUE_CS-2.0) with ESMTP id q0PCsNLT005167
+	for <rdroms@cisco.com>; Wed, 25 Jan 2012 07:54:23 -0500 (EST)
+Received: (from comer@localhost)
+	by lancelot.cs.purdue.edu (8.13.6.20060614/8.13.6/Submit) id q0PCsLbQ005166
+	for rdroms@cisco.com; Wed, 25 Jan 2012 07:54:21 -0500 (EST)
+Date: Wed, 25 Jan 2012 07:54:21 -0500 (EST)
+From: Douglas Comer <comer@cs.purdue.edu>
+Message-Id: <201201251254.q0PCsLbQ005166@lancelot.cs.purdue.edu>
+To: rdroms@cisco.com
+Subject: Re: design parameters
+Return-Path: comer@cs.purdue.edu
+X-OriginalArrivalTime: 25 Jan 2012 12:54:26.0354 (UTC) FILETIME=[78007120:01CCDB60]
+
+
+  > Use case is driving a sensor or an actuator in a
+  > residential network.  The device will use HTTP
+  > (as a client) to retrieve electricity pricing
+  > information and post electricity usage information.
+  > The device will also use multicast DNS and DNS-SD
+  > (service discovery) to locate services of
+  > interest, such as an electric meter that can
+  > supply pricing information or a home energy monitor
+  > that wants to receive usage information.
+
+Hmmm...
+
+  > > * Should we view the system as a router or as a host
+  > >  on a single wireless network that happens to use
+  > >  low-level protocol software to relay packets.
+  > Has to be a one-interface router.  I'll write up a longer
+  > summary of the IETF mesh networking model later this
+  > evening.  The nodes are arranged in a mesh (hence the
+  > router function) rather than a one hop network such as a star.
+
+OK.
+
+  > The entire list of protocols looks like:
+  > 
+  > Smart Energy Profile 2.0 (application)
+  > HTTP/TCP/UDP
+  > ZigBee IP (IPv6 stack)
+  > RPL (routing protocol)
+  > IPv6
+  >   6lowpan ND (a version of Neighbor Discovery protocols adapted to NBMA)
+  >   6lowpan adaptation
+  > IEEE802.15.4
+  > RPL will take care of routing in the mesh network.
+  > A dual-interface border router forwards IPv6 between the 802.15.4
+  > mesh and Ethernet-(ish; e.g. WiFi) networks.  Assuming we build a
+  > border router on XINU, we'll need to adapt XINU to handle both an
+  > 802.15.4 interface and an Ethernet interface. 
+
+Wow, that's quite ambitious.
+
+  > To start, we can build a router with a single 802.15.4 interface that
+  > forwards traffic among the mesh nodes
+
+Is the mesh forwarding handled at the network level or through IP?
+That is, should we think of the model as (A) where IP handles all
+the forwarding, but uses interface 1 as a 1-arm router, or should
+we think of it as (B) where IP sees two interfaces that correspond
+to two networks and a separate layer handles the mesh forwarding?
+
+
+
+          applications                             applications
+
+             UDP/TCP                                 UDP/TCP
+
+               IP                                      IP
+
+   Interface 1   Interface 2               Interface 1     Interface 2
+                                         mesh forwarding
+    802.15.4       ETHERNET                  802.15.4         ETHERNET
+
+              (A)                                       (B)
+Doug

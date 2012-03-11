@@ -1,0 +1,20 @@
+Move utilities to separate file:
+printradaddr
+printhex
+print6addr
+
+Check previous Xinu use of network structure prefixes; i.e.,
+net_udpsrc vs. udp_srcport; also chack ip vs. ip6
+
+Fix declarations of varius compression bytes for bitfields
+
+UDP header compression
+
+uint8 vs byte vs ???
+
+radio/network/host byte orderings
+
+shell
+
+
+
