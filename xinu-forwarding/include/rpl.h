@@ -152,3 +152,11 @@ struct route_info{
 #define         RPL_REMOVE_TIMER                0xff
 #endif
 
+
+
+/*
+ * Temporary definitions for testing puposes
+ */
+
+int16   link_local_neighbors[LOWPAN_MAX_NODES];
+
