@@ -24,7 +24,10 @@ void genereate_link_local_neighbors(){
 rpl_init(){
 
 #ifdef  LOWPAN_BORDER_ROUTER
-        
+       /*
+        * Send DIO Messages to immediate Link Local Neighbors
+        */
+
 
 #endif
 
