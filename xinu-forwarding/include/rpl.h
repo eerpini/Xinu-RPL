@@ -123,7 +123,8 @@ struct route_info{
          * List of link local address of the nodes in the network
          * maps directly to the rows of the adj_matrix
          */
-        int16   iface_addr[LOWPAN_MAX_NODES]; 
+        /*      Need to switch back to int16 after testing      */
+        int32   iface_addr[LOWPAN_MAX_NODES]; 
         /*      
          *      Pre-computed Source Route info for the nodes, this is a sparse matrix
          *      the values are indices into the above iface_addr array, we can improve 
@@ -158,5 +159,5 @@ struct route_info{
  * Temporary definitions for testing puposes
  */
 
-int16   link_local_neighbors[LOWPAN_MAX_NODES];
+int32   rpl_link_local_neighbors[LOWPAN_MAX_NODES];
 
