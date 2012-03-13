@@ -1,0 +1,12 @@
+NOTES
+_-----
+
+RPL RFC draft, consistent and inconsistent state definition - Page 74
+
+
+
+
+WATCHOUT
+--------
+
+--> All link local addresses need to be reverted back to int16 when the testing is done and has to be integrated.
