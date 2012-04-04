@@ -40,6 +40,7 @@ COMPS	=	system 							\
 		device/nam						\
 		device/eth						\
 		net 							\
+		rpl 							\
 		shell 							
 
 # Start with empty source file list and add files for each directory
@@ -138,6 +139,18 @@ NET_CFILES =								\
 NET_CFULL  = ${NET_CFILES:%=../net/%}
 
 SRC_FILES += $(NET_CFULL)
+
+#------------------------------------------------------------------------
+# Files for ../net
+#------------------------------------------------------------------------
+
+RPL_CFILES =								\
+	rpl.c		rpldag.c	rpldis.c	rpldio.c	\
+	rpldao.c
+
+RPL_CFULL  = ${RPL_CFILES:%=../rpl/%}
+
+SRC_FILES += $(RPL_CFULL)
 
 #------------------------------------------------------------------------
 # Files for ../shell

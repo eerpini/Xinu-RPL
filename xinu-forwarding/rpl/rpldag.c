@@ -30,6 +30,38 @@ void printpaths (){
         }
 }
 
+int getpath (uint32 target, uint32 *arr) {
+
+        int i = 0, j = 0, k = 0;
+	int index = 0;
+
+        k = state[target].dist;
+        for (j = k; j >= 0; j--)
+		arr[index ++] = rplpath[target][j];
+
+	return index;
+}
+
+int getsourceroutehdr (uint32 target, uint32 *arr) {
+
+	struct sourceroute 	srcheader;
+	int			index = 0;
+
+	srcheader.startmarker = 0xFFFFFFFF;
+	srcheader.endmarker = 0xFFFFFFFF;
+	srcheader.len = 0;
+	
+	index = getpath (target, &arr[2]);
+	
+	srcheader.len = index;
+
+	arr[0] = srcheader.startmarker;
+	arr[1] = srcheader.len;
+	arr[index + 2] = srcheader.endmarker;
+
+	return (index + 3);
+}
+
 void shortestpath (void) {
 
 	int i, k, min;

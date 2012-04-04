@@ -36,3 +36,5 @@
 #include <i386.h>
 #include <pci.h>
 #include <e1000.h>
+#include <rpl.h>
+#include <rpldag.h>
