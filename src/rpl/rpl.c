@@ -11,7 +11,7 @@ void genereate_link_local_neighbors(){
 
         int i=0;
         for(i=0; i < LOWPAN_MAX_NODES; i++){
-                rpl_link_local_neighbors[i] = i;
+                link_local_neighbors[i] = i;
         }
 
 }
@@ -21,7 +21,7 @@ void genereate_link_local_neighbors(){
  * Rpl initialization function, called when RPL has to be started
  */
 
-void rpl_init(){
+rpl_init(){
 
 #ifdef  LOWPAN_BORDER_ROUTER
        /*
