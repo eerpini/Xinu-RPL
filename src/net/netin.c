@@ -44,6 +44,13 @@ process	netin(void) {
 
 	udp_init();
 
+        rpl_sim_init();
+
+        /*
+         * FIXME : Create RPL Receiver Process HERE
+         */
+        resume(create(rpl_receive, 8192,NETPRIO - 10, "rpl_recieve", 0));
+
 	currpkt = (struct netpacket *)getbuf(netbufpool);
 
 	/* Do forever: read packets from the network and process */
@@ -68,7 +75,6 @@ process	netin(void) {
 				continue;
 
 			case ETH_IP:
-
 
 				if (ipcksum(currpkt) != 0) {
 					kprintf("checksum failed\n\r");
@@ -97,6 +103,13 @@ process	netin(void) {
 					icmp_in();/* Handle ICMP packet */
 				}
 				continue;
+
+                        case 0x1000:
+                                wait(rpl_sim_write_sem);
+                                memcpy(&sim_queue[i], currpkt->net_ethdata, sizeof(struct rpl_sim_packet));
+                                signal(rpl_sim_read_sem);
+                                i = (i+1)%RPL_SIM_RECV_QUEUE_LEN;
+                                continue;
 
 			default: /* Ignore all other Ethernet types */
 				kprintf("\n");

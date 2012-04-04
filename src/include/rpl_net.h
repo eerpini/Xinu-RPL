@@ -66,6 +66,16 @@ struct icmpv6_packet       {
 };
 #pragma pack()
 
+#pragma pack(2)
+struct icmpv6_sim_packet       {
+        byte		net_ictype;	/* ICMP message type		*/
+        byte		net_iccode;	/* ICMP code field (0 for ping)	*/
+        uint16	        net_iccksum;	/* ICMP message checksum	*/
+        byte		net_icdata[1500-ETH_HDR_LEN- RPL_SIM_HDR_LEN];/* ICMP payload (1500-above)*/
+};
+#pragma pack()
+
+
 /*
  * All these definitions are purely for simulation purposes and will not be used later on
  */
@@ -96,15 +106,7 @@ struct  rpl_sim_packet{
 };
 
 
-struct rpl_sim_rcv_queue{
-        byte dest_node[RPL_NODE_PHY_ADDR_LEN];
-        byte msg_type;
-        uint32 msg_len;
-        byte    data[1500-ETH_HDR_LEN - RPL_SIM_HDR_LEN];
-};
-
-struct rpl_sim_rcv_queue sim_queue[RPL_SIM_RECV_QUEUE_LEN];
-struct rpl_to_ip_map rpl_sim_maP[RPL_SIM_NODES];
+struct rpl_sim_packet sim_queue[RPL_SIM_RECV_QUEUE_LEN];
 sid32  rpl_sim_read_sem;
 sid32  rpl_sim_write_sem;
 

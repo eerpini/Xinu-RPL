@@ -2,11 +2,11 @@
  * Utilities for sending and receiving rpl packets to the forwarding machine
  */
 
-extern struct rpl_sim_recv_queue sim_queue[RPL_SIM_RECV_QUEUE_LEN];
+extern struct rpl_sim_packet sim_queue[RPL_SIM_RECV_QUEUE_LEN];
 extern sid32  rpl_sim_read_sem;
 extern sid32  rpl_sim_write_sem;
 
-status rpl_init(){
+status rpl_sim_init(){
 
         int i = 0;
         rpl_sim_read_sem  = semcreate(0);
@@ -22,6 +22,10 @@ status rpl_send(char * node_phy_addr, byte msg_type, char *msg, uint32 msglen){
 
         if ( ! NetData.ipvalid){
                 getlocalip();
+        }
+        if(msglen > 1500-ETH_HDR_LEN-RPL_SIM_HDR_LEN){
+                kprintf("Simulator : Message too big \r\n");
+                return SYSERR;
         }
  
 	memcpy(pkt.net_ethsrc, NetData.ethaddr, ETH_ADDR_LEN);
@@ -128,7 +132,7 @@ status rpl_receive(){
                  */
 
                 remip = (uint32) (pkt->dest_node & 0x00000000ffffffff);
-                if(remip == 0xffffffff){
+                if(remip == 0xffffffff || remip == 0x00000000){
                         kprintf("Could not find a mapping for the given 64bit physical address\r\n");
                         return SYSERR;
                 }
@@ -136,7 +140,7 @@ status rpl_receive(){
                         rpl_send_with_ip(pkt->dest_node, pkt->msg_type, pkt->data, pkt->msg_len, remip);
                 }
                 signal(rpl_sim_write_sem);
-                i = (i+1)%RPL_SIM_REC_QUEUE_LEN;
+                i = (i+1)%RPL_SIM_RECV_QUEUE_LEN;
         }
 
         return OK;

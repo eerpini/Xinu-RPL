@@ -31,3 +31,8 @@
 #include <i8255x.h>
 #include <paging.h>
 #include <page_server.h>
+#include <rpl_net.h>
+#ifdef LOWPAN_BORDER_ROUTER
+        #include <rpl.h>
+#endif
+#include <rpldag.h>
