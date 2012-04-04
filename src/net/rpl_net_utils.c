@@ -3,17 +3,14 @@
  */
 
 extern struct rpl_sim_recv_queue sim_queue[RPL_SIM_RECV_QUEUE_LEN];
-
-extern struct rpl_to_ip_map rpl_sim_map[RPL_SIM_NODES];
+extern sid32  rpl_sim_read_sem;
+extern sid32  rpl_sim_write_sem;
 
 status rpl_init(){
 
         int i = 0;
-        for(i = 0; i < RPL_SIM_NODES; i++){
-                memset(rpl_sim_map[i].dest_node, 0xFF, RPL_NODE_PHY_ADDR_LEN);
-                memset(rpl_sim_map[i].ipaddr, 0xff, IPV4_ADDR_LEN);
-        }
-        
+        rpl_sim_read_sem  = semcreate(0);
+        rpl_sim_write_sem = semcreate(RPL_SIM_RECV_QUEUE_LEN);
         return OK;
 }
 
@@ -53,6 +50,7 @@ status rpl_send(char * node_phy_addr, byte msg_type, char *msg, uint32 msglen){
         rpl_sim_pkt = (struct rpl_sim_packet *)pkt.net_ethdata;
         rpl_sim_pkt->dest_node = node_phy_addr;
         rpl_sim_pkt->msg_type = msg_type;
+        rpl_sim_pkt->msg_len = msg_len;
         memcpy(rpl_sim_pkt->data, msg, msglen);
 
         /*
@@ -118,28 +116,31 @@ status rpl_receive(){
 
         int i = 0;
         struct rpl_sim_rcv_queue * pkt = NULL;
-        wait(rpl_sim_read_sem);
-        i = (i+1)%RPL_SIM_REC_QUEUE_LEN;
-        pkt = &sim_queue[i];
-        uint32 remip = 0xffffffff;
-        
-        /*
-         * Lookup map and see if we have a mapping
-         * Send the packet using the ip stack 
-         * Use the rpl_sim_packet header as such
-         */
-        for(i=0; i < RPL_SIM_NODES; i++){
-                if(strncmp(rpl_sim_map[i].dest_node, pkt->dest_node, RPL_NODE_PHY_ADDR_LEN) == 0){
-                        remip = rpl_sim_map[i].ipaddr;
+        while(1){
+                wait(rpl_sim_read_sem);
+                pkt = &sim_queue[i];
+                uint32 remip = 0xffffffff;
+                
+                /*
+                 * Lookup map and see if we have a mapping
+                 * Send the packet using the ip stack 
+                 * Use the rpl_sim_packet header as such
+                 */
+
+                remip = (uint32) (pkt->dest_node & 0x00000000ffffffff);
+                if(remip == 0xffffffff){
+                        kprintf("Could not find a mapping for the given 64bit physical address\r\n");
+                        return SYSERR;
                 }
+                else{
+                        rpl_send_with_ip(pkt->dest_node, pkt->msg_type, pkt->data, pkt->msg_len, remip);
+                }
+                signal(rpl_sim_write_sem);
+                i = (i+1)%RPL_SIM_REC_QUEUE_LEN;
         }
-        if(remip == 0xffffffff){
-                kprintf("Could not find a mapping for the given 64bit physical address\r\n");
-                return SYSERR;
-        }
-        else{
-status rpl_send_with_ip(char * node_phy_addr, byte msg_type, char *msg, uint32 msglen, utin32 remip){
-                rpl_send_with_ip(pkt->dest_node, pkt->msg_type, pkt->data, 
+
+        return OK;
+}
 
 
         

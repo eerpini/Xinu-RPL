@@ -72,7 +72,7 @@ struct icmpv6_packet       {
 
 
 #ifndef RPL_SIM_HDR_LEN
-        #define RPL_SIM_HDR_LEN 9
+        #define RPL_SIM_HDR_LEN 13
 #endif
 
 
@@ -91,6 +91,7 @@ struct icmpv6_packet       {
 struct  rpl_sim_packet{
         byte dest_node[RPL_NODE_PHY_ADDR_LEN];
         byte   msg_type;
+        uint32 msg_len;
         byte   data[1500-ETH_HDR_LEN - RPL_SIM_HDR_LEN];
 };
 
@@ -98,12 +99,8 @@ struct  rpl_sim_packet{
 struct rpl_sim_rcv_queue{
         byte dest_node[RPL_NODE_PHY_ADDR_LEN];
         byte msg_type;
+        uint32 msg_len;
         byte    data[1500-ETH_HDR_LEN - RPL_SIM_HDR_LEN];
-};
-
-struct rpl_to_ip_map{
-        byte dest_node[RPL_NODE_PHY_ADDR_LEN];
-        uint32  ipaddr;
 };
 
 struct rpl_sim_rcv_queue sim_queue[RPL_SIM_RECV_QUEUE_LEN];
