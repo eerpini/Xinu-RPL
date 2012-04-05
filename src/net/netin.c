@@ -3,7 +3,7 @@
 #include <xinu.h>
 
 bpid32	netbufpool;			/* ID of network buffer pool	*/
-struct	netpacket *currpkt;		/* packet buffer being used now	*/
+struct	eth_packet *currpkt;		/* packet buffer being used now	*/
 struct	network NetData;		/* local network interface	*/
 
 /*------------------------------------------------------------------------
@@ -14,7 +14,7 @@ struct	network NetData;		/* local network interface	*/
 process	netin(void) {
 
 	status	retval;			/* return value from function	*/
-        //int i=0;
+        int i=0;
 
 	netbufpool = mkbufpool(PACKLEN, UDP_SLOTS * UDP_QSIZ +
 				ICMP_SLOTS * ICMP_QSIZ + ICMP_OQSIZ + 1);

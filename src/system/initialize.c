@@ -85,6 +85,7 @@ void	nulluser(void)
 
         resume(create((void *)netin, NETSTK, NETPRIO, "netin", 0));
 
+        rpl_init();
 
 
 	/* Create a process to execute function main() */

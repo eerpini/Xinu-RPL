@@ -40,7 +40,8 @@ COMPS	=	system 							\
 		device/eth						\
 		device/rds						\
 		net 							\
-		shell 							
+		shell 							\
+		rpl
 
 # Start with empty source file list and add files for each directory
 #
@@ -140,11 +141,24 @@ SRC_FILES += $(RDS_CFULL)
 
 NET_CFILES =								\
 	netin.c 	arp.c 		udp.c 		pdump.c 	\
-	dhcp.c		dot2ip.c	icmp.c
+	dhcp.c		dot2ip.c	icmp.c		rpl_net_utils.c
 
 NET_CFULL  = ${NET_CFILES:%=../net/%}
 
 SRC_FILES += $(NET_CFULL)
+
+#------------------------------------------------------------------------
+# Files for ../rpl
+#------------------------------------------------------------------------
+
+RPL_CFILES =								\
+	rpl.c		rplborderrouter.c		rpldag.c	\
+	rpldao.c	rpldio.c	rpldis.c
+
+RPL_CFULL  = ${RPL_CFILES:%=../rpl/%}
+
+SRC_FILES += $(RPL_CFULL)
+
 
 
 

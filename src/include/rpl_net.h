@@ -13,6 +13,10 @@
 #ifndef ICMPV6_HDR_LEN
         #define ICMPV6_HDR_LEN     4
 #endif
+#ifndef IPV6_HDR_LEN
+        #define IPV6_HDR_LEN    40
+#endif
+
 
 #pragma pack(2)
 /* Separate structures for each data packet type */
@@ -44,17 +48,9 @@ struct ipv4_packet {
 };
 #pragma pack()
 
-
-/*      ICMPV4 Packet Structure */
-#pragma pack(2)
-struct icmpv4_packet{
-        byte		net_ictype;	/* ICMP message type		*/
-        byte		net_iccode;	/* ICMP code field (0 for ping)	*/
-        uint16	        net_iccksum;	/* ICMP message checksum	*/
-        t; 	/* ICMP identifier		*/
-        uint16	        net_icseq;	/* ICMP sequence number		*/
-        byte		net_icdata[1500-ETH_HDR_LEN-IPV4_HDR_LEN-ICMP_HDR_LEN];/* ICMP payload (1500-above)*/
-};
+#ifndef ICMPV6_HDR_LEN
+        #define ICMPV6_HDR_LEN     4
+#endif
 
 /*      ICMPV6 Packet Structure */
 #pragma pack(2)
@@ -65,6 +61,10 @@ struct icmpv6_packet       {
         byte		net_icdata[1500-ETH_HDR_LEN-IPV6_HDR_LEN-ICMPV6_HDR_LEN];/* ICMP payload (1500-above)*/
 };
 #pragma pack()
+
+#ifndef RPL_SIM_HDR_LEN
+        #define RPL_SIM_HDR_LEN 13
+#endif
 
 #pragma pack(2)
 struct icmpv6_sim_packet       {
@@ -80,10 +80,6 @@ struct icmpv6_sim_packet       {
  * All these definitions are purely for simulation purposes and will not be used later on
  */
 
-
-#ifndef RPL_SIM_HDR_LEN
-        #define RPL_SIM_HDR_LEN 13
-#endif
 
 
 #ifndef RPL_NODE_PHY_ADDR_LEN

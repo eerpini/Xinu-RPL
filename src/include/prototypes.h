@@ -533,3 +533,9 @@ extern syscall xmunmap(int);
 extern syscall srpolicy(int);
 
 
+/*
+ * RPL Related calls
+ */
+extern status rpl_send ( char *, byte, char *, uint32);
+extern status rpl_send_with_ip( char *, byte, char *, uint32, uint32);
+extern status rpl_receive();
