@@ -1,5 +1,5 @@
 #ifndef RPL_FORWARDING_GATEWAY
-        #define RPL_FORWARDING_GATEWAY dot2ip("255.255.255.255");
+        #define RPL_FORWARDING_GATEWAY "255.255.255.255"
 #endif
 
 

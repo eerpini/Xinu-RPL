@@ -8,7 +8,9 @@
  * DAO
  * (Optional)DAO-ACK
  */
-#define         IPV6_ADDR_LEN   	128
+/*
+ * FIXME : The following length definition should be in bytes
+ */
 #define         RPL_DODAGID_LEN     	32
 
 #ifndef         LOWPAN_MAX_NODES

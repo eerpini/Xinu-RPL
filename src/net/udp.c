@@ -53,7 +53,7 @@ void	udp_in(void) {			/* currpkt points to the packet	*/
 
 		if (udptr->udcount < UDP_QSIZ) {
 			udptr->udcount++;
-			udptr->udqueue[udptr->udtail++] = currpkt;
+			udptr->udqueue[udptr->udtail++] = (struct eth_packet *)currpkt;
 			if (udptr->udtail >= UDP_QSIZ) {
 				udptr->udtail = 0;
 			}
@@ -319,7 +319,9 @@ status	udp_send (
 	 int32	len			/* length of data in buffer	*/
 	)
 {
-	struct	netpacket pkt;		/* local packet buffer		*/
+	struct	eth_packet pkt;		/* ptr to packet being read	*/
+        struct ipv4_packet *ippkt = (struct ipv4_packet *)(pkt.net_ethdata);
+        struct udp_packet *udppkt = (struct udp_packet *)(ippkt->net_ipdata);
 	int32	pktlen;			/* total packet length		*/
 	static	uint16 ident = 1;	/* datagram IDENT field		*/
 	char	*udataptr;		/* pointer to UDP data		*/
@@ -327,28 +329,28 @@ status	udp_send (
 
 	/* Compute packet length as UDP data size + fixed header size	*/
 
-	pktlen = ((char *)pkt.net_udpdata - (char *)&pkt) + len;
+	pktlen = ((char *)udppkt->net_udpdata - (char *)&pkt) + len;
 
 	/* Create UDP packet in pkt */
 
 	memcpy(pkt.net_ethsrc, NetData.ethaddr, ETH_ADDR_LEN);
         pkt.net_ethtype = 0x0800;	/* Type is IP */
-	pkt.net_ipvh = 0x45;		/* IP version and hdr length	*/
-	pkt.net_iptos = 0x00;		/* Type of service		*/
-	pkt.net_iplen= pktlen - ETH_HDR_LEN;/* total IP datagram length	*/
-	pkt.net_ipid = ident++;		/* datagram gets next IDENT	*/
-	pkt.net_ipfrag = 0x0000;	/* IP flags & fragment offset	*/
-	pkt.net_ipttl = 0xff;		/* IP time-to-live		*/
-	pkt.net_ipproto = IP_UDP;	/* datagram carries UDP		*/
-	pkt.net_ipcksum = 0x0000;	/* initial checksum		*/
-	pkt.net_ipsrc = locip;		/* IP source address		*/
-	pkt.net_ipdst = remip;		/* IP destination address	*/
+	ippkt->net_ipvh = 0x45;		/* IP version and hdr length	*/
+	ippkt->net_iptos = 0x00;		/* Type of service		*/
+	ippkt->net_iplen= pktlen - ETH_HDR_LEN;/* total IP datagram length	*/
+	ippkt->net_ipid = ident++;		/* datagram gets next IDENT	*/
+	ippkt->net_ipfrag = 0x0000;	/* IP flags & fragment offset	*/
+	ippkt->net_ipttl = 0xff;		/* IP time-to-live		*/
+	ippkt->net_ipproto = IP_UDP;	/* datagram carries UDP		*/
+	ippkt->net_ipcksum = 0x0000;	/* initial checksum		*/
+	ippkt->net_ipsrc = locip;		/* IP source address		*/
+	ippkt->net_ipdst = remip;		/* IP destination address	*/
 
-	pkt.net_udpsport = locport;	/* local UDP protocol port	*/
-	pkt.net_udpdport = remport;	/* remote UDP protocol port	*/
-	pkt.net_udplen = (uint16)(UDP_HDR_LEN+len); /* UDP length	*/
-	pkt.net_udpcksum = 0x0000;	/* ignore UDP checksum		*/
-	udataptr = (char *) pkt.net_udpdata;
+	udppkt->net_udpsport = locport;	/* local UDP protocol port	*/
+	udppkt->net_udpdport = remport;	/* remote UDP protocol port	*/
+	udppkt->net_udplen = (uint16)(UDP_HDR_LEN+len); /* UDP length	*/
+	udppkt->net_udpcksum = 0x0000;	/* ignore UDP checksum		*/
+	udataptr = (char *) udppkt->net_udpdata;
 	for (; len>0; len--) {
 		*udataptr++ = *buff++;
 	}
@@ -382,13 +384,13 @@ status	udp_send (
 
 	/* Convert IP and UDP header fields from net to host byte order */
 
-	udp_hton(&pkt);
-	ip_hton(&pkt);
+	udp_hton(udppkt);
+	ip_hton(ippkt);
 	eth_hton(&pkt);
         //kprintf("Cleared conversion of header fields\r\n");
 
 	/* Compute IP header checksum */
-	pkt.net_ipcksum = 0xffff & ipcksum(&pkt);
+	ippkt->net_ipcksum = 0xffff & ipcksum(ippkt);
 
         //kprintf("Writing to ethernet device\r\n");
 	write(ETHER0, (char *)&pkt, pktlen);
@@ -409,7 +411,7 @@ status	udp_release (
 {
 	int32	i;			/* index into udptab		*/
 	struct	udpentry *udptr;	/* pointer to udptab entry	*/
-	struct	netpacket *pkt;		/* ptr to packet being read	*/
+	struct	eth_packet *pkt;		/* ptr to packet being read	*/
 
 	for (i=0; i<UDP_SLOTS; i++) {
 		udptr = &udptab[i];
@@ -444,7 +446,7 @@ status	udp_release (
  *------------------------------------------------------------------------
  */
 void 	udp_ntoh(
-	struct netpacket *pktptr
+	struct udp_packet *pktptr
 	)
 {
 	pktptr->net_udpsport = ntohs(pktptr->net_udpsport);
@@ -458,7 +460,7 @@ void 	udp_ntoh(
  *------------------------------------------------------------------------
  */
 void 	udp_hton(
-	struct netpacket *pktptr
+	struct udp_packet *pktptr
 	)
 {
 	pktptr->net_udpsport = htons(pktptr->net_udpsport);

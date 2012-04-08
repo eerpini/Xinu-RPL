@@ -1,8 +1,9 @@
 #include <xinu.h>
+#ifdef LOWPAN_BORDER_ROUTER
 
 int getindex (uint32 addr) {
 	int index = 0;
-	for (index = 0; index < LOWPAN_MAX_NODEX; index ++) {
+	for (index = 0; index < LOWPAN_MAX_NODES; index ++) {
 		if (iface_addr[index] == addr)
 			return index;
 	}
@@ -13,7 +14,7 @@ int getindex (uint32 addr) {
 int assignindex (uint32 addr) {
 	int index = 0;
 
-	for (index = 0; index < LOWPAN_MAX_NODEX; index ++) {
+	for (index = 0; index < LOWPAN_MAX_NODES; index ++) {
 		if (iface_addr[index] == 0){
 			iface_addr[index] = addr;
 			return index;
@@ -57,7 +58,7 @@ void processroute (uint32 target, uint32 parent) {
 	printpaths ();
 }
 
-void processdaomsg (struct icmpv6_sim_packet *daomsg) {
+void processdaomsg (struct icmpv6_sim_packet *rpldaomsg) {
         struct rpl_dao_msg              daomsg;
 	struct rpl_opt_target           opttarget;
 	struct rpl_opt_transitinf       opttransit;
@@ -80,7 +81,11 @@ void processdaomsg (struct icmpv6_sim_packet *daomsg) {
                 return;
         }
 
-	daomsg = (struct rpl_dao_msg *)rpldaomsg->net_icdata;
+        /*
+         * FIXME : Commenting this out, as this did not seem right, 
+         * FIXME for Sudhir Kylasa
+         */
+	//daomsg = (struct rpl_dao_msg *)rpldaomsg->net_icdata;
 	pos += sizeof (struct rpl_dao_msg);
         if (opttarget->type != RPL_OPT_TYPE_TARGET){
                 kprintf (" DAO Message: DAO message does not have an RPL OPTION TARGET %02x\n", opttarget->type);
@@ -113,3 +118,5 @@ void processdaomsg (struct icmpv6_sim_packet *daomsg) {
 	//compute the shortest paths if necessary
 	processroute (target, parent);
 }
+
+#endif

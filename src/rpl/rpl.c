@@ -26,7 +26,7 @@ extern uint32   rpl_link_local_neighbors[LOWPAN_MAX_NODES];
  * when ready
  */
 
-void genereate_link_local_neighbors(){
+void generate_link_local_neighbors(){
 
         int i=0;
         for(i=0; i < LOWPAN_MAX_NODES; i++){
@@ -58,6 +58,7 @@ void rpl_init(){
 
 
 }
+#ifdef LOWPAN_NODE
 
 void rpl_node_init(){
 
@@ -66,9 +67,9 @@ void rpl_node_init(){
         RPL_MYINFO.rank = RPL_INFINITE_RANK;
         RPL_MYINFO.version = 0;
         RPL_MYINFO.dtsn = 0;
-        memset(RPL_MYINFO.dodagid, NULLCHAR, RPL_DODAGID_LEN);
-        memset(RPL_MYINFO.parent, NULLCHAR, RPL_DODAGID_LEN);
-        memset(RPL_MYINFO.myaddr, NULLCHAR, RPL_DODAGID_LEN);
+        memset(RPL_MYINFO.dodagid, NULLCH, RPL_DODAGID_LEN);
+        memset(RPL_MYINFO.parent, NULLCH, RPL_DODAGID_LEN);
+        memset(RPL_MYINFO.myaddr, NULLCH, RPL_DODAGID_LEN);
         RPL_MYINFO.trickle_imin =  0;
         RPL_MYINFO.trickle_imax =  0;
         RPL_MYINFO.trickle_k =  0;
@@ -80,13 +81,15 @@ void rpl_node_init(){
         RPL_MYINFO.minhoprankinc =  0;
 
 }
+#endif
 
+#ifdef  LOWPAN_BORDER_ROUTER
 
 void rpl_border_router_init(){
 
-        memset(rplpath, NULLCHAR, LOWPAN_MAX_NODES*LOWPAN_MAX_NODES); 
-        memset(rpladjlist , NULLCHAR, LOWPAN_MAX_NODES*LOWPAN_MAX_NODES); 
-        memset(iface_addr, NULLCHAR, (RPL_DODAGID_LEN/8)*LOWPAN_MAX_NODES ); 
+        memset(rplpath, NULLCH, LOWPAN_MAX_NODES*LOWPAN_MAX_NODES); 
+        memset(rpladjlist , NULLCH, LOWPAN_MAX_NODES*LOWPAN_MAX_NODES); 
+        memset(iface_addr, NULLCH, (RPL_DODAGID_LEN/8)*LOWPAN_MAX_NODES ); 
 
         if(!NetData.ipvalid){
                 getlocalip();
@@ -96,3 +99,4 @@ void rpl_border_router_init(){
         }
 
 }
+#endif

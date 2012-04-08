@@ -25,7 +25,7 @@ struct	udpentry {			/* entry in the UDP endpoint tbl*/
 	int32	udtail;			/* index of next slot to insert	*/
 	int32	udcount;		/* count of packets enqueued	*/
 	pid32	udpid;			/* ID of waiting process	*/
-	struct	netpacket *udqueue[UDP_QSIZ];/* circular packet queue	*/
+	struct	eth_packet *udqueue[UDP_QSIZ];/* circular packet queue	*/
 };
 
 extern	struct	udpentry udptab[];

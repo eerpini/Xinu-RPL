@@ -1,4 +1,5 @@
 #include <xinu.h>
+#ifdef LOWPAN_BORDER_ROUTER
 
 void computepaths(void) {
 	
@@ -112,3 +113,4 @@ void shortestpath (void) {
 		}
 	}
 }
+#endif

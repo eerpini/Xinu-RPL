@@ -25,7 +25,7 @@ BOOTPLOC=	0x150000
 
 # Compiler flags
 SDEFS	= -I../include
-CFLAGS	= -march=i586 -m32 -fno-builtin -fno-stack-protector -nostdlib -c -Wall -O ${DEFS} ${INCLUDE} ${CFLAGS_EXTRA}
+CFLAGS	= -march=i586 -m32 -fno-builtin -fno-stack-protector -nostdlib -c -Wall -O ${DEFS} ${INCLUDE} ${CFLAGS_EXTRA} -DLOWPAN_BORDER_ROUTER
 
 # Loader flags
 
@@ -140,8 +140,8 @@ SRC_FILES += $(RDS_CFULL)
 #------------------------------------------------------------------------
 
 NET_CFILES =								\
-	netin.c 	arp.c 		udp.c 		pdump.c 	\
-	dhcp.c		dot2ip.c	icmp.c		rpl_net_utils.c
+	netin.c 	arp.c 		udp.c 		rpl_net_utils.c\
+	dhcp.c		dot2ip.c	icmp.c	        #pdump.c	
 
 NET_CFULL  = ${NET_CFILES:%=../net/%}
 

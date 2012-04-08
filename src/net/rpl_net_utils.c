@@ -1,3 +1,4 @@
+#include <xinu.h>
 /*
  * Utilities for sending and receiving rpl packets to the forwarding machine
  */
@@ -18,7 +19,9 @@ status rpl_send(char * node_phy_addr, byte msg_type, char *msg, uint32 msglen){
 
         struct eth_packet pkt;
         struct rpl_sim_packet *rpl_sim_pkt  = NULL;
-        uint32 remip = RPL_FORWARDING_GATEWAY;
+        uint32 remip;
+	byte	ethbcast[] = {0xff,0xff,0xff,0xff,0xff,0xff};
+        dot2ip(RPL_FORWARDING_GATEWAY, &remip);
 
         if ( ! NetData.ipvalid){
                 getlocalip();
@@ -52,9 +55,9 @@ status rpl_send(char * node_phy_addr, byte msg_type, char *msg, uint32 msglen){
 	}
 
         rpl_sim_pkt = (struct rpl_sim_packet *)pkt.net_ethdata;
-        rpl_sim_pkt->dest_node = node_phy_addr;
+        memcpy(rpl_sim_pkt->dest_node, node_phy_addr, RPL_NODE_PHY_ADDR_LEN);
         rpl_sim_pkt->msg_type = msg_type;
-        rpl_sim_pkt->msg_len = msg_len;
+        rpl_sim_pkt->msg_len = msglen;
         memcpy(rpl_sim_pkt->data, msg, msglen);
 
         /*
@@ -68,10 +71,11 @@ status rpl_send(char * node_phy_addr, byte msg_type, char *msg, uint32 msglen){
 
 }
 
-status rpl_send_with_ip(char * node_phy_addr, byte msg_type, char *msg, uint32 msglen, utin32 remip){
+status rpl_send_with_ip(char * node_phy_addr, byte msg_type, char *msg, uint32 msglen, uint32 remip){
 
         struct eth_packet pkt;
         struct rpl_sim_packet *rpl_sim_pkt  = NULL;
+	byte	ethbcast[] = {0xff,0xff,0xff,0xff,0xff,0xff};
 
         if ( ! NetData.ipvalid){
                 getlocalip();
@@ -101,7 +105,7 @@ status rpl_send_with_ip(char * node_phy_addr, byte msg_type, char *msg, uint32 m
 	}
 
         rpl_sim_pkt = (struct rpl_sim_packet *)pkt.net_ethdata;
-        rpl_sim_pkt->dest_node = node_phy_addr;
+        memcpy(rpl_sim_pkt->dest_node, node_phy_addr, RPL_NODE_PHY_ADDR_LEN);
         rpl_sim_pkt->msg_type = msg_type;
         memcpy(rpl_sim_pkt->data, msg, msglen);
 
@@ -119,11 +123,12 @@ status rpl_send_with_ip(char * node_phy_addr, byte msg_type, char *msg, uint32 m
 status rpl_receive(){
 
         int i = 0;
-        struct rpl_sim_rcv_queue * pkt = NULL;
+        struct rpl_sim_packet * pkt = NULL;
+        uint32 remip = 0xffffffff;
         while(1){
+                remip = 0xffffffff;
                 wait(rpl_sim_read_sem);
                 pkt = &sim_queue[i];
-                uint32 remip = 0xffffffff;
                 
                 /*
                  * Lookup map and see if we have a mapping
@@ -131,25 +136,17 @@ status rpl_receive(){
                  * Use the rpl_sim_packet header as such
                  */
 
-                remip = (uint32) (pkt->dest_node & 0x00000000ffffffff);
+                remip = (uint32) ((uint32)pkt->dest_node & 0x00000000ffffffff);
                 if(remip == 0xffffffff || remip == 0x00000000){
                         kprintf("Could not find a mapping for the given 64bit physical address\r\n");
                         return SYSERR;
                 }
                 else{
-                        rpl_send_with_ip(pkt->dest_node, pkt->msg_type, pkt->data, pkt->msg_len, remip);
+                        rpl_send_with_ip((char *)pkt->dest_node, pkt->msg_type, (char *)pkt->data, pkt->msg_len, remip);
                 }
                 signal(rpl_sim_write_sem);
                 i = (i+1)%RPL_SIM_RECV_QUEUE_LEN;
         }
 
         return OK;
-}
-
-
-        
-
-        
-
-
 }

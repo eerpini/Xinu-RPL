@@ -61,7 +61,7 @@ struct	netpacket	{
 };
 #pragma pack()
 
-extern	struct	netpacket *currpkt;	/* ptr to current input packet	*/
+extern	struct	eth_packet *currpkt;	/* ptr to current input packet	*/
 extern	bpid32	netbufpool;		/* ID of net packet buffer pool	*/
 
 struct	network {

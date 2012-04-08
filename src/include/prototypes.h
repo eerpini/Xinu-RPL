@@ -193,8 +193,8 @@ extern	int32	icmp_recv (int32, char *, int32, uint32);
 extern	status	icmp_send (uint32, uint16, uint16, uint16, char	*, int32);
 extern	status	icmp_release (int32);
 extern	uint16	icmp_cksum (char *, int32);
-extern 	void 	icmp_ntoh(struct netpacket *);
-extern 	void 	icmp_hton(struct netpacket *);
+extern 	void 	icmp_ntoh(struct icmp_packet *);
+extern 	void 	icmp_hton(struct icmp_packet *);
 
 
 /* in file init.c */
@@ -219,11 +219,11 @@ extern	devcall	ioerr(void);
 extern	devcall	ionull(void);
 
 /* in file netin.c */
-extern	uint16	ipcksum(struct netpacket *);
-extern 	void 	eth_ntoh(struct netpacket *);
-extern 	void 	eth_hton(struct netpacket *);
-extern 	void 	ip_ntoh(struct netpacket *);
-extern 	void 	ip_hton(struct netpacket *);
+extern	uint16	ipcksum(struct ipv4_packet *);
+extern 	void 	eth_ntoh(struct eth_packet *);
+extern 	void 	eth_hton(struct eth_packet *);
+extern 	void 	ip_ntoh(struct ipv4_packet *);
+extern 	void 	ip_hton(struct ipv4_packet*);
 
 
 /* in file kill.c */
@@ -462,7 +462,7 @@ extern	devcall	ttyRead(struct dentry *, char *, int32);
 extern	devcall	ttyWrite(struct dentry *, char *, int32);
 
 /* in file udp.c */
-extern  uint16  udpcksum(struct netpacket *);
+extern  uint16  udpcksum(struct udp_packet *);
 extern	void	udp_in(void);
 extern	void	udp_init(void);
 extern	int32	udp_recv(uint32, uint16, uint16, char *, int32, uint32);
@@ -470,8 +470,8 @@ extern	int32	udp_recvaddr(uint32 *, uint16*, uint16, char *, int32, uint32);
 extern	status	udp_register(uint32, uint16, uint16);
 extern	status	udp_send(uint32, uint16, uint32, uint16, char *, int32);
 extern	status	udp_release(uint32, uint16, uint16);
-extern 	void 	udp_ntoh(struct netpacket *);
-extern 	void 	udp_hton(struct netpacket *);
+extern 	void 	udp_ntoh(struct udp_packet *);
+extern 	void 	udp_hton(struct udp_packet *);
 
 
 
@@ -539,3 +539,4 @@ extern syscall srpolicy(int);
 extern status rpl_send ( char *, byte, char *, uint32);
 extern status rpl_send_with_ip( char *, byte, char *, uint32, uint32);
 extern status rpl_receive();
+extern void genereate_link_local_neighbors();
