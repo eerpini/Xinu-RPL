@@ -59,9 +59,9 @@ void processroute (uint32 target, uint32 parent) {
 }
 
 void processdaomsg (struct icmpv6_sim_packet *rpldaomsg) {
-        struct rpl_dao_msg              daomsg;
-	struct rpl_opt_target           opttarget;
-	struct rpl_opt_transitinf       opttransit;
+        //struct rpl_dao_msg              daomsg;
+	struct rpl_opt_target           *opttarget;
+	struct rpl_opt_transitinf       *opttransit;
 	int                             pos = 0;
 
 	uint32				target;
@@ -81,19 +81,7 @@ void processdaomsg (struct icmpv6_sim_packet *rpldaomsg) {
                 return;
         }
 
-        /*
-         * FIXME : Commenting this out, as this did not seem right, 
-         * FIXME for Sudhir Kylasa
-         */
-	//daomsg = (struct rpl_dao_msg *)rpldaomsg->net_icdata;
-	pos += sizeof (struct rpl_dao_msg);
-        if (opttarget->type != RPL_OPT_TYPE_TARGET){
-                kprintf (" DAO Message: DAO message does not have an RPL OPTION TARGET %02x\n", opttarget->type);
-                return;
-        }
-
-
-        // Decode the options here -- RPL option Target
+	// Decode the options here -- RPL option Target
         pos += sizeof (struct rpl_dao_msg);
         opttarget = (struct rpl_opt_target *) &rpldaomsg->net_icdata[pos];
         if (opttarget->type != RPL_OPT_TYPE_TARGET){
