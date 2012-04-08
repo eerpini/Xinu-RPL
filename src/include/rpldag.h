@@ -23,7 +23,7 @@ struct nodeinfo {
 	byte label;
 
 };
-struct nodeinfo state[LOWPAN_MAX_NODES];
+extern struct nodeinfo state[LOWPAN_MAX_NODES];
 
 struct sourceroute {
 	uint32	startmarker;

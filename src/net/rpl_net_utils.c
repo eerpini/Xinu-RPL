@@ -9,7 +9,7 @@ extern sid32  rpl_sim_write_sem;
 
 status rpl_sim_init(){
 
-        int i = 0;
+        //int i = 0;
         rpl_sim_read_sem  = semcreate(0);
         rpl_sim_write_sem = semcreate(RPL_SIM_RECV_QUEUE_LEN);
         return OK;

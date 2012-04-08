@@ -25,7 +25,7 @@ BOOTPLOC=	0x150000
 
 # Compiler flags
 SDEFS	= -I../include
-CFLAGS	= -march=i586 -m32 -fno-builtin -fno-stack-protector -nostdlib -c -Wall -O ${DEFS} ${INCLUDE} ${CFLAGS_EXTRA} -DLOWPAN_BORDER_ROUTER
+CFLAGS	= -march=i586 -m32 -fno-builtin -fno-stack-protector -nostdlib -c -Wall -O ${DEFS} ${INCLUDE} ${CFLAGS_EXTRA} -DLOWPAN_NODE -DLOWPAN_BORDER_ROUTER
 
 # Loader flags
 

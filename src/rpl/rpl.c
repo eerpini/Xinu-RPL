@@ -39,6 +39,10 @@ void generate_link_local_neighbors(){
 /*
  * Rpl initialization function, called when RPL has to be started
  */
+/*
+ * FIXME : Check the return status of the functions and accordingly
+ * return error code from rpl_init()
+ */
 
 void rpl_init(){
 
@@ -49,8 +53,6 @@ void rpl_init(){
         * Send DIO Messages to immediate Link Local Neighbors
         */
         rpl_border_router_init();
-
-
 #endif
 #ifdef LOWPAN_NODE
         rpl_node_init();
@@ -95,7 +97,7 @@ void rpl_border_router_init(){
                 getlocalip();
         }
         else{
-               if( assignindex(NetData.ipaddr));
+               assignindex(NetData.ipaddr);
         }
 
 }

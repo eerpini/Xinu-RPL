@@ -540,3 +540,18 @@ extern status rpl_send ( char *, byte, char *, uint32);
 extern status rpl_send_with_ip( char *, byte, char *, uint32, uint32);
 extern status rpl_receive();
 extern void genereate_link_local_neighbors();
+#ifdef LOWPAN_BORDER_ROUTER
+        extern void rpl_border_router_init();
+        extern int  assignindex ( uint32 );
+        extern void computepaths();
+        extern void printpaths();
+        extern int  getpath(uint32, uint32 *);
+        extern int  getsourceroutehdr( uint32, uint32 *);
+        extern void shortestpath();
+
+#endif
+#ifdef LOWPAN_NODE
+        extern void rpl_node_init();
+#endif
+extern void rpl_init();
+extern status rpl_sim_init();

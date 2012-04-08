@@ -76,7 +76,7 @@ void processdio (struct icmpv6_sim_packet *rpldiomsg) {
 			//Check for the options here
 			pos += sizeof (struct rpl_dio_msg);
 			if (rpldiomsg->net_icdata[pos] == RPL_OPT_TYPE_DODAG_CONF) {
-				dagconf = (struct rpl_opt_dodagcnf *) &rpldiomsg->net_icdata[pos];
+				dagconf = (struct rpl_opt_dodag_conf *) &rpldiomsg->net_icdata[pos];
 
 				RPL_MYINFO.diointdouble = dagconf->diointdouble;
 				RPL_MYINFO.diointmin = dagconf->diointmin;

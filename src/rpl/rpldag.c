@@ -1,6 +1,8 @@
 #include <xinu.h>
 #ifdef LOWPAN_BORDER_ROUTER
 
+struct nodeinfo state [ LOWPAN_MAX_NODES];
+
 void computepaths(void) {
 	
 	int i = 0, j = 0, k = 0;
@@ -21,19 +23,19 @@ void printpaths (){
         int i = 0, j = 0, k = 0;
 
         for (i = 1; i < LOWPAN_MAX_NODES; i++) {
-                printf (" Path from %d to 0 is : ", i);
+                kprintf (" Path from %d to 0 is : ", i);
                 k = state[i].dist;
 
                 for (j = k; j >= 0; j--)
-                        printf (" %d ", rplpath[i][j]);
+                        kprintf (" %d ", rplpath[i][j]);
 
-                printf ("\n");
+                kprintf ("\n");
         }
 }
 
 int getpath (uint32 target, uint32 *arr) {
 
-        int i = 0, j = 0, k = 0;
+        int j = 0, k = 0;
 	int index = 0;
 
         k = state[target].dist;
@@ -66,11 +68,17 @@ int getsourceroutehdr (uint32 target, uint32 *arr) {
 void shortestpath (void) {
 
 	int i, k, min;
-	struct state *ptr;
+	//struct state *ptr;
 
 	//initialite the node info structures
 	for (i = 0; i < LOWPAN_MAX_NODES; i++){
 		state[i].pred = -1;	
+                /*
+                 * FIXME 13 for Sudhir, 
+                 * We have dist defined as a byte ( for optimization reasons I guess)
+                 * and have RPL_INF_DIST defined as 9999
+                 * this throws a warning during compilation, but might be more harmful
+                 */
 		state[i].dist = RPL_INF_DIST;
 		state[i].label = TENTATIVE;
 	}
