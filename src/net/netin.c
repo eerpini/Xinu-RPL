@@ -15,7 +15,11 @@ process	netin(void) {
 
 	status	retval;			/* return value from function	*/
         int i=0;
+        struct ipv4_packet* ippkt = NULL;
 
+        /*
+         * FIXME : This might now work
+         */
 	netbufpool = mkbufpool(PACKLEN, UDP_SLOTS * UDP_QSIZ +
 				ICMP_SLOTS * ICMP_QSIZ + ICMP_OQSIZ + 1);
 
@@ -51,7 +55,7 @@ process	netin(void) {
          */
         resume(create(rpl_receive, 8192,NETPRIO - 10, "rpl_recieve", 0));
 
-	currpkt = (struct netpacket *)getbuf(netbufpool);
+	currpkt = (struct eth_packet *)getbuf(netbufpool);
 
 	/* Do forever: read packets from the network and process */
 
@@ -75,31 +79,32 @@ process	netin(void) {
 				continue;
 
 			case ETH_IP:
+                                ippkt = (struct ipv4_packet *)(currpkt->net_ethdata);
 
-				if (ipcksum(currpkt) != 0) {
+				if (ipcksum(ippkt) != 0) {
 					kprintf("checksum failed\n\r");
 					continue;
 				}
 
-				if (currpkt->net_ipvh != 0x45) {
+				if (ippkt->net_ipvh != 0x45) {
 					kprintf("version failed\n\r");
 					continue;
 				}
 
 				/* Convert IP packet to host order */
-                                ip_ntoh(currpkt);
+                                ip_ntoh(ippkt);
 
-                                if ( (currpkt->net_ipdst != IP_BCAST) &&
+                                if ( (ippkt->net_ipdst != IP_BCAST) &&
 				     (NetData.ipvalid) &&
-				     (currpkt->net_ipdst != NetData.ipaddr) ) {
+				     (ippkt->net_ipdst != NetData.ipaddr) ) {
 					continue;
 				}
 
 				/* Demultiplex UDP and ignore others */
 
-				if (currpkt->net_ipproto == IP_UDP) {
+				if (ippkt->net_ipproto == IP_UDP) {
 					udp_in();/* Handle a UDP packet	*/
-				}else if (currpkt->net_ipproto == IP_ICMP){
+				}else if (ippkt->net_ipproto == IP_ICMP){
 					icmp_in();/* Handle ICMP packet */
 				}
 				continue;
@@ -125,7 +130,7 @@ process	netin(void) {
  */
 
 uint16	ipcksum(
-	 struct  netpacket *pkt		/* ptr to a packet		*/
+	 struct  ipv4_packet *pkt		/* ptr to a packet		*/
 	)
 {
 	uint16	*hptr;			/* ptr to 16-bit header values	*/
@@ -150,7 +155,7 @@ uint16	ipcksum(
  *------------------------------------------------------------------------
  */
 void 	eth_ntoh(
-	  struct netpacket *pktptr
+	  struct eth_packet *pktptr
 	)
 {
 	pktptr->net_ethtype = ntohs(pktptr->net_ethtype);
@@ -161,7 +166,7 @@ void 	eth_ntoh(
  *------------------------------------------------------------------------
  */
 void 	eth_hton(
-	  struct netpacket *pktptr
+	  struct eth_packet *pktptr
 	)
 {
 	pktptr->net_ethtype = htons(pktptr->net_ethtype);
@@ -172,7 +177,7 @@ void 	eth_hton(
  *------------------------------------------------------------------------
  */
 void 	ip_ntoh(
-	  struct netpacket *pktptr
+	  struct ipv4_packet *pktptr
 	)
 {
 	pktptr->net_iplen = ntohs(pktptr->net_iplen);
@@ -187,7 +192,7 @@ void 	ip_ntoh(
  *------------------------------------------------------------------------
  */
 void 	ip_hton(
-	  struct netpacket *pktptr
+	  struct ipv4_packet *pktptr
 	)
 {
 	pktptr->net_iplen = htons(pktptr->net_iplen);

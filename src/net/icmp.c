@@ -3,12 +3,14 @@
 
 status	icmp_in(void){
 
+        struct ipv4_packet *ippkt = (struct ipv4_packet *)(currpkt->net_ethdata);
+        struct icmp_packet *icmppkt = (struct icmp_packet *)(ippkt->net_ipdata);
 	
-	icmp_ntoh(currpkt);
+	icmp_ntoh(icmppkt);
 
 	//kprintf("recd a ICMP packet\n\r");
-	if(currpkt->net_ictype == ICMP_ECHOREQST){
-		currpkt->net_ictype = ICMP_ECHOREPLY;
+	if(icmppkt->net_ictype == ICMP_ECHOREQST){
+		icmppkt->net_ictype = ICMP_ECHOREPLY;
 	}else{
 		kprintf("Not Handled\n\r");
 		return OK;
@@ -17,9 +19,9 @@ status	icmp_in(void){
 	byte temp_mac[ETH_ADDR_LEN];
 
 	/*swap ip-addresses in packet*/
-	temp_ip = currpkt->net_ipsrc;
-	currpkt->net_ipsrc = currpkt->net_ipdst;
-	currpkt->net_ipdst = temp_ip;
+	temp_ip = ippkt->net_ipsrc;
+	ippkt->net_ipsrc = ippkt->net_ipdst;
+	ippkt->net_ipdst = temp_ip;
 
 	/*swap mac addresses in packet*/
 	memcpy(temp_mac, currpkt->net_ethsrc, ETH_ADDR_LEN);
@@ -28,8 +30,8 @@ status	icmp_in(void){
 
 	
 
-	icmp_hton(currpkt);
-	ip_hton(currpkt);
+	icmp_hton(icmppkt);
+	ip_hton(ippkt);
 	eth_hton(currpkt);
 	
 	//kprintf("Sending ICMP response..\n\r");
@@ -44,7 +46,7 @@ status	icmp_in(void){
  *------------------------------------------------------------------------
  */
 void 	icmp_ntoh(
-	struct netpacket *pktptr
+	struct icmp_packet *pktptr
 	)
 {
 	pktptr->net_icident = ntohs(pktptr->net_icident);
@@ -57,7 +59,7 @@ void 	icmp_ntoh(
  *------------------------------------------------------------------------
  */
 void 	icmp_hton(
-	struct netpacket *pktptr
+	struct icmp_packet *pktptr
 	)
 {
 	pktptr->net_icident = htons(pktptr->net_icident);

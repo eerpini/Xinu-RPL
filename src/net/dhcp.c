@@ -8,10 +8,12 @@
  */
 uint32	getlocalip(void)
 {
-	struct	dhcpmsg dmsg;		/* holds outgoing DHCP discover	*/
+	//struct	dhcpmsg dmsg;		/* holds outgoing DHCP discover	*/
 					/*	message			*/
-	struct	dhcpmsg dmsg2;		/* holds incoming DHCP offer	*/
+	//struct	dhcpmsg dmsg2;		/* holds incoming DHCP offer	*/
 					/* and outgoing request message	*/
+        struct dhcp_packet dmsg;
+        struct dhcp_packet dmsg2;
 	uint32	xid;			/* xid used for the exchange	*/
 	int32	i, j;			/* retry counter		*/
 	int32	len;			/* length of data read		*/

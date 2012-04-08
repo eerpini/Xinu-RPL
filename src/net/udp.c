@@ -29,6 +29,8 @@ void	udp_in(void) {			/* currpkt points to the packet	*/
 	intmask	mask;			/* saved interrupt mask		*/
 	int32	i;			/* index into udptab		*/
 	struct	udpentry *udptr;	/* pointer to udptab entry	*/
+        struct  ipv4_packet *ippkt = (struct ipv4_packet *)(currpkt->net_ethdata);
+        struct  udp_packet * udppkt = (struct udp_packet *)(ippkt->net_ipdata);
 
 	/* Insure only one process can access the UDP table at a time */
 
@@ -36,16 +38,16 @@ void	udp_in(void) {			/* currpkt points to the packet	*/
 
 	/* Convert IP and UDP header fields to host byte order */
 
-	udp_ntoh(currpkt);
+	udp_ntoh(udppkt);
 
 	for (i=0; i<UDP_SLOTS; i++) {
 	    udptr = &udptab[i];
 	    if ( (udptr->udstate != UDP_FREE) &&
-		 (currpkt->net_udpdport == udptr->udlocport)  &&
+		 (udppkt->net_udpdport == udptr->udlocport)  &&
 		    ((udptr->udremport == 0) ||
-			(currpkt->net_udpsport == udptr->udremport)) &&
+			(udppkt->net_udpsport == udptr->udremport)) &&
 		 (  ((udptr->udremip==0)     ||
-			(currpkt->net_ipsrc == udptr->udremip)))    ) {
+			(ippkt->net_ipsrc == udptr->udremip)))    ) {
 
 		/* Entry matches incoming packet */
 
@@ -55,7 +57,9 @@ void	udp_in(void) {			/* currpkt points to the packet	*/
 			if (udptr->udtail >= UDP_QSIZ) {
 				udptr->udtail = 0;
 			}
-			currpkt = (struct netpacket *)getbuf(netbufpool);
+			currpkt = (struct eth_packet *)getbuf(netbufpool);
+                        ippkt = (struct ipv4_packet *)(currpkt->net_ethdata);
+                        udppkt = (struct udp_packet *)(ippkt->net_ipdata);
 			if (udptr->udstate == UDP_RECV) {
 				udptr->udstate = UDP_USED;
 				send (udptr->udpid, OK);
@@ -148,7 +152,9 @@ int32	udp_recv (
 	int32	i;			/* index into udptab		*/
 	struct	udpentry *udptr;	/* pointer to udptab entry	*/
 	umsg32	msg;			/* message from recvtime()	*/
-	struct	netpacket *pkt;		/* ptr to packet being read	*/
+	struct	eth_packet *pkt;		/* ptr to packet being read	*/
+        struct  ipv4_packet *ippkt = NULL;
+        struct  udp_packet * udppkt = NULL;
 	int32	msglen;			/* length of UDP data in packet	*/
 	char	*udataptr;		/* pointer to UDP data		*/
 
@@ -190,6 +196,8 @@ int32	udp_recv (
 	/* Packet has arrived -- dequeue it */
 
 	pkt = udptr->udqueue[udptr->udhead++];
+        ippkt = (struct ipv4_packet *)(pkt->net_ethdata);
+        udppkt = (struct udp_packet *)(ippkt->net_ipdata);
 	if (udptr->udhead >= UDP_SLOTS) {
 		udptr->udhead = 0;
 	}
@@ -197,8 +205,8 @@ int32	udp_recv (
 
 	/* Copy UDP data from packet into caller's buffer */
 
-	msglen = pkt->net_udplen - UDP_HDR_LEN;
-	udataptr = (char *)pkt->net_udpdata;
+	msglen = udppkt->net_udplen - UDP_HDR_LEN;
+	udataptr = (char *)udppkt->net_udpdata;
 	for (i=0; i<msglen; i++) {
 		if (i >= len) {
 			break;
@@ -227,7 +235,9 @@ int32	udp_recvaddr (
 	int32	i;			/* index into udptab		*/
 	struct	udpentry *udptr;	/* pointer to udptab entry	*/
 	umsg32	msg;			/* message from recvtime()	*/
-	struct	netpacket *pkt;		/* ptr to packet being read	*/
+	struct	eth_packet *pkt;		/* ptr to packet being read	*/
+        struct  ipv4_packet *ippkt = NULL;
+        struct  udp_packet * udppkt = NULL;
 	int32	msglen;			/* length of UDP data in packet	*/
 	char	*udataptr;		/* pointer to UDP data		*/
 
@@ -268,6 +278,8 @@ int32	udp_recvaddr (
 	/* Packet has arrived -- dequeue it */
 
 	pkt = udptr->udqueue[udptr->udhead++];
+        ippkt = (struct ipv4_packet *)(pkt->net_ethdata);
+        udppkt = (struct udp_packet *)(ippkt->net_ipdata);
 	if (udptr->udhead >= UDP_SLOTS) {
 		udptr->udhead = 0;
 	}
@@ -275,13 +287,13 @@ int32	udp_recvaddr (
 
 	/* Record sender's IP address and UDP port number */
 
-	*remip = pkt->net_ipsrc;
-	*remport = pkt->net_udpsport;
+	*remip = ippkt->net_ipsrc;
+	*remport = udppkt->net_udpsport;
 
 	/* Copy UDP data from packet into caller's buffer */
 
-	msglen = pkt->net_udplen - UDP_HDR_LEN;
-	udataptr = (char *)pkt->net_udpdata;
+	msglen = udppkt->net_udplen - UDP_HDR_LEN;
+	udataptr = (char *)udppkt->net_udpdata;
 	for (i=0; i<msglen; i++) {
 		if (i >= len) {
 			break;
