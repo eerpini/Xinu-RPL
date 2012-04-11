@@ -58,7 +58,7 @@ void processroute (uint32 target, uint32 parent) {
 	printpaths ();
 }
 
-void processdaomsg (struct icmpv6_sim_packet *rpldaomsg) {
+void processdao(struct icmpv6_sim_packet *rpldaomsg) {
         //struct rpl_dao_msg              daomsg;
 	struct rpl_opt_target           *opttarget;
 	struct rpl_opt_transitinf       *opttransit;

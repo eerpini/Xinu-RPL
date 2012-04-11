@@ -536,11 +536,18 @@ extern syscall srpolicy(int);
 /*
  * RPL Related calls
  */
-extern status rpl_send ( char *, byte, char *, uint32);
-extern status rpl_send_with_ip( char *, byte, char *, uint32, uint32);
+extern status rpl_send ( char *, char *, byte, char *, uint32);
+extern status rpl_send_with_ip( char *,char *, byte, char *, uint32, uint32);
 extern status rpl_receive();
 extern void genereate_link_local_neighbors();
+extern void encodedis(struct icmpv6_sim_packet *);
+extern void decodedis(struct icmpv6_sim_packet *);
+extern void encodedao(struct icmpv6_sim_packet *);
+extern void encodedio(struct icmpv6_sim_packet *);
+extern void processdio(struct icmpv6_sim_packet *);
+extern void send_init_messages(void );
 #ifdef LOWPAN_BORDER_ROUTER
+        extern void processdao(struct icmpv6_sim_packet *);
         extern void rpl_border_router_init();
         extern int  assignindex ( uint32 );
         extern void computepaths();

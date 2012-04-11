@@ -24,6 +24,7 @@
 #include <icmp.h>
 #include <shell.h>
 #include <date.h>
+#include <rpl_net.h>
 #include <prototypes.h>
 #include <i386.h>
 #include <pci.h>
@@ -35,4 +36,3 @@
 #ifdef LOWPAN_BORDER_ROUTER
         #include <rpldag.h>
 #endif
-#include <rpl_net.h>

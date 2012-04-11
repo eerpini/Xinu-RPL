@@ -15,7 +15,7 @@ status rpl_sim_init(){
         return OK;
 }
 
-status rpl_send(char * node_phy_addr, byte msg_type, char *msg, uint32 msglen){
+status rpl_send(char * node_phy_addr, char *src_node, byte msg_type, char *msg, uint32 msglen){
 
         struct eth_packet pkt;
         struct rpl_sim_packet *rpl_sim_pkt  = NULL;
@@ -56,6 +56,10 @@ status rpl_send(char * node_phy_addr, byte msg_type, char *msg, uint32 msglen){
 
         rpl_sim_pkt = (struct rpl_sim_packet *)pkt.net_ethdata;
         memcpy(rpl_sim_pkt->dest_node, node_phy_addr, RPL_NODE_PHY_ADDR_LEN);
+        /*
+         * FIXME Change this to my_phsical_address which is 64 bits
+         */
+        memcpy(rpl_sim_pkt->src_node, (char *)(src_node), RPL_NODE_PHY_ADDR_LEN);
         rpl_sim_pkt->msg_type = msg_type;
         rpl_sim_pkt->msg_len = msglen;
         memcpy(rpl_sim_pkt->data, msg, msglen);
@@ -71,7 +75,7 @@ status rpl_send(char * node_phy_addr, byte msg_type, char *msg, uint32 msglen){
 
 }
 
-status rpl_send_with_ip(char * node_phy_addr, byte msg_type, char *msg, uint32 msglen, uint32 remip){
+status rpl_send_with_ip(char * node_phy_addr, char *src_node, byte msg_type, char *msg, uint32 msglen, uint32 remip){
 
         struct eth_packet pkt;
         struct rpl_sim_packet *rpl_sim_pkt  = NULL;
@@ -106,6 +110,10 @@ status rpl_send_with_ip(char * node_phy_addr, byte msg_type, char *msg, uint32 m
 
         rpl_sim_pkt = (struct rpl_sim_packet *)pkt.net_ethdata;
         memcpy(rpl_sim_pkt->dest_node, node_phy_addr, RPL_NODE_PHY_ADDR_LEN);
+        /*
+         * FIXME Change this to my_phsical_address which is 64 bits
+         */
+        memcpy(rpl_sim_pkt->src_node, (char *)(src_node), RPL_NODE_PHY_ADDR_LEN);
         rpl_sim_pkt->msg_type = msg_type;
         memcpy(rpl_sim_pkt->data, msg, msglen);
 
@@ -135,14 +143,44 @@ status rpl_receive(){
                  * Send the packet using the ip stack 
                  * Use the rpl_sim_packet header as such
                  */
+                dot2ip(RPL_FORWARDING_GATEWAY, &remip);
+                if(remip == NetData.ipaddr){
 
-                remip = (uint32) ((uint32)pkt->dest_node & 0x00000000ffffffff);
-                if(remip == 0xffffffff || remip == 0x00000000){
-                        kprintf("Could not find a mapping for the given 64bit physical address\r\n");
-                        return SYSERR;
+
+                        remip = (uint32) (pkt->dest_node);
+                        if(remip == 0xffffffff || remip == 0x00000000){
+                                kprintf("Could not find a mapping for the given 64bit physical address\r\n");
+                                return SYSERR;
+                        }
+                        else{
+                                rpl_send_with_ip((char *)pkt->dest_node, (char *)pkt->src_node, pkt->msg_type, (char *)pkt->data, pkt->msg_len, remip);
+                        }
                 }
                 else{
-                        rpl_send_with_ip((char *)pkt->dest_node, pkt->msg_type, (char *)pkt->data, pkt->msg_len, remip);
+                        switch(pkt->msg_type){
+                                case RPL_DIS_MSGTYPE:
+                                        /*
+                                         */
+                                        decodedis((struct icmpv6_sim_packet *)(pkt->data));
+                                        struct icmpv6_sim_packet rpkt;
+                                        encodedio(&rpkt);
+                                        rpl_send((char *)(pkt->src_node), (char *)(NetData.ipaddr), RPL_DIO_MSGTYPE, 
+                                                        (char *)(&rpkt), 1500-ETH_HDR_LEN- RPL_SIM_HDR_LEN);
+
+                                        break;
+                                case RPL_DIO_MSGTYPE:
+                                        processdio((struct icmpv6_sim_packet *)(pkt->data));
+                                        break;
+#ifdef LOWPAN_BORDER_ROUTER
+                                case RPL_DAO_MSGTYPE:
+                                        processdao((struct icmpv6_sim_packet *)(pkt->data));
+                                        break;
+#endif
+                                default:
+                                        kprintf("Received an unknown RPL message type\r\n");
+                                        break;
+                        }
+
                 }
                 signal(rpl_sim_write_sem);
                 i = (i+1)%RPL_SIM_RECV_QUEUE_LEN;

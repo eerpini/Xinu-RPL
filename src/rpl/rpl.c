@@ -28,10 +28,15 @@ extern uint32   rpl_link_local_neighbors[LOWPAN_MAX_NODES];
 
 void generate_link_local_neighbors(){
 
+        rpl_link_local_neighbors[0] = (NetData.ipaddr + 1);
+        rpl_link_local_neighbors[1] = (NetData.ipaddr - 1);
+        rpl_link_local_neighbors[2] = -1;
+        /*
         int i=0;
         for(i=0; i < LOWPAN_MAX_NODES; i++){
                 rpl_link_local_neighbors[i] = i;
         }
+        */
 
 }
 
@@ -46,21 +51,20 @@ void generate_link_local_neighbors(){
 
 void rpl_init(){
 
+        if(!NetData.ipvalid){
+                getlocalip();
+        }
         generate_link_local_neighbors();
 
+        rpl_node_init();
+
 #ifdef  LOWPAN_BORDER_ROUTER
-       /*
-        * Send DIO Messages to immediate Link Local Neighbors
-        */
         rpl_border_router_init();
 #endif
-#ifdef LOWPAN_NODE
-        rpl_node_init();
-#endif
 
+        send_init_messages();
 
 }
-#ifdef LOWPAN_NODE
 
 void rpl_node_init(){
 
@@ -82,8 +86,11 @@ void rpl_node_init(){
         RPL_MYINFO.maxrankincrease =  0;
         RPL_MYINFO.minhoprankinc =  0;
 
+        /*
+         * FIXME : Send DIS Message to neighbors
+         */
+
 }
-#endif
 
 #ifdef  LOWPAN_BORDER_ROUTER
 
@@ -102,3 +109,23 @@ void rpl_border_router_init(){
 
 }
 #endif
+
+void send_init_messages(){
+
+#ifdef LOWPAN_NODE
+        
+        struct icmpv6_sim_packet pkt;
+        encodedis( &pkt );
+
+        int i = 0;
+        while(rpl_link_local_neighbors[i] != -1){
+                rpl_send((char *) &rpl_link_local_neighbors[i], (char *)(NetData.ipaddr), RPL_DIS_MSGTYPE, (char *)(&pkt),  
+                                1500-ETH_HDR_LEN - RPL_SIM_HDR_LEN);
+                i++;
+        }
+
+
+
+#endif
+
+}

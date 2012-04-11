@@ -1,5 +1,5 @@
 #ifndef RPL_FORWARDING_GATEWAY
-        #define RPL_FORWARDING_GATEWAY "255.255.255.255"
+        #define RPL_FORWARDING_GATEWAY "128.10.133.127"
 #endif
 
 
@@ -27,7 +27,7 @@ struct icmpv6_sim_packet       {
         byte		net_ictype;	/* ICMP message type		*/
         byte		net_iccode;	/* ICMP code field (0 for ping)	*/
         uint16	        net_iccksum;	/* ICMP message checksum	*/
-        byte		net_icdata[1500-ETH_HDR_LEN- RPL_SIM_HDR_LEN];/* ICMP payload (1500-above)*/
+        byte		net_icdata[1500-ETH_HDR_LEN- RPL_SIM_HDR_LEN - ICMPV6_HDR_LEN];/* ICMP payload (1500-above)*/
 };
 #pragma pack()
 
@@ -39,7 +39,7 @@ struct icmpv6_sim_packet       {
 
 
 #ifndef RPL_NODE_PHY_ADDR_LEN
-        #define RPL_NODE_PHY_ADDR_LEN 8
+        #define RPL_NODE_PHY_ADDR_LEN 4
 #endif
 
 #ifndef RPL_SIM_RECV_QUEUE_LEN
@@ -52,6 +52,7 @@ struct icmpv6_sim_packet       {
 
 struct  rpl_sim_packet{
         byte dest_node[RPL_NODE_PHY_ADDR_LEN];
+        byte src_node[RPL_NODE_PHY_ADDR_LEN];
         byte   msg_type;
         uint32 msg_len;
         byte   data[1500-ETH_HDR_LEN - RPL_SIM_HDR_LEN];
