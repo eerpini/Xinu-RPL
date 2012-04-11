@@ -39,7 +39,7 @@ void encodedio(struct icmpv6_sim_packet *rpldiomsg) {
 	dagconf.minhoprankinc	= RPL_MYINFO.minhoprankinc;
 	dagconf.ocp		= 0;
 	dagconf.reserved	= 0;
-	//dagconf.lifetime	= RPL_MYINFO.lifetime;
+	dagconf.lifetime	= RPL_MYINFO.pathlifetime;
 	dagconf.lifetime_unit	= RPL_OPT_LIFETIME_UNIT;
 
 	/*	Encode the diomsg into the ICMP packet here 	*/
@@ -83,6 +83,7 @@ void processdio (struct icmpv6_sim_packet *rpldiomsg) {
 				RPL_MYINFO.dioredundancy = dagconf->dioredundancy;
 				RPL_MYINFO.maxrankincrease = dagconf->maxrankincrease;
 				RPL_MYINFO.minhoprankinc = dagconf->minhoprankinc;
+				RPL_MYINFO.pathlifetime = dagconf->lifetime;
 			} else {
 				kprintf (" Unexpected option in the DIO Message --> %02x <--\n", rpldiomsg->net_icdata[pos]);
 			}

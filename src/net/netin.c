@@ -49,6 +49,8 @@ process	netin(void) {
 	udp_init();
 
         rpl_sim_init();
+        
+        rpl_init();
 
         /*
          * FIXME : Create RPL Receiver Process HERE
@@ -62,6 +64,7 @@ process	netin(void) {
 	while(1) {
                 //kprintf("Reading in netin\r\n");
 	    	retval = read(ETHER0, (char *)currpkt, PACKLEN);
+                //kprintf("Read a packet from ethernet\r\n");
 	    	if (retval == SYSERR) {
 			panic("Ethernet read error");
 	    	}
@@ -103,6 +106,7 @@ process	netin(void) {
 				/* Demultiplex UDP and ignore others */
 
 				if (ippkt->net_ipproto == IP_UDP) {
+                                        //kprintf("Trying to handle a UDP packet\r\n");
 					udp_in();/* Handle a UDP packet	*/
 				}else if (ippkt->net_ipproto == IP_ICMP){
 					icmp_in();/* Handle ICMP packet */
@@ -117,7 +121,7 @@ process	netin(void) {
                                 continue;
 
 			default: /* Ignore all other Ethernet types */
-				kprintf("\n");
+                                kprintf("Nothing \r\n");
 				continue;		
 		}
 	}

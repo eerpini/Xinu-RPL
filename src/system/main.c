@@ -27,56 +27,16 @@ int main(int argc, char **argv)
 			(NetData.routeraddr>>24)&0xff, (NetData.routeraddr>>16)&0xff,
 			(NetData.routeraddr>> 8)&0xff, NetData.routeraddr&0xff);
 	}
+       
+        dot2ip(RPL_FORWARDING_GATEWAY, &retval);
+        if(retval == NetData.ipaddr){
+                kprintf("I am the simulator gateway\r\n");
+        }
+        
+        resume(create(shell, 4096, INITPRIO, "Shell", 1, CONSOLE));
          
         //psinit();
                 
-        kprintf("Done with psinit\r\n");
-        
-        if(get_bs(0, 100) != SYSERR ){
-
-                kprintf("Opened the disk\r\n");
-                memcpy(buf, "abcdef", 6);
-                if(write_bs(buf, 0, 0) == OK){
-                        kprintf("Successfully written \r\n");
-                }
-                else{
-                        kprintf("Something went wrong\r\n");
-                }
-                memcpy(buf, "abcdefghijklmnopqr", 18);
-                if(write_bs(buf, 0, 17) == OK){
-                        kprintf("Successfully written \r\n");
-                }
-                else{
-                        kprintf("Something went wrong\r\n");
-                }
-        }
-        if(release_bs(0) != SYSERR){
-                kprintf("Releasing the backing store succeeded\r\n");
-        }
-        else
-                kprintf("Releasing the backing store failed\r\n");
-        memset(buf, NULLCH, NBPG);
-        if(get_bs(0, 50) != SYSERR){
-                if(read_bs(buf, 0, 0) != SYSERR){
-                        kprintf("Successfully read\r\n");
-                }
-
-                
-                kprintf("The buffer is %s\r\n", buf);
-
-                if(read_bs(buf, 0, 0) != SYSERR){
-                        kprintf("Successfully read\r\n");
-                }
-                kprintf("The buffer is %s\r\n", buf);
-
-        }
-
-        if(release_bs(0) != SYSERR){
-                kprintf("Releasing the backing store succeeded\r\n");
-        }
-        else
-                kprintf("Releasing the backing store failed\r\n");
-
         return OK;
 
 }

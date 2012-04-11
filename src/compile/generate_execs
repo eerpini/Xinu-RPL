@@ -1,0 +1,10 @@
+#!/bin/bash
+
+
+make clean 
+
+make -f Makefile.node
+mv xinu xinu.n
+make clean 
+make -f Makefile.router 
+mv xinu xinu.r

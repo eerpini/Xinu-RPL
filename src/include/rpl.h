@@ -164,6 +164,7 @@ uint32   rpl_link_local_neighbors[LOWPAN_MAX_NODES];
 #define		RPL_DIO_MSGTYPE			0x01
 #define		RPL_DAO_MSGTYPE			0x02
 #define		RPL_DAO_ACK_MSGTYPE		0x03
+#define		RPL_TIMER_EXPIRY                0x04
 
 struct		rpl_info {
 
@@ -186,6 +187,7 @@ struct		rpl_info {
 	byte	dioredundancy;
 	uint16	maxrankincrease;
 	uint16	minhoprankinc;
+        byte    pathlifetime;
 };
 struct	rpl_info	RPL_MYINFO;
 
@@ -218,6 +220,7 @@ struct	rpl_opt_routeinfo{
 };
 
 #define		RPL_OPT_TYPE_DODAG_CONF		0x04
+#define		RPL_OPT_DEFAULT_PATH_LIFETIME   20
 #define		RPL_OPT_LIFETIME_UNIT		1
 struct	rpl_opt_dodag_conf {
 	byte	type;

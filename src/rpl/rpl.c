@@ -85,10 +85,12 @@ void rpl_node_init(){
         RPL_MYINFO.dioredundancy =  RPL_DEFAULT_DIO_REDUNDANCY_CONSTANT;
         RPL_MYINFO.maxrankincrease =  0;
         RPL_MYINFO.minhoprankinc =  0;
-
-        /*
-         * FIXME : Send DIS Message to neighbors
-         */
+#ifdef LOWPAN_NODE
+        RPL_MYINFO.pathlifetime = 0;
+#endif
+#ifdef LOWPAN_BORDER_ROUTER
+        RPL_MYINFO.pathlifetime = RPL_OPT_DEFAULT_PATH_LIFETIME;
+#endif
 
 }
 

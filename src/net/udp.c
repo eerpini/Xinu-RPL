@@ -36,6 +36,7 @@ void	udp_in(void) {			/* currpkt points to the packet	*/
 
 	mask = disable();
 
+        //kprintf("Inside udp_in\r\n");
 	/* Convert IP and UDP header fields to host byte order */
 
 	udp_ntoh(udppkt);
@@ -71,7 +72,7 @@ void	udp_in(void) {			/* currpkt points to the packet	*/
 	}
 
 	/* No match - simply discard packet */
-
+        //kprintf("Done with udp_in\r\n");
 	restore(mask);
 	return;
 }

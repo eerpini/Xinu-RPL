@@ -136,6 +136,7 @@ status rpl_receive(){
         while(1){
                 remip = 0xffffffff;
                 wait(rpl_sim_read_sem);
+                kprintf("Resuming in rpl_receive\r\n");
                 pkt = &sim_queue[i];
                 
                 /*
@@ -170,12 +171,27 @@ status rpl_receive(){
                                         break;
                                 case RPL_DIO_MSGTYPE:
                                         processdio((struct icmpv6_sim_packet *)(pkt->data));
+                                        struct icmpv6_sim_packet rpkt;
+                                        encodedao(&rpkt);
+                                        rpl_send((char *)(RPL_MYINFO.parent), (char *)(NetData.ipaddr), RPL_DIO_MSGTYPE, (char *)(&rpkt), 1500-ETH_HDR_LEN- RPL_SIM_HDR_LEN);
+
                                         break;
-#ifdef LOWPAN_BORDER_ROUTER
                                 case RPL_DAO_MSGTYPE:
+#ifdef LOWPAN_BORDER_ROUTER
                                         processdao((struct icmpv6_sim_packet *)(pkt->data));
-                                        break;
 #endif
+#ifdef LOWPAN_NODE
+                                        rpl_send((char *)(RPL_MYINFO.parent), (char *)(NetData.ipaddr), RPL_DIO_MSGTYPE, (char *)(&pkt), 1500-ETH_HDR_LEN- RPL_SIM_HDR_LEN);
+#endif
+
+
+                                        break;
+                                case RPL_TIMER_EXPIRY:
+                                        struct icmpv6_sim_packet rpkt;
+                                        encodedao(&rpkt);
+                                        rpl_send((char *)(RPL_MYINFO.parent), (char *)(NetData.ipaddr), RPL_DIO_MSGTYPE, (char *)(&rpkt), 1500-ETH_HDR_LEN- RPL_SIM_HDR_LEN);
+
+
                                 default:
                                         kprintf("Received an unknown RPL message type\r\n");
                                         break;

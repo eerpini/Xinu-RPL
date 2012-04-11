@@ -71,6 +71,7 @@ uint32	getlocalip(void)
 		udp_send(IP_BCAST, UDP_DHCP_SPORT, IP_THIS, UDP_DHCP_CPORT,
 				(char *)&dmsg, len);
 		sleep(1);
+                kprintf("Sending again in dhcp iteration [%d]\r\n", i);
 	}
 
 	/* Read 3 incoming DHCP messages and check for an offer	or	*/

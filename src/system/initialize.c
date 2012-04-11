@@ -85,7 +85,7 @@ void	nulluser(void)
 
         resume(create((void *)netin, NETSTK, NETPRIO, "netin", 0));
 
-        rpl_init();
+        //rpl_init();
 
 
 	/* Create a process to execute function main() */
@@ -98,6 +98,7 @@ void	nulluser(void)
 	/*  something to run when no other process is ready to execute)	*/
 
 	while (TRUE) {
+                //kprintf("We are null\r\n");
 		;		/* do nothing */
 	}
 }

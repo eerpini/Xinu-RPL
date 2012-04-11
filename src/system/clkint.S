@@ -19,8 +19,11 @@ clkint:
 cl1:
 		cmpl	$0,slnonempty	# if no sleeping processes,
 		je	clpreem		#   skip to preemption check
+                movl    rpl_dao_timeout, %ebx
+                decl    (%ebx)
 		movl	sltop,%eax	# decrement key of first
 		decl	(%eax)		#   sleeping process
+                orl     %ebx
 		jg	clpreem		# must use jg for signed int
 		call	wakeup		# if zero, call wakeup
 clpreem:	decl	preempt		# decrement preemption counter
