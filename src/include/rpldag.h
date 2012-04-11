@@ -1,6 +1,7 @@
 #define		RPL_NO_PRED		-1
 #define		RPL_ROOT		0
-#define		RPL_INF_DIST		9999
+//#define		RPL_INF_DIST		9999
+#define		RPL_INF_DIST		255
 
 //distance to each nodes
 byte		rplpath[LOWPAN_MAX_NODES][LOWPAN_MAX_NODES];
