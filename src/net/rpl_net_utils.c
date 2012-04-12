@@ -158,12 +158,12 @@ status rpl_receive(){
                         }
                 }
                 else{
+                        struct icmpv6_sim_packet rpkt;
                         switch(pkt->msg_type){
                                 case RPL_DIS_MSGTYPE:
                                         /*
                                          */
                                         decodedis((struct icmpv6_sim_packet *)(pkt->data));
-                                        struct icmpv6_sim_packet rpkt;
                                         encodedio(&rpkt);
                                         rpl_send((char *)(pkt->src_node), (char *)(NetData.ipaddr), RPL_DIO_MSGTYPE, 
                                                         (char *)(&rpkt), 1500-ETH_HDR_LEN- RPL_SIM_HDR_LEN);
@@ -171,7 +171,6 @@ status rpl_receive(){
                                         break;
                                 case RPL_DIO_MSGTYPE:
                                         processdio((struct icmpv6_sim_packet *)(pkt->data));
-                                        struct icmpv6_sim_packet rpkt;
                                         encodedao(&rpkt);
                                         rpl_send((char *)(RPL_MYINFO.parent), (char *)(NetData.ipaddr), RPL_DIO_MSGTYPE, (char *)(&rpkt), 1500-ETH_HDR_LEN- RPL_SIM_HDR_LEN);
 
@@ -187,7 +186,6 @@ status rpl_receive(){
 
                                         break;
                                 case RPL_TIMER_EXPIRY:
-                                        struct icmpv6_sim_packet rpkt;
                                         encodedao(&rpkt);
                                         rpl_send((char *)(RPL_MYINFO.parent), (char *)(NetData.ipaddr), RPL_DIO_MSGTYPE, (char *)(&rpkt), 1500-ETH_HDR_LEN- RPL_SIM_HDR_LEN);
 
