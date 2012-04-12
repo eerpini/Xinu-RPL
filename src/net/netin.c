@@ -48,15 +48,7 @@ process	netin(void) {
 
 	udp_init();
 
-        rpl_sim_init();
         
-        rpl_init();
-
-        /*
-         * FIXME : Create RPL Receiver Process HERE
-         */
-        resume(create(rpl_receive, 8192,NETPRIO - 10, "rpl_recieve", 0));
-
 	currpkt = (struct eth_packet *)getbuf(netbufpool);
 
 	/* Do forever: read packets from the network and process */
@@ -82,6 +74,7 @@ process	netin(void) {
 				continue;
 
 			case ETH_IP:
+                                //kprintf("Ip packet received \r\n");
                                 ippkt = (struct ipv4_packet *)(currpkt->net_ethdata);
 
 				if (ipcksum(ippkt) != 0) {
@@ -100,6 +93,7 @@ process	netin(void) {
                                 if ( (ippkt->net_ipdst != IP_BCAST) &&
 				     (NetData.ipvalid) &&
 				     (ippkt->net_ipdst != NetData.ipaddr) ) {
+                                        kprintf("IP Packet not destined for us\r\n");
 					continue;
 				}
 
@@ -109,6 +103,7 @@ process	netin(void) {
                                         //kprintf("Trying to handle a UDP packet\r\n");
 					udp_in();/* Handle a UDP packet	*/
 				}else if (ippkt->net_ipproto == IP_ICMP){
+                                        kprintf("ICMP Packet \r\n");
 					icmp_in();/* Handle ICMP packet */
 				}
 				continue;

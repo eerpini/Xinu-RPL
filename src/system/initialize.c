@@ -85,8 +85,19 @@ void	nulluser(void)
 
         resume(create((void *)netin, NETSTK, NETPRIO, "netin", 0));
 
-        //rpl_init();
+        getlocalip_sem = semcreate(1);
 
+
+        /*FIXME
+         * This order is crucial, this should not be done after main is created
+         * since we are calling rpl_init() in main right now
+         */
+        rpl_sim_init();
+
+        /*
+         * FIXME : Create RPL Receiver Process HERE
+         */
+        resume(create(rpl_receive, 8192,NETPRIO - 10, "rpl_recieve", 0));
 
 	/* Create a process to execute function main() */
 

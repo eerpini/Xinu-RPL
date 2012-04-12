@@ -29,6 +29,8 @@ struct	dhcpmsg	{
 extern	struct	eth_packet *currpkt;	/* ptr to current input packet	*/
 extern	bpid32	netbufpool;		/* ID of net packet buffer pool	*/
 
+extern sid32 getlocalip_sem;
+
 #define	PACKLEN	sizeof(struct netpacket)
 
 extern	uint32	myipaddr;		/* IP address of computer	*/

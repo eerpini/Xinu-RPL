@@ -239,6 +239,8 @@ clean:
 	@echo   removing configuration files ...
 	@rm -f ../include/conf.h ../system/conf.c
 	@(cd ../config; make clean)
+	@echo removing router and node specific xinu files
+	@rm -rf xinu.r xinu.n
 	@echo removing xinu ...
 	@rm -f xinu
 

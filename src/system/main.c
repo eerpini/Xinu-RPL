@@ -33,9 +33,15 @@ int main(int argc, char **argv)
                 kprintf("I am the simulator gateway\r\n");
         }
         
+
+        rpl_init();
+
+        resume(create(shell, 4096, INITPRIO, "Shell", 1, CONSOLE));
+        receive();
+
+        getlocalip();
         resume(create(shell, 4096, INITPRIO, "Shell", 1, CONSOLE));
          
-        //psinit();
                 
         return OK;
 

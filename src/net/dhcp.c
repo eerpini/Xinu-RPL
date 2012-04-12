@@ -6,14 +6,17 @@
  * getlocalip - use DHCP to obtain an IP address
  *------------------------------------------------------------------------
  */
+
+sid32   getlocalip_sem;
+
 uint32	getlocalip(void)
 {
-	//struct	dhcpmsg dmsg;		/* holds outgoing DHCP discover	*/
+	struct	dhcpmsg dmsg;		/* holds outgoing DHCP discover	*/
 					/*	message			*/
-	//struct	dhcpmsg dmsg2;		/* holds incoming DHCP offer	*/
+	struct	dhcpmsg dmsg2;		/* holds incoming DHCP offer	*/
 					/* and outgoing request message	*/
-        struct dhcp_packet dmsg;
-        struct dhcp_packet dmsg2;
+        //struct dhcp_packet dmsg;
+        //struct dhcp_packet dmsg2;
 	uint32	xid;			/* xid used for the exchange	*/
 	int32	i, j;			/* retry counter		*/
 	int32	len;			/* length of data read		*/
@@ -24,7 +27,10 @@ uint32	getlocalip(void)
 	uint32	routeraddr;		/* default router address	*/
 	uint32	tmp;			/* used for byte conversion	*/
 
+        wait(getlocalip_sem);
+
 	if (NetData.ipvalid) {		/* already have an IP address	*/
+                signal(getlocalip_sem);
 		return NetData.ipaddr;
 	}
 	udp_register(0, UDP_DHCP_SPORT, UDP_DHCP_CPORT);
@@ -79,12 +85,15 @@ uint32	getlocalip(void)
 
 	for (j=0; j<3; j++) {
 		len = udp_recv(0, UDP_DHCP_SPORT, UDP_DHCP_CPORT,
-			(char *)&dmsg2, sizeof(struct dhcpmsg),3000);
+			(char *)&dmsg2, sizeof(struct dhcpmsg),5000);
 		if (len == TIMEOUT) {
+                        kprintf("Timed out while waiting for DHCP reply \r\n");
 			continue;
 		} else if (len == SYSERR) {
+                        signal(getlocalip_sem);
 			return SYSERR;
 		}
+                kprintf("Got DHCP reply \r\n");
 		/* Check that incoming message is a valid response (ID	*/
 		/* matches our request)					*/
 
@@ -137,9 +146,11 @@ uint32	getlocalip(void)
 		NetData.ipaddr = ntohl(dmsg2.dc_yip);
 		NetData.ipvalid = TRUE;
 		udp_release(0, UDP_DHCP_SPORT, UDP_DHCP_CPORT);
+                signal(getlocalip_sem);
 		return NetData.ipaddr;
 	}
 	kprintf("DHCP failed to get response\r\n");
 	udp_release(0, UDP_DHCP_SPORT, UDP_DHCP_CPORT);
+        signal(getlocalip_sem);
 	return (uint32)SYSERR;
 }

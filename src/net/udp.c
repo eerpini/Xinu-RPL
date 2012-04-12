@@ -41,6 +41,33 @@ void	udp_in(void) {			/* currpkt points to the packet	*/
 
 	udp_ntoh(udppkt);
 
+
+
+        /*
+        if (ippkt->net_ipproto == IP_UDP) {
+                kprintf("proto UDP (%d), length %d",
+                                ippkt->net_ipproto, ntohs(ippkt->net_iplen));
+                kprintf(")\n");
+                kprintf("\t%d.%d.%d.%d > ",
+                                ((ippkt->net_ipsrc)>>24)&0xff,
+                                ((ippkt->net_ipsrc)>>16)&0xff,
+                                ((ippkt->net_ipsrc)>>8)&0xff, 
+                                ((ippkt->net_ipsrc)&0xff));
+                kprintf("%d.%d.%d.%d: ",
+                                ((ippkt->net_ipdst)>>24)&0xff,
+                                ((ippkt->net_ipdst)>>16)&0xff,
+                                ((ippkt->net_ipdst)>>8)&0xff, 
+                                ((ippkt->net_ipdst)&0xff));
+                //kprintf("PDUMP Check 9\r\n");
+                kprintf("[udp checksum none] ");
+                kprintf("UDP, src port %d, dst port %d, length %d\n",
+                                (udppkt->net_udpsport),
+                                (udppkt->net_udpdport),
+                                (udppkt->net_udplen) - UDP_HDR_LEN);
+        }
+        */
+
+
 	for (i=0; i<UDP_SLOTS; i++) {
 	    udptr = &udptab[i];
 	    if ( (udptr->udstate != UDP_FREE) &&
@@ -59,8 +86,6 @@ void	udp_in(void) {			/* currpkt points to the packet	*/
 				udptr->udtail = 0;
 			}
 			currpkt = (struct eth_packet *)getbuf(netbufpool);
-                        ippkt = (struct ipv4_packet *)(currpkt->net_ethdata);
-                        udppkt = (struct udp_packet *)(ippkt->net_ipdata);
 			if (udptr->udstate == UDP_RECV) {
 				udptr->udstate = UDP_USED;
 				send (udptr->udpid, OK);
@@ -153,7 +178,7 @@ int32	udp_recv (
 	int32	i;			/* index into udptab		*/
 	struct	udpentry *udptr;	/* pointer to udptab entry	*/
 	umsg32	msg;			/* message from recvtime()	*/
-	struct	eth_packet *pkt;		/* ptr to packet being read	*/
+	struct	eth_packet *pkt = NULL;		/* ptr to packet being read	*/
         struct  ipv4_packet *ippkt = NULL;
         struct  udp_packet * udppkt = NULL;
 	int32	msglen;			/* length of UDP data in packet	*/
@@ -330,7 +355,7 @@ status	udp_send (
 
 	/* Compute packet length as UDP data size + fixed header size	*/
 
-	pktlen = ((char *)udppkt->net_udpdata - (char *)&pkt) + len;
+	pktlen = ((char *)(udppkt->net_udpdata) - (char *)&pkt) + len;
 
 	/* Create UDP packet in pkt */
 
