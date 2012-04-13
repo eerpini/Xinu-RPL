@@ -11,7 +11,7 @@ void encodedis (struct icmpv6_sim_packet *rpldis) {
 	rpldis->net_iccode		= RPL_DIS_MSGTYPE;
 	rpldis->net_iccksum		= 0;
 
-	memset ( rpldis->net_icdata, 0, (1500-42));
+	memset ( rpldis->net_icdata, 0, (1500-ETH_HDR_LEN - RPL_SIM_HDR_LEN));
 
 	memcpy (rpldis->net_icdata, &dis, sizeof (struct rpl_dis_msg));
 }

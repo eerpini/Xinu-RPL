@@ -16,7 +16,8 @@ extern struct rpl_info RPL_MYINFO;
 
 #endif
 
-extern uint32   rpl_link_local_neighbors[LOWPAN_MAX_NODES];
+uint32   rpl_link_local_neighbors[LOWPAN_MAX_NODES];
+int32    rpl_dao_timeout;
 
 
 
@@ -62,6 +63,8 @@ void rpl_init(){
         rpl_border_router_init();
 #endif
 
+        rpl_dao_timeout = RPL_MYINFO.pathlifetime*1000;
+
         send_init_messages();
 
 }
@@ -85,8 +88,11 @@ void rpl_node_init(){
         RPL_MYINFO.dioredundancy =  RPL_DEFAULT_DIO_REDUNDANCY_CONSTANT;
         RPL_MYINFO.maxrankincrease =  0;
         RPL_MYINFO.minhoprankinc =  0;
+        /*
+         * FIXME Should the starting value not be the same as DEFAULT ?
+         */
 #ifdef LOWPAN_NODE
-        RPL_MYINFO.pathlifetime = 0;
+        RPL_MYINFO.pathlifetime = RPL_OPT_DEFAULT_PATH_LIFETIME;
 #endif
 #ifdef LOWPAN_BORDER_ROUTER
         RPL_MYINFO.pathlifetime = RPL_OPT_DEFAULT_PATH_LIFETIME;
@@ -119,9 +125,10 @@ void send_init_messages(){
         struct icmpv6_sim_packet pkt;
         encodedis( &pkt );
 
+        kprintf("Done encoding the dis packet\r\n");
         int i = 0;
         while(rpl_link_local_neighbors[i] != -1){
-                rpl_send((char *) &rpl_link_local_neighbors[i], (char *)(NetData.ipaddr), RPL_DIS_MSGTYPE, (char *)(&pkt),  
+                rpl_send((char *) &rpl_link_local_neighbors[i], (char *)(&(NetData.ipaddr)), RPL_DIS_MSGTYPE, (char *)(&pkt),  
                                 1500-ETH_HDR_LEN - RPL_SIM_HDR_LEN);
                 i++;
         }
@@ -129,5 +136,23 @@ void send_init_messages(){
 
 
 #endif
+}
+
+void rpl_process_path_timeout(){
+
+        /*
+        struct icmpv6_sim_packet rpkt;
+#ifdef LOWPAN_NODE
+        encodedao(&rpkt);
+        rpl_send((char *)(RPL_MYINFO.parent), (char *)(NetData.ipaddr), RPL_DIO_MSGTYPE, (char *)(&rpkt), 1500-ETH_HDR_LEN- RPL_SIM_HDR_LEN);
+#endif
+#ifdef LOWPAN_BORDER_ROUTER
+
+       kprintf("In Border router\r\n"); 
+
+#endif
+
+        rpl_dao_timeout += RPL_MYINFO.pathlifetime*1000;
+        */
 
 }

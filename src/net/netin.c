@@ -93,7 +93,7 @@ process	netin(void) {
                                 if ( (ippkt->net_ipdst != IP_BCAST) &&
 				     (NetData.ipvalid) &&
 				     (ippkt->net_ipdst != NetData.ipaddr) ) {
-                                        kprintf("IP Packet not destined for us\r\n");
+                                        //kprintf("IP Packet not destined for us\r\n");
 					continue;
 				}
 

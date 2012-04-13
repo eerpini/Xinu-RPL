@@ -164,7 +164,6 @@ uint32   rpl_link_local_neighbors[LOWPAN_MAX_NODES];
 #define		RPL_DIO_MSGTYPE			0x01
 #define		RPL_DAO_MSGTYPE			0x02
 #define		RPL_DAO_ACK_MSGTYPE		0x03
-#define		RPL_TIMER_EXPIRY                0x04
 
 struct		rpl_info {
 
@@ -190,6 +189,10 @@ struct		rpl_info {
         byte    pathlifetime;
 };
 struct	rpl_info	RPL_MYINFO;
+
+/*      Global variable to allow for timeout on the path lifetime
+ *      in ms   */
+extern  int32   rpl_dao_timeout;
 
 
 /*		RPL OPTION Messages	*/
