@@ -23,6 +23,8 @@ status rpl_send(char * node_phy_addr, char *src_node, byte msg_type, char *msg, 
 	byte	ethbcast[] = {0xff,0xff,0xff,0xff,0xff,0xff};
         dot2ip(RPL_FORWARDING_GATEWAY, &remip);
 
+        kprintf("Simulator is : %04x dest : %04x source : %04x my addr : %04x\r\n", remip, *((uint32*)node_phy_addr), *((uint32*)src_node), NetData.ipaddr);
+
         if ( ! NetData.ipvalid){
                 getlocalip();
         }
@@ -32,9 +34,10 @@ status rpl_send(char * node_phy_addr, char *src_node, byte msg_type, char *msg, 
         }
  
 	memcpy(pkt.net_ethsrc, NetData.ethaddr, ETH_ADDR_LEN);
-        kprintf("Copied ethernet source\r\n");
+        kprintf("Copied ethernet source : %06x\r\n", *(pkt.net_ethsrc+4));
         /* FIXME : Needs to be changed to something that is valid */
         pkt.net_ethtype = 0x1000;	
+        kprintf("The eth type in current packet is : %02x\r\n", pkt.net_ethtype);
 	if (remip == IP_BCAST) {	/* set mac address to b-cast	*/
 		memcpy(pkt.net_ethdst, ethbcast, ETH_ADDR_LEN);
 
@@ -43,26 +46,27 @@ status rpl_send(char * node_phy_addr, char *src_node, byte msg_type, char *msg, 
 	} else if ((NetData.ipaddr & NetData.addrmask)
 			!= (remip & NetData.addrmask)) {
 		if (arp_resolve(NetData.routeraddr, pkt.net_ethdst)!=OK) {
-		    kprintf("udp_send: cannot resolve router %08x\n\r",
+		    kprintf("rpl_send: cannot resolve router %08x\n\r",
 				NetData.routeraddr);
 		    return SYSERR;
 		}
 	} else {
 		/* Destination is on local subnet -  get MAC address */
 		if (arp_resolve(remip, pkt.net_ethdst) != OK) {
-			kprintf("udp_send: cannot resolve %08x\n\r",remip);
+			kprintf("rpl_send: cannot resolve %08x\n\r",remip);
 			return SYSERR;
 		}
 	}
 
         rpl_sim_pkt = (struct rpl_sim_packet *)pkt.net_ethdata;
-        memcpy(rpl_sim_pkt->dest_node, node_phy_addr, RPL_NODE_PHY_ADDR_LEN);
-        kprintf("Copied physical node address : %04x\r\n", rpl_sim_pkt->dest_node);
+        kprintf("Copied physical node address before from [%04x] to [%04x]\r\n",*node_phy_addr, *(rpl_sim_pkt->dest_node));
+        memcpy((char *)rpl_sim_pkt->dest_node, (char *)node_phy_addr, RPL_NODE_PHY_ADDR_LEN);
+        kprintf("Copied physical node address from [%04x] to [%04x]\r\n",*((uint32 *)node_phy_addr), *((uint32 *)(rpl_sim_pkt->dest_node)));
         /*
          * FIXME Change this to my_phsical_address which is 64 bits
          */
-        memcpy(rpl_sim_pkt->src_node, (char *)(src_node), RPL_NODE_PHY_ADDR_LEN);
-        kprintf("Copied source physical node address : %04x\r\n", rpl_sim_pkt->src_node);
+        memcpy((char *)rpl_sim_pkt->src_node, (char *)(src_node), RPL_NODE_PHY_ADDR_LEN);
+        kprintf("Copied source physical node address from [%04x] to [%04x]\r\n", *((uint32 *)src_node), *((uint32 *)(rpl_sim_pkt->src_node)));
         rpl_sim_pkt->msg_type = msg_type;
         rpl_sim_pkt->msg_len = msglen;
         memcpy(rpl_sim_pkt->data, msg, msglen);
@@ -71,6 +75,10 @@ status rpl_send(char * node_phy_addr, char *src_node, byte msg_type, char *msg, 
         /*
          * FIXME : Perform host to network order translations
          */
+
+        kprintf("The packet is destined for : %06x\r\n", *(pkt.net_ethdst+4));
+
+        eth_hton(&pkt);
 
         write(ETHER0, (char *)&pkt, ETH_HDR_LEN + RPL_SIM_HDR_LEN + msglen); 
 
@@ -125,6 +133,7 @@ status rpl_send_with_ip(char * node_phy_addr, char *src_node, byte msg_type, cha
          * FIXME : Perform host to network order translations
          */
 
+        eth_hton(&pkt);
         write(ETHER0, (char *)&pkt, ETH_HDR_LEN + RPL_SIM_HDR_LEN + msglen); 
 
         return OK;
@@ -136,7 +145,7 @@ status rpl_receive(){
 
         int i = 0;
         struct rpl_sim_packet * pkt = NULL;
-        uint32 remip = 0xffffffff;
+        uint32 remip ;
         while(1){
                 remip = 0xffffffff;
                 wait(rpl_sim_read_sem);
@@ -150,13 +159,14 @@ status rpl_receive(){
                  */
                 dot2ip(RPL_FORWARDING_GATEWAY, &remip);
                 if(remip == NetData.ipaddr){
-                        kprintf("Simulator working with message type : %d\r\n",pkt->msg_type);
-                        remip = (uint32) (pkt->dest_node);
+                        kprintf("Simulator working with iter [%d] message type : %d dest : %04x source : %04x\r\n",i, pkt->msg_type, *((uint32 *)(pkt->dest_node)), *((uint32 *)(pkt->src_node)));
+                        remip = *((uint32 *)(pkt->dest_node));
                         if(remip == 0xffffffff || remip == 0x00000000){
                                 kprintf("Could not find a mapping for the given 64bit physical address\r\n");
-                                return SYSERR;
+                                //return SYSERR;
                         }
                         else{
+                                kprintf("Forwarding rpl message to : [%04x]\r\n", remip);
                                 rpl_send_with_ip((char *)pkt->dest_node, (char *)pkt->src_node, pkt->msg_type, (char *)pkt->data, pkt->msg_len, remip);
                         }
                 }

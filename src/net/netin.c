@@ -40,6 +40,9 @@ process	netin(void) {
 	NetData.addrmask = 0;
 	NetData.routeraddr = 0;
 
+
+        kprintf("My Mac is : %06x\r\n", *(NetData.ethaddr+4));
+
 	/* Initialize ARP cache */
 
 	arp_init();
@@ -64,7 +67,6 @@ process	netin(void) {
                 //pdump(currpkt);
 		/* Convert Ethernet Type to host order */
 		eth_ntoh(currpkt);
-
 		/* Demultiplex on Ethernet type */
 
 		switch (currpkt->net_ethtype) {
@@ -109,8 +111,10 @@ process	netin(void) {
 				continue;
 
                         case 0x1000:
+                                kprintf("Received a simulator packet\r\n");
                                 wait(rpl_sim_write_sem);
-                                memcpy(&sim_queue[i], currpkt->net_ethdata, sizeof(struct rpl_sim_packet));
+                                memcpy((char *)&sim_queue[i], currpkt->net_ethdata, sizeof(struct rpl_sim_packet));
+                                kprintf("Netin working with iter [%d] message type : %d dest : %04x source : %04x\r\n",i, sim_queue[i].msg_type, *((uint32 *)(sim_queue[i].dest_node)), *((uint32 *)(sim_queue[i].src_node)));
                                 signal(rpl_sim_read_sem);
                                 i = (i+1)%RPL_SIM_RECV_QUEUE_LEN;
                                 continue;

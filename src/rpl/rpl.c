@@ -29,8 +29,12 @@ int32    rpl_dao_timeout;
 
 void generate_link_local_neighbors(){
 
+        /*
         rpl_link_local_neighbors[0] = (NetData.ipaddr + 1);
         rpl_link_local_neighbors[1] = (NetData.ipaddr - 1);
+        */
+        //dot2ip("128.10.3.113", &rpl_link_local_neighbors[0]);
+        dot2ip("128.10.3.114", &rpl_link_local_neighbors[1]);
         rpl_link_local_neighbors[2] = -1;
         /*
         int i=0;
@@ -109,7 +113,10 @@ void rpl_border_router_init(){
         memset(iface_addr, NULLCH, (RPL_DODAGID_LEN/8)*LOWPAN_MAX_NODES ); 
 
         if(!NetData.ipvalid){
-                getlocalip();
+               if( getlocalip() == SYSERR){
+                       kprintf("rpl_border_router_init :getting the IP address failed, init will fail !!\r\n");
+               }
+               assignindex(NetData.ipaddr);
         }
         else{
                assignindex(NetData.ipaddr);
@@ -127,11 +134,12 @@ void send_init_messages(){
 
         kprintf("Done encoding the dis packet\r\n");
         int i = 0;
-        while(rpl_link_local_neighbors[i] != -1){
+        do{
+                kprintf("[%d] Sending a packet to [%04x] from me[%04x]\r\n", i, rpl_link_local_neighbors[i], NetData.ipaddr);
                 rpl_send((char *) &rpl_link_local_neighbors[i], (char *)(&(NetData.ipaddr)), RPL_DIS_MSGTYPE, (char *)(&pkt),  
                                 1500-ETH_HDR_LEN - RPL_SIM_HDR_LEN);
                 i++;
-        }
+        }while(rpl_link_local_neighbors[i] != -1);
 
 
 

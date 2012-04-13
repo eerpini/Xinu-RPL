@@ -1,5 +1,5 @@
 #ifndef RPL_FORWARDING_GATEWAY
-        #define RPL_FORWARDING_GATEWAY "128.10.133.127"
+        #define RPL_FORWARDING_GATEWAY "128.10.3.115"
 #endif
 
 
