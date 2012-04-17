@@ -7,6 +7,7 @@ void encodedio(struct icmpv6_sim_packet *rpldiomsg) {
 	struct	rpl_opt_dodag_conf	dagconf;
 	int				len = 0;
 
+        kprintf("Encoding DIO Message \r\n");
 	diomsg.rpl_instance_id 	= RPL_DEFAULT_INSTANCE;
 	diomsg.version		= RPL_MYINFO.version; 
 	diomsg.rank		= RPL_MYINFO.rank;
@@ -17,6 +18,7 @@ void encodedio(struct icmpv6_sim_packet *rpldiomsg) {
 	diomsg.reserved		 = 0;
 
 	memcpy (diomsg.dodagid, RPL_MYINFO.dodagid, RPL_DODAGID_LEN);
+        kprintf("The dodagid being sent is : [%04x]\r\n", *((uint32 *)(diomsg.dodagid)));
 	
 	//encode options here
 	//Route information
@@ -53,7 +55,7 @@ void encodedio(struct icmpv6_sim_packet *rpldiomsg) {
 	//copy options here
 	//DAG Configuration
 	memcpy (&rpldiomsg->net_icdata[len], &dagconf, sizeof (struct rpl_opt_dodag_conf));
-	len += sizeof (struct rpl_opt_dodag_conf);
+        kprintf("Encoding DIO Message done\r\n");
 }
 
 
@@ -63,37 +65,43 @@ void processdio (struct icmpv6_sim_packet *rpldiomsg) {
 	struct	rpl_opt_dodag_conf	*dagconf;
 	int				pos = 0;
 
+        kprintf(" Inside processdio \r\n");
 	if (rpldiomsg->net_iccode ==  RPL_DIO_MSGTYPE) {
 		diomsg = (struct rpl_dio_msg *) rpldiomsg->net_icdata;
-
-		if (RPL_MYINFO.rank > diomsg->rank + 1){
+                if(RPL_MYINFO.rank == 0){
+                        RPL_MYINFO.rank = diomsg->rank + 1;
+                }
+                else if(RPL_MYINFO.rank > diomsg->rank + 1){
 
 			//base message
 			RPL_MYINFO.rank = diomsg->rank + 1;
-			RPL_MYINFO.dtsn = diomsg->dtsn;
-			memcpy(RPL_MYINFO.dodagid, diomsg->dodagid, RPL_DODAGID_LEN);
+                }
+                else{
+			kprintf (" Ignoring the dio message, since my rank is less \r\n");
+                        return ;
+                }
+                
+                RPL_MYINFO.dtsn = diomsg->dtsn;
+                memcpy(RPL_MYINFO.dodagid, diomsg->dodagid, RPL_DODAGID_LEN);
 
-			//Check for the options here
-			pos += sizeof (struct rpl_dio_msg);
-			if (rpldiomsg->net_icdata[pos] == RPL_OPT_TYPE_DODAG_CONF) {
-				dagconf = (struct rpl_opt_dodag_conf *) &rpldiomsg->net_icdata[pos];
+                //Check for the options here
+                pos += sizeof (struct rpl_dio_msg);
+                if (rpldiomsg->net_icdata[pos] == RPL_OPT_TYPE_DODAG_CONF) {
+                        dagconf = (struct rpl_opt_dodag_conf *) &rpldiomsg->net_icdata[pos];
 
-				RPL_MYINFO.diointdouble = dagconf->diointdouble;
-				RPL_MYINFO.diointmin = dagconf->diointmin;
-				RPL_MYINFO.dioredundancy = dagconf->dioredundancy;
-				RPL_MYINFO.maxrankincrease = dagconf->maxrankincrease;
-				RPL_MYINFO.minhoprankinc = dagconf->minhoprankinc;
-				RPL_MYINFO.pathlifetime = dagconf->lifetime;
-			} else {
-				kprintf (" Unexpected option in the DIO Message --> %02x <--\n", rpldiomsg->net_icdata[pos]);
-			}
+                        RPL_MYINFO.diointdouble = dagconf->diointdouble;
+                        RPL_MYINFO.diointmin = dagconf->diointmin;
+                        RPL_MYINFO.dioredundancy = dagconf->dioredundancy;
+                        RPL_MYINFO.maxrankincrease = dagconf->maxrankincrease;
+                        RPL_MYINFO.minhoprankinc = dagconf->minhoprankinc;
+                        RPL_MYINFO.pathlifetime = dagconf->lifetime;
+                        kprintf("The dodagid was set to : [%04x]\r\n", *((uint32 *)(RPL_MYINFO.dodagid)));
+                } else {
+                        kprintf (" Unexpected option in the DIO Message --> %02x <--\r\n", rpldiomsg->net_icdata[pos]);
+                }
 
-		} else {
-			kprintf (" Ignoring the dio message, since my rank is less \n");
-		}
-		
 	} else {
-		kprintf (" This message is NOT DIO message \n");
+		kprintf (" This message is NOT DIO message \r\n");
 	}
 }
 

@@ -18,15 +18,14 @@ clkint:
 		incl	clktime
 		movw	$1000,count1000
 cl1:
-		cmpl	$0,slnonempty	# if no sleeping processes,
-		je	clpreem		#   skip to preemption check
-/*
-                decl    rpl_dao_timeout
-                mov     rpl_dao_timeout, %eax
+                movl    rpl_dao_timeout, %eax
+                decl    %eax 
+                movl     %eax, rpl_dao_timeout
                 jg      clwakeup
                 call    rpl_process_path_timeout
-*/
-clwakeup:       movl	sltop,%eax	# decrement key of first
+clwakeup:       cmpl	$0,slnonempty	# if no sleeping processes,
+		je	clpreem		#   skip to preemption check
+                movl	sltop,%eax	# decrement key of first
 		decl	(%eax)		#   sleeping process
 		jg	clpreem		# must use jg for signed int
 		call	wakeup		# if zero, call wakeup

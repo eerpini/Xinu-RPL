@@ -11,7 +11,7 @@
 /*
  * FIXME : The following length definition should be in bytes
  */
-#define         RPL_DODAGID_LEN     	32
+#define         RPL_DODAGID_LEN     	4
 
 #ifndef         LOWPAN_MAX_NODES
        #define LOWPAN_MAX_NODES        	64
@@ -172,7 +172,11 @@ struct		rpl_info {
 	uint8	version;
 	byte	dtsn;
 	byte	dodagid[RPL_DODAGID_LEN];
-	byte	parent[RPL_DODAGID_LEN];
+        /*
+         * Not required here, will be maintained as a flag in 
+         * neighbor list, this is TODO
+         * */
+	//byte	parent[RPL_DODAGID_LEN];
 	byte	myaddr[RPL_DODAGID_LEN];
 
 	//Trickle constants
@@ -223,7 +227,7 @@ struct	rpl_opt_routeinfo{
 };
 
 #define		RPL_OPT_TYPE_DODAG_CONF		0x04
-#define		RPL_OPT_DEFAULT_PATH_LIFETIME   20
+#define		RPL_OPT_DEFAULT_PATH_LIFETIME   10
 #define		RPL_OPT_LIFETIME_UNIT		1
 struct	rpl_opt_dodag_conf {
 	byte	type;

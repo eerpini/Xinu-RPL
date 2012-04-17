@@ -48,6 +48,12 @@ void	*maxheap;		/* highest valid memory address		*/
 
 void	nulluser(void)
 {
+        /*
+         * Have a large value for rpl_dao_timeout so that we have everything in place
+         * by the time timeout happens, this will be reinit to 20 secs in rpl_init()
+         */
+        rpl_dao_timeout = 100*1000;
+
 	sysinit();
 
 	kprintf("\n\r%s\n\n\r", VERSION);

@@ -4,13 +4,13 @@
 #define		RPL_INF_DIST		255
 
 //distance to each nodes
-byte		rplpath[LOWPAN_MAX_NODES][LOWPAN_MAX_NODES];
+extern byte		rplpath[LOWPAN_MAX_NODES][LOWPAN_MAX_NODES];
 
 //adjacency list
-byte		rpladjlist[LOWPAN_MAX_NODES][LOWPAN_MAX_NODES];
+extern byte		rpladjlist[LOWPAN_MAX_NODES][LOWPAN_MAX_NODES];
 
 // list of interface addresses
-int32   	iface_addr[LOWPAN_MAX_NODES];
+uint32   	iface_addr[LOWPAN_MAX_NODES];
 
 enum{
 	TENTATIVE, 

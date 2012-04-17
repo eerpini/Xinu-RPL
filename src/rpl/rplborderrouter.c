@@ -1,6 +1,9 @@
 #include <xinu.h>
 #ifdef LOWPAN_BORDER_ROUTER
 
+byte		rplpath[LOWPAN_MAX_NODES][LOWPAN_MAX_NODES];
+byte		rpladjlist[LOWPAN_MAX_NODES][LOWPAN_MAX_NODES];
+
 int getindex (uint32 addr) {
 	int index = 0;
 	for (index = 0; index < LOWPAN_MAX_NODES; index ++) {
@@ -29,28 +32,35 @@ void processroute (uint32 target, uint32 parent) {
 	int tindex = SYSERR;
 
 	//check if the parent exists
-	if (getindex (parent) == SYSERR) {
-		kprintf (" DAO Message-> Parent does not exist in the map %04x \n", parent);
+	pindex = getindex (parent);
+	if (pindex == SYSERR) {
+		kprintf (" DAO Message-> Parent does not exist in the map %05x \n", parent);
 		return;
 	}
+        else{
+                kprintf("The index returned for parent : [%04x] is %d\r\n", parent, pindex);
+        }
 
-	pindex = getindex (parent);
 
-	if (getindex (target) == SYSERR) 
+        tindex = getindex (target);
+	if (tindex == SYSERR) {
 		tindex = assignindex (target);
-	else 
-		tindex = getindex (target);
+                kprintf("Target [%04x] not already present, assigned the index : %d\r\n", target, tindex);
+        }
+        else{
+                kprintf("The index returned for target : [%04x] is %d\r\n", target, tindex);
+        }
 	
 
 	//check if the mapping already exists or it is a new mapping
 	//ignore if the mapping already exists.
-	if (rpladjlist[target][parent] || rpladjlist[parent][target]){
+	if (rpladjlist[tindex][pindex] || rpladjlist[pindex][tindex]){
 		kprintf (" DAO Message-> Mapping already exists (target - parent)%04x - %04x \n", target, parent);
 		return;
 	}
 
-	rpladjlist[target][parent] = 1;
-	rpladjlist[parent][target] = 1;
+	rpladjlist[tindex][pindex] = 1;
+	rpladjlist[pindex][tindex] = 1;
 
 	//kickoff the Dijkstras shortest path calculation.
 	shortestpath ();
@@ -90,7 +100,7 @@ void processdao(struct icmpv6_sim_packet *rpldaomsg) {
         }
 
 	//NOTE THIS IS A 128 bit field, use only the first four bytes
-	target = (uint32)opttarget->target;
+	target = *((uint32 *)(opttarget->target));
 
         // RPL OPTION TRANSIT INFO
         pos += sizeof (struct  rpl_opt_target);
@@ -101,7 +111,10 @@ void processdao(struct icmpv6_sim_packet *rpldaomsg) {
         }
 
 	//NOTE THIS IS A 128 bit field, use only the first four bytes
-	parent = (uint32) opttransit->parent;
+	parent = *((uint32 *)( opttransit->parent));
+
+        kprintf("Calling process route with parent : [%04x] target : [%04x]\r\n", parent, target);
+        
 
 	//compute the shortest paths if necessary
 	processroute (target, parent);

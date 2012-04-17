@@ -9,7 +9,7 @@ extern struct rpl_info RPL_MYINFO;
         extern byte		rpladjlist[LOWPAN_MAX_NODES][LOWPAN_MAX_NODES];
 
         // list of interface addresses
-        extern int32   	iface_addr[LOWPAN_MAX_NODES];
+        extern uint32   	iface_addr[LOWPAN_MAX_NODES];
 
         //structure for each node
         extern struct nodeinfo state[LOWPAN_MAX_NODES];
@@ -34,8 +34,8 @@ void generate_link_local_neighbors(){
         rpl_link_local_neighbors[1] = (NetData.ipaddr - 1);
         */
         //dot2ip("128.10.3.113", &rpl_link_local_neighbors[0]);
-        dot2ip("128.10.3.114", &rpl_link_local_neighbors[1]);
-        rpl_link_local_neighbors[2] = -1;
+        dot2ip("128.10.3.112", &rpl_link_local_neighbors[0]);
+        rpl_link_local_neighbors[1] = -1;
         /*
         int i=0;
         for(i=0; i < LOWPAN_MAX_NODES; i++){
@@ -81,8 +81,9 @@ void rpl_node_init(){
         RPL_MYINFO.version = 0;
         RPL_MYINFO.dtsn = 0;
         memset(RPL_MYINFO.dodagid, NULLCH, RPL_DODAGID_LEN);
-        memset(RPL_MYINFO.parent, NULLCH, RPL_DODAGID_LEN);
-        memset(RPL_MYINFO.myaddr, NULLCH, RPL_DODAGID_LEN);
+        //memset(RPL_MYINFO.parent, NULLCH, RPL_DODAGID_LEN);
+        //memset(RPL_MYINFO.myaddr, NULLCH, RPL_DODAGID_LEN);
+        memcpy(RPL_MYINFO.myaddr, &(NetData.ipaddr), RPL_DODAGID_LEN);
         RPL_MYINFO.trickle_imin =  0;
         RPL_MYINFO.trickle_imax =  0;
         RPL_MYINFO.trickle_k =  0;
@@ -108,19 +109,29 @@ void rpl_node_init(){
 
 void rpl_border_router_init(){
 
+        int my_index = -1;
         memset(rplpath, NULLCH, LOWPAN_MAX_NODES*LOWPAN_MAX_NODES); 
         memset(rpladjlist , NULLCH, LOWPAN_MAX_NODES*LOWPAN_MAX_NODES); 
-        memset(iface_addr, NULLCH, (RPL_DODAGID_LEN/8)*LOWPAN_MAX_NODES ); 
+        //memset(iface_addr, NULLCH, (RPL_DODAGID_LEN)*LOWPAN_MAX_NODES ); 
+
+        for(my_index = 0; my_index < LOWPAN_MAX_NODES; my_index ++){
+                iface_addr[my_index] = 0;
+
+        }
+        my_index = -1;
 
         if(!NetData.ipvalid){
                if( getlocalip() == SYSERR){
                        kprintf("rpl_border_router_init :getting the IP address failed, init will fail !!\r\n");
                }
-               assignindex(NetData.ipaddr);
+               my_index = assignindex(NetData.ipaddr);
+               
         }
         else{
-               assignindex(NetData.ipaddr);
+               my_index = assignindex(NetData.ipaddr);
         }
+        kprintf("I was assigned the index : %d\r\n", my_index);
+        memcpy(RPL_MYINFO.dodagid, &(NetData.ipaddr), RPL_DODAGID_LEN);
 
 }
 #endif
@@ -148,19 +159,19 @@ void send_init_messages(){
 
 void rpl_process_path_timeout(){
 
-        /*
         struct icmpv6_sim_packet rpkt;
+        rpl_dao_timeout += RPL_MYINFO.pathlifetime*1000;
 #ifdef LOWPAN_NODE
         encodedao(&rpkt);
-        rpl_send((char *)(RPL_MYINFO.parent), (char *)(NetData.ipaddr), RPL_DIO_MSGTYPE, (char *)(&rpkt), 1500-ETH_HDR_LEN- RPL_SIM_HDR_LEN);
+        if(NetData.ipvalid && (*((uint32 *)(RPL_MYINFO.dodagid)) != 0)){
+                rpl_send((char *)(RPL_MYINFO.dodagid), (char *)(&(NetData.ipaddr)), RPL_DAO_MSGTYPE, (char *)(&rpkt), 1500-ETH_HDR_LEN- RPL_SIM_HDR_LEN);
+        }
 #endif
 #ifdef LOWPAN_BORDER_ROUTER
 
-       kprintf("In Border router\r\n"); 
+       kprintf("In Border router timeout value is : %d\r\n", rpl_dao_timeout); 
 
 #endif
 
-        rpl_dao_timeout += RPL_MYINFO.pathlifetime*1000;
-        */
 
 }

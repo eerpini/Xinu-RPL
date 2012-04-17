@@ -5,6 +5,7 @@ struct nodeinfo state [ LOWPAN_MAX_NODES];
 
 void computepaths(void) {
 	
+        kprintf("In %s\r\n", __FUNCTION__);
 	int i = 0, j = 0, k = 0;
 
 	for (i = 1; i < LOWPAN_MAX_NODES; i++) {
@@ -20,6 +21,7 @@ void computepaths(void) {
 
 void printpaths (){
 
+        kprintf("In %s\r\n", __FUNCTION__);
         int i = 0, j = 0, k = 0;
 
         for (i = 1; i < LOWPAN_MAX_NODES; i++) {
@@ -35,6 +37,7 @@ void printpaths (){
 
 int getpath (uint32 target, uint32 *arr) {
 
+        kprintf("In %s\r\n", __FUNCTION__);
         int j = 0, k = 0;
 	int index = 0;
 
@@ -47,6 +50,7 @@ int getpath (uint32 target, uint32 *arr) {
 
 int getsourceroutehdr (uint32 target, uint32 *arr) {
 
+        kprintf("In %s\r\n", __FUNCTION__);
 	struct sourceroute 	srcheader;
 	int			index = 0;
 
@@ -67,6 +71,7 @@ int getsourceroutehdr (uint32 target, uint32 *arr) {
 
 void shortestpath (void) {
 
+        kprintf("In %s\r\n", __FUNCTION__);
 	int i, k, min;
 	//struct state *ptr;
 
