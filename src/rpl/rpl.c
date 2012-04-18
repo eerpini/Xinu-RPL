@@ -173,6 +173,8 @@ void rpl_process_path_timeout(){
         }
 #endif
 #ifdef LOWPAN_BORDER_ROUTER
+        sleepms(1000);
+        processPathlifetimeTimeout();
 
        kprintf("In Border router timeout value is : %d\r\n", rpl_dao_timeout); 
 
