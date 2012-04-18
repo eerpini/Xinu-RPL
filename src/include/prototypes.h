@@ -506,7 +506,7 @@ extern void send_init_messages(void );
         extern int  getpath(uint32, uint32 *);
         extern int  getsourceroutehdr( uint32, uint32 *);
         extern void shortestpath();
-
+        extern void processPathlifetimeTimeout();
 #endif
 #ifdef LOWPAN_NODE
         extern void rpl_node_init();

@@ -6,8 +6,6 @@
 int main(int argc, char **argv)
 {
 	uint32 retval;
-        char buf[NBPG] = {0};
-        //did32 val = 0;
 
 	kprintf("main: calling getlocalip\n");
 	retval = getlocalip();
