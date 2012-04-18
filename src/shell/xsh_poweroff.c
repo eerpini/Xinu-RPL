@@ -26,4 +26,5 @@ shellcmd xsh_poweroff(int nargs, char *args[])
 
         printf("Killing all the processes successfull, now killing shell and quitting...\r\n");
         kill(currpid);
+        return 0;
 }
