@@ -19,6 +19,7 @@ extern struct rpl_info RPL_MYINFO;
 uint32   rpl_link_local_neighbors[LOWPAN_MAX_NODES];
 int32    rpl_dao_timeout;
 
+void    rpl_node_init();
 
 
 /*
@@ -163,9 +164,9 @@ void send_init_messages(){
 
 void rpl_process_path_timeout(){
 
-        struct icmpv6_sim_packet rpkt;
         rpl_dao_timeout += RPL_MYINFO.pathlifetime*1000;
 #ifdef LOWPAN_NODE
+        struct icmpv6_sim_packet rpkt;
         encodedao(&rpkt);
         if(NetData.ipvalid && (*((uint32 *)(RPL_MYINFO.dodagid)) != 0)){
                 rpl_send((char *)(RPL_MYINFO.dodagid), (char *)(&(NetData.ipaddr)), RPL_DAO_MSGTYPE, (char *)(&rpkt), 1500-ETH_HDR_LEN- RPL_SIM_HDR_LEN);

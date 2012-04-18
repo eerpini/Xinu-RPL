@@ -12,7 +12,7 @@ extern byte		rpladjlist[LOWPAN_MAX_NODES][LOWPAN_MAX_NODES];
 // list of interface addresses
 uint32   	iface_addr[LOWPAN_MAX_NODES];
 
-byte		iface_fresh[LOWPAN_MAX_NODES];
+extern byte		iface_freshness[LOWPAN_MAX_NODES];
 
 enum{
 	TENTATIVE, 

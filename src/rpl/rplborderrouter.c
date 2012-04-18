@@ -3,6 +3,7 @@
 
 byte		rplpath[LOWPAN_MAX_NODES][LOWPAN_MAX_NODES];
 byte		rpladjlist[LOWPAN_MAX_NODES][LOWPAN_MAX_NODES];
+byte		iface_freshness[LOWPAN_MAX_NODES];
 
 int getindex (uint32 addr) {
 	int index = 0;
@@ -58,7 +59,8 @@ void processroute (uint32 target, uint32 parent) {
 	
 
 	//Update the freshness of the path here. 
-	iface_freshness[tindex] = (++ iface_freshness[tindes] ) % LOWPAN_MAX_NODES;
+        //FIXME : For Sudhir, what is being done here ?
+	iface_freshness[tindex] = (iface_freshness[tindex] +1) % LOWPAN_MAX_NODES;
 
 	//check if the mapping already exists or it is a new mapping
 	//ignore if the mapping already exists.
@@ -148,9 +150,9 @@ void processPathlifetimeTimeout () {
 			//invalidate here.
 			iface_freshness[index] = 0;
 			recompute = 1;
-			kprintf (" %s: did not receive DAO update from node %04x \n\r", __FUNCTION__, getaddress[index]);
+			kprintf (" %s: did not receive DAO update from node %04x \n\r", __FUNCTION__, getaddress(index));
 
-			for (j = 0; i < LOWPAN_MAX_NODES; j ++) {
+			for (j = 0; j < LOWPAN_MAX_NODES; j ++) {
 				rpladjlist[index][j] = 0;
 				rpladjlist[j][index] = 0;
 			}
