@@ -34,8 +34,10 @@ void generate_link_local_neighbors(){
         rpl_link_local_neighbors[1] = (NetData.ipaddr - 1);
         */
         //dot2ip("128.10.3.113", &rpl_link_local_neighbors[0]);
-        dot2ip("128.10.3.112", &rpl_link_local_neighbors[0]);
-        rpl_link_local_neighbors[1] = -1;
+        dot2ip("128.10.3.114", &rpl_link_local_neighbors[0]);
+        dot2ip("128.10.3.112", &rpl_link_local_neighbors[1]);
+        dot2ip("128.10.3.113", &rpl_link_local_neighbors[2]);
+        rpl_link_local_neighbors[3] = -1;
         /*
         int i=0;
         for(i=0; i < LOWPAN_MAX_NODES; i++){
@@ -147,8 +149,10 @@ void send_init_messages(){
         int i = 0;
         do{
                 kprintf("[%d] Sending a packet to [%04x] from me[%04x]\r\n", i, rpl_link_local_neighbors[i], NetData.ipaddr);
-                rpl_send((char *) &rpl_link_local_neighbors[i], (char *)(&(NetData.ipaddr)), RPL_DIS_MSGTYPE, (char *)(&pkt),  
-                                1500-ETH_HDR_LEN - RPL_SIM_HDR_LEN);
+                if(rpl_link_local_neighbors[i] != NetData.ipaddr){
+                        rpl_send((char *) &rpl_link_local_neighbors[i], (char *)(&(NetData.ipaddr)), RPL_DIS_MSGTYPE, (char *)(&pkt),  
+                                        1500-ETH_HDR_LEN - RPL_SIM_HDR_LEN);
+                }
                 i++;
         }while(rpl_link_local_neighbors[i] != -1);
 

@@ -34,10 +34,10 @@ status rpl_send(char * node_phy_addr, char *src_node, byte msg_type, char *msg, 
         }
  
 	memcpy(pkt.net_ethsrc, NetData.ethaddr, ETH_ADDR_LEN);
-        kprintf("Copied ethernet source : %06x\r\n", *(pkt.net_ethsrc+4));
+        //kprintf("Copied ethernet source : %06x\r\n", *(pkt.net_ethsrc+4));
         /* FIXME : Needs to be changed to something that is valid */
         pkt.net_ethtype = 0x1000;	
-        kprintf("The eth type in current packet is : %02x\r\n", pkt.net_ethtype);
+        //kprintf("The eth type in current packet is : %02x\r\n", pkt.net_ethtype);
 	if (remip == IP_BCAST) {	/* set mac address to b-cast	*/
 		memcpy(pkt.net_ethdst, ethbcast, ETH_ADDR_LEN);
 
@@ -59,18 +59,18 @@ status rpl_send(char * node_phy_addr, char *src_node, byte msg_type, char *msg, 
 	}
 
         rpl_sim_pkt = (struct rpl_sim_packet *)pkt.net_ethdata;
-        kprintf("Copied physical node address before from [%04x] to [%04x]\r\n",*node_phy_addr, *(rpl_sim_pkt->dest_node));
+        //kprintf("Copied physical node address before from [%04x] to [%04x]\r\n",*node_phy_addr, *(rpl_sim_pkt->dest_node));
         memcpy((char *)rpl_sim_pkt->dest_node, (char *)node_phy_addr, RPL_NODE_PHY_ADDR_LEN);
-        kprintf("Copied physical node address from [%04x] to [%04x]\r\n",*((uint32 *)node_phy_addr), *((uint32 *)(rpl_sim_pkt->dest_node)));
+        //kprintf("Copied physical node address from [%04x] to [%04x]\r\n",*((uint32 *)node_phy_addr), *((uint32 *)(rpl_sim_pkt->dest_node)));
         /*
          * FIXME Change this to my_phsical_address which is 64 bits
          */
         memcpy((char *)rpl_sim_pkt->src_node, (char *)(src_node), RPL_NODE_PHY_ADDR_LEN);
-        kprintf("Copied source physical node address from [%04x] to [%04x]\r\n", *((uint32 *)src_node), *((uint32 *)(rpl_sim_pkt->src_node)));
+        //kprintf("Copied source physical node address from [%04x] to [%04x]\r\n", *((uint32 *)src_node), *((uint32 *)(rpl_sim_pkt->src_node)));
         rpl_sim_pkt->msg_type = msg_type;
         rpl_sim_pkt->msg_len = msg_len;
         memcpy(rpl_sim_pkt->data, msg, msg_len);
-        kprintf("Copied the payload to rpl_sim_pkt message\r\n");
+        //kprintf("Copied the payload to rpl_sim_pkt message\r\n");
 
         /*
          * FIXME : Perform host to network order translations
@@ -103,10 +103,10 @@ status rpl_send_with_ip(char * node_phy_addr, char *src_node, byte msg_type, cha
         }
  
 	memcpy(pkt.net_ethsrc, NetData.ethaddr, ETH_ADDR_LEN);
-        kprintf("Copied ethernet source : %06x\r\n", *(pkt.net_ethsrc+4));
+        //kprintf("Copied ethernet source : %06x\r\n", *(pkt.net_ethsrc+4));
         /* FIXME : Needs to be changed to something that is valid */
         pkt.net_ethtype = 0x1000;	
-        kprintf("The eth type in current packet is : %02x\r\n", pkt.net_ethtype);
+        //kprintf("The eth type in current packet is : %02x\r\n", pkt.net_ethtype);
 	if (remip == IP_BCAST) {	/* set mac address to b-cast	*/
 		memcpy(pkt.net_ethdst, ethbcast, ETH_ADDR_LEN);
 
@@ -128,18 +128,18 @@ status rpl_send_with_ip(char * node_phy_addr, char *src_node, byte msg_type, cha
 	}
 
         rpl_sim_pkt = (struct rpl_sim_packet *)pkt.net_ethdata;
-        kprintf("Copied physical node address before from [%04x] to [%04x]\r\n",*node_phy_addr, *(rpl_sim_pkt->dest_node));
+        //kprintf("Copied physical node address before from [%04x] to [%04x]\r\n",*node_phy_addr, *(rpl_sim_pkt->dest_node));
         memcpy((char *)rpl_sim_pkt->dest_node, (char *)node_phy_addr, RPL_NODE_PHY_ADDR_LEN);
-        kprintf("Copied physical node address from [%04x] to [%04x]\r\n",*((uint32 *)node_phy_addr), *((uint32 *)(rpl_sim_pkt->dest_node)));
+        //kprintf("Copied physical node address from [%04x] to [%04x]\r\n",*((uint32 *)node_phy_addr), *((uint32 *)(rpl_sim_pkt->dest_node)));
         /*
          * FIXME Change this to my_phsical_address which is 64 bits
          */
         memcpy((char *)rpl_sim_pkt->src_node, (char *)(src_node), RPL_NODE_PHY_ADDR_LEN);
-        kprintf("Copied source physical node address from [%04x] to [%04x]\r\n", *((uint32 *)src_node), *((uint32 *)(rpl_sim_pkt->src_node)));
+        //kprintf("Copied source physical node address from [%04x] to [%04x]\r\n", *((uint32 *)src_node), *((uint32 *)(rpl_sim_pkt->src_node)));
         rpl_sim_pkt->msg_type = msg_type;
         rpl_sim_pkt->msg_len = msg_len;
         memcpy(rpl_sim_pkt->data, msg, msg_len);
-        kprintf("Copied the payload to rpl_sim_pkt message\r\n");
+        //kprintf("Copied the payload to rpl_sim_pkt message\r\n");
 
         /*
          * FIXME : Perform host to network order translations
