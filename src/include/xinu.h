@@ -30,8 +30,6 @@
 #include <pci.h>
 #include <e1000e.h>
 #include <i8255x.h>
-#include <paging.h>
-#include <page_server.h>
 #include <rpl.h>
 #ifdef LOWPAN_BORDER_ROUTER
         #include <rpldag.h>

@@ -38,7 +38,6 @@ TOPDIR	= ..
 COMPS	=	system 							\
 		device/tty						\
 		device/eth						\
-		device/rds						\
 		net 							\
 		shell 							\
 		rpl
@@ -121,21 +120,7 @@ SRC_FILES += $(ETH_SFULL)
 SRC_FILES += $(ETH_CFULL)
 
 
-#------------------------------------------------------------------------
-# Files for ../device/rds
-#------------------------------------------------------------------------
-
-RDS_CFILES = 								\
-	rdsInit.c	rdsOpen.c	rdsClose.c	rdsControl.c	\
-	rdsRead.c	rdsbufalloc.c	rdscomm.c	rdsprocess.c	\
-	rdsWrite.c
-
-RDS_CFULL = ${RDS_CFILES:%=../device/rds/%}
-
-SRC_FILES += $(RDS_CFULL)
-
-
-#------------------------------------------------------------------------
+#-----------------------------------------------------------------------
 # Files for ../net
 #------------------------------------------------------------------------
 
@@ -178,18 +163,6 @@ SHELL_CFILES +=								\
 SHELL_CFULL  = ${SHELL_CFILES:%=../shell/%}
 
 SRC_FILES += $(SHELL_CFULL)
-
-#------------------------------------------------------------------------
-# Files for ../paging
-#------------------------------------------------------------------------
-
-PAGING_CFILES +=								\
-	get_bs.c	psinit.c	read_bs.c	release_bs.c		\
-	write_bs.c
-PAGING_CFULL  = ${PAGING_CFILES:%=../paging/%}
-
-SRC_FILES += $(PAGING_CFULL)
-
 
 #######################################
 # Generate a list of all object files

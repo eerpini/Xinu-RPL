@@ -240,7 +240,7 @@ status rpl_receive(){
                         else{
                                 kprintf("Forwarding rpl message to : [%04x] and i is : %d\r\n", remip, i);
                                 rpl_send_with_ip((char *)pkt->dest_node, (char *)pkt->src_node, pkt->msg_type, (char *)pkt->data, pkt->msg_len, remip);
-                                kprintf("The value of i after rpl_send_with_ip is : %d\r\n", i);
+                                //kprintf("The value of i after rpl_send_with_ip is : %d\r\n", i);
                         }
                 }
                 else{
@@ -280,11 +280,11 @@ status rpl_receive(){
                         }
 
                 }
-                kprintf("Before signal i is [%d] j is [%d]\r\n", i, j);
+                //kprintf("Before signal i is [%d] j is [%d]\r\n", i, j);
                 signal(rpl_sim_write_sem);
-                kprintf("Before incrementing i is [%d] j is [%d]\r\n", i, j);
+                //kprintf("Before incrementing i is [%d] j is [%d]\r\n", i, j);
                 i = (i+1)%RPL_SIM_RECV_QUEUE_LEN;
-                kprintf("After handling packet i is [%d] j is [%d]\r\n", i, j);
+                //kprintf("After handling packet i is [%d] j is [%d]\r\n", i, j);
         }
 
         return OK;

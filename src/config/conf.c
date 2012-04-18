@@ -38,12 +38,5 @@ struct	dentry	devtab[NDEVS] =
 	  (void *)ethInit, (void *)ioerr, (void *)ioerr,
 	  (void *)ethRead, (void *)ethWrite, (void *)ioerr,
 	  (void *)ioerr, (void *)ioerr, (void *)ethControl,
-	  (void *)0x0, (void *)ethDispatch, 0 },
-
-/* RDISK is rds */
-	{ 3, 0, "RDISK",
-	  (void *)rdsInit, (void *)rdsOpen, (void *)rdsClose,
-	  (void *)rdsRead, (void *)rdsWrite, (void *)ioerr,
-	  (void *)ioerr, (void *)ioerr, (void *)rdsControl,
-	  (void *)0x0, (void *)ionull, 0 }
+	  (void *)0x0, (void *)ethDispatch, 0 }
 };

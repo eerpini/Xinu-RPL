@@ -329,34 +329,6 @@ extern	syscall	ptsend(int32, umsg32);
 /* in file putc.c */
 extern	syscall	putc(did32, char);
 
-/* in file rdsClose.c */
-extern	devcall	rdsClose(struct dentry *);
-
-/* in file rdsControl.c */
-extern	devcall	rdsControl(struct dentry *, int32, int32, int32);
-
-/* in file rdsInit.c */
-extern	devcall	rdsInit(struct dentry *);
-
-/* in file rdsOpen.c */
-extern	devcall	rdsOpen(struct dentry *, char *, char *);
-
-/* in file rdsRead.c */
-extern	devcall	rdsRead(struct dentry *, char *, int32);
-
-/* in file rdsWrite.c */
-extern	devcall	rdsWrite(struct dentry *, char *, int32);
-
-/* in file rdsbufalloc.c */
-extern	struct	rdbuff * rdsbufalloc(struct rdscblk *);
-
-/* in file rdscomm.c */
-extern	status	rdscomm(struct rd_msg_hdr *, int32, struct rd_msg_hdr *,
-		int32, struct rdscblk *);
-
-/* in file rdsprocess.c */
-extern	void	rdsprocess(struct rdscblk *);
-
 /* in file read.c */
 extern	syscall	read(did32, char *, uint32);
 
@@ -510,27 +482,6 @@ extern  syscall  stacktrace(int pid);
 #define	ntohs(x)   ( ( 0xff & ((x)>>8) ) | ( (0xff & (x)) << 8 ) )
 #define	ntohl(x)   (  (((x)>>24) & 0x000000ff) | (((x)>> 8) & 0x0000ff00) | \
 		      (((x)<< 8) & 0x00ff0000) | (((x)<<24) & 0xff000000) )
-
-
-/* Functions for virtual memory related stuff   */
-extern  int psinit();
-/* given calls for dealing with backing store */
-
-extern syscall get_bs(bsd_t, unsigned int);
-extern syscall release_bs(bsd_t);
-extern syscall read_bs(char *, bsd_t, int);
-extern syscall write_bs(char *, bsd_t, int);
-
-/* Prototypes for required backing-store API */
-extern bsd_t allocate_bs(unsigned int npages);
-extern bsd_t deallocate_bs(bsd_t store);
-extern bsd_t open_bs(bsd_t store);
-extern bsd_t close_bs(bsd_t store);
-
-/* Prototypes for new system calls required */
-extern syscall xmmap(int, int, unsigned int, bsd_t);
-extern syscall xmunmap(int);
-extern syscall srpolicy(int);
 
 
 /*

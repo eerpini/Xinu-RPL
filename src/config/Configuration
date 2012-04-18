@@ -40,15 +40,6 @@ eth:
 		-r ethRead      -g ioerr        -p ioerr
 		-w ethWrite     -s ioerr        -n ethControl
 		-intr ethDispatch
-/* type of a remote disk system device */
-rds:
-	on udp
-		-i rdsInit	-o rdsOpen	-c rdsClose
-		-r rdsRead	-g ioerr	-p ioerr
-		-w rdsWrite	-s ioerr	-n rdsControl
-		-intr ionull
-
-
 %%
 
 /* Actual device declarations that each give the name of a device that	*/
@@ -63,10 +54,6 @@ rds:
    /* Physical Ethernet (raw packet transfer) */
    ETHER0 is eth   on e1000e csr 0 -irq 0
 
-   /* Define a remote disk system device */
-
-   RDISK is rds on udp
-
 
 
 %%
@@ -78,9 +65,3 @@ rds:
 #define	IRQ_TIMER    IRQ_HW5	/* timer IRQ is wired to hardware 5	*/
 #define	IRQ_ATH_MISC IRQ_HW4	/* Misc. IRQ is wired to hardware 4	*/
 #define CLKFREQ      200000000	/* 200 MHz clock			*/
-
-#ifdef RD_SERVER_PORT
-#undef RD_SERVER_PORT
-#endif
-#define RD_SERVER_PORT  30226
-#define LF_DISK_DEV     RDISK

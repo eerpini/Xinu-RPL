@@ -24,8 +24,6 @@ struct	memblk	memlist;	/* List of free memory blocks		*/
 
 int	prcount;		/* Total number of live processes	*/
 pid32	currpid;		/* ID of currently executing process	*/
-bool8   PAGE_SERVER_STATUS;    /* Indicate the status of the page server */
-sid32   bs_init_sem;
 
 /* Memory bounds set by start.S */
 
@@ -225,10 +223,6 @@ static	void	sysinit(void)
 			(devptr->dvinit) (devptr);
 		}
 	}
-
-        PAGE_SERVER_STATUS = PAGE_SERVER_INACTIVE;
-        bs_init_sem = semcreate(1);
-
 
 	return;
 }

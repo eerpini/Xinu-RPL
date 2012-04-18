@@ -28,17 +28,15 @@ extern	struct	dentry	devtab[]; /* one entry per device */
 #define CONSOLE     0       /* type tty      */
 #define NOTADEV     1       /* type null     */
 #define ETHER0      2       /* type eth      */
-#define RDISK       3       /* type rds      */
 
 /* Control block sizes */
 
 #define	Nnull	1
 #define	Ntty	1
 #define	Neth	1
-#define	Nrds	1
 
 #define DEVMAXNAME 24
-#define NDEVS 4
+#define NDEVS 3
 
 
 /* Configuration and Size Constants */
@@ -48,9 +46,3 @@ extern	struct	dentry	devtab[]; /* one entry per device */
 #define	IRQ_TIMER    IRQ_HW5	/* timer IRQ is wired to hardware 5	*/
 #define	IRQ_ATH_MISC IRQ_HW4	/* Misc. IRQ is wired to hardware 4	*/
 #define CLKFREQ      200000000	/* 200 MHz clock			*/
-
-#ifdef RD_SERVER_PORT
-#undef RD_SERVER_PORT
-#endif
-#define RD_SERVER_PORT  30226
-#define LF_DISK_DEV     RDISK
