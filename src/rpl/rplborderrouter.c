@@ -14,6 +14,11 @@ int getindex (uint32 addr) {
 	return SYSERR;
 }
 
+uint32	getaddress (uint32 index) {
+	
+	return iface_addr[index];
+}
+
 int assignindex (uint32 addr) {
 	int index = 0;
 
@@ -52,6 +57,9 @@ void processroute (uint32 target, uint32 parent) {
         }
 	
 
+	//Update the freshness of the path here. 
+	iface_freshness[tindex] = (++ iface_freshness[tindes] ) % LOWPAN_MAX_NODES;
+
 	//check if the mapping already exists or it is a new mapping
 	//ignore if the mapping already exists.
 	if (rpladjlist[tindex][pindex] || rpladjlist[pindex][tindex]){
@@ -76,6 +84,7 @@ void processdao(struct icmpv6_sim_packet *rpldaomsg) {
 
 	uint32				target;
 	uint32				parent;
+	uint32				mask;
 
 	// get the target and its parent. 
 	// target is present in the rpl target option
@@ -117,7 +126,41 @@ void processdao(struct icmpv6_sim_packet *rpldaomsg) {
         
 
 	//compute the shortest paths if necessary
+	mask = disable ();
 	processroute (target, parent);
+	restore (mask);
 }
 
+void processPathlifetimeTimeout () {
+
+	//1.  check if the freshness is more than 0, if yes reset it to 0
+	//   else invalidate the path and recompute the paths if necessary
+	
+	byte	recompute = 0;
+	int	index = 0, j = 0;
+
+	kprintf (" In the %s --> \n\r", __FUNCTION__);
+
+	for (index = 0; index < LOWPAN_MAX_NODES; index ++){
+		if (iface_freshness[index] != 0) {
+			iface_freshness[index] = 0;
+		} else {
+			//invalidate here.
+			iface_freshness[index] = 0;
+			recompute = 1;
+			kprintf (" %s: did not receive DAO update from node %04x \n\r", __FUNCTION__, getaddress[index]);
+
+			for (j = 0; i < LOWPAN_MAX_NODES; j ++) {
+				rpladjlist[index][j] = 0;
+				rpladjlist[j][index] = 0;
+			}
+		}
+	}
+
+	if (recompute) {
+		shortestpath ();
+		computepaths ();
+		printpaths ();
+	}
+}
 #endif
