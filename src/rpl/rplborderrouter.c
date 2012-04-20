@@ -60,7 +60,8 @@ void processroute (uint32 target, uint32 parent) {
 
 	//Update the freshness of the path here. 
         //FIXME : For Sudhir, what is being done here ?
-	iface_freshness[tindex] = (iface_freshness[tindex] +1) % LOWPAN_MAX_NODES;
+        kprintf("INFO : Incrmenting the freshness[%d] for index [%d]\r\n", iface_freshness[tindex], tindex);
+	iface_freshness[tindex] = (iface_freshness[tindex] +1) ;
 
 	//check if the mapping already exists or it is a new mapping
 	//ignore if the mapping already exists.
@@ -143,7 +144,11 @@ void processPathlifetimeTimeout () {
 
 	kprintf (" In the %s --> \n\r", __FUNCTION__);
 
-	for (index = 0; index < LOWPAN_MAX_NODES; index ++){
+        /*
+         * NOTE : We only check the freshness for the nodes in the 
+         * RPL Network and not for the other nodes
+         */
+	for (index = 1; index < LOWPAN_MAX_NODES; index ++){
 		if (iface_freshness[index] != 0) {
 			iface_freshness[index] = 0;
 		} else {

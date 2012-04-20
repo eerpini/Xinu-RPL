@@ -249,10 +249,12 @@ status rpl_receive(){
                         switch(pkt->msg_type){
                                 case RPL_DIS_MSGTYPE:
                                         kprintf("DIS Received\r\n");
+#ifdef LOWPAN_NODE
                                         if(RPL_MYINFO.parent_index < 0){
                                                 kprintf("WARN : Ignoring DIS Message since I don't know my parent\r\n");
                                                 break;
                                         }
+#endif
                                         decodedis((struct icmpv6_sim_packet *)(pkt->data));
                                         encodedio(&rpkt);
                                         rpl_send((char *)(pkt->src_node), (char *)(&NetData.ipaddr), RPL_DIO_MSGTYPE, (char *)(&rpkt), 1500-ETH_HDR_LEN- RPL_SIM_HDR_LEN);
@@ -271,6 +273,9 @@ status rpl_receive(){
                                                 else{
                                                         kprintf("WARN : Cannot send the DAO message after receiving DIO message since we do not know the parent\r\n");
                                                 }
+                                        }
+                                        else{
+                                                kprintf("INFO : Parent did not change so not doing anything\r\n");
                                         }
                                         break;
                                 case RPL_DAO_MSGTYPE:

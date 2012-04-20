@@ -71,16 +71,19 @@ void processdio (struct icmpv6_sim_packet *rpldiomsg, uint32 sender, byte *paren
 		diomsg = (struct rpl_dio_msg *) rpldiomsg->net_icdata;
                 if(RPL_MYINFO.rank == 0){
                         RPL_MYINFO.rank = diomsg->rank + 1;
+                        kprintf("My Rank is 0 and I set it to : [%d]\r\n", RPL_MYINFO.rank);
                         //set sender as parent
                 }
                 else if(RPL_MYINFO.rank > diomsg->rank + 1){
 
 			//base message
 			RPL_MYINFO.rank = diomsg->rank + 1;
+                        kprintf("My Rank is greater than the senders [%d] and I set it to : [%d]\r\n", diomsg->rank, RPL_MYINFO.rank);
                         //set sender as parent
                 }
                 else{
-			kprintf (" Ignoring the dio message, since my rank is less \r\n");
+			kprintf (" Ignoring the dio message, since the rank need not be changed\r\n");
+                        *parent_changed = 0;
                         return ;
                 }
                 /*

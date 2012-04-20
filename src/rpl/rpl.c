@@ -70,7 +70,6 @@ void rpl_init(){
         if(!NetData.ipvalid){
                 getlocalip();
         }
-        generate_link_local_neighbors();
 
 
         rpl_node_init();
@@ -79,6 +78,7 @@ void rpl_init(){
         rpl_border_router_init();
 #endif
 
+        generate_link_local_neighbors();
         rpl_dao_timeout = RPL_MYINFO.pathlifetime*1000;
         rpl_dis_timeout = 10*1000;
 
@@ -95,7 +95,8 @@ void rpl_node_init(){
         }
  
         RPL_MYINFO.instance_id = 0;
-        RPL_MYINFO.rank = RPL_INFINITE_RANK;
+        //RPL_MYINFO.rank = RPL_INFINITE_RANK;
+        RPL_MYINFO.rank = 0;
         RPL_MYINFO.version = 0;
         RPL_MYINFO.dtsn = 0;
         memset(RPL_MYINFO.dodagid, NULLCH, RPL_DODAGID_LEN);
@@ -157,6 +158,10 @@ void rpl_border_router_init(){
         }
         kprintf("I was assigned the index : %d\r\n", my_index);
         memcpy(RPL_MYINFO.dodagid, &(NetData.ipaddr), RPL_DODAGID_LEN);
+        /*
+         * FIXME : Setting the rank here
+         */
+        RPL_MYINFO.rank = 10;
 
 }
 #endif
@@ -165,6 +170,9 @@ void send_init_messages(){
 
 #ifdef LOWPAN_NODE
         
+        kprintf("The first neighbor is : %04x\r\n", rpl_link_local_neighbors[0].iface_addr);
+        kprintf("The first neighbor is : %04x\r\n", rpl_link_local_neighbors[1].iface_addr);
+        kprintf("The first neighbor is : %04x\r\n", rpl_link_local_neighbors[2].iface_addr);
         struct icmpv6_sim_packet pkt;
         encodedis( &pkt );
 
@@ -193,6 +201,7 @@ void rpl_process_path_timeout(){
         encodedao(&rpkt);
         if(NetData.ipvalid && (*((uint32 *)(RPL_MYINFO.dodagid)) != 0)){
                 if(RPL_MYINFO.parent_index > -1 && RPL_MYINFO.parent_index < LOWPAN_MAX_NODES){
+                        kprintf("Sending a TIMEOUT DAO Message \r\n");
                         rpl_send((char *)(&(rpl_link_local_neighbors[RPL_MYINFO.parent_index].iface_addr)), (char *)(&(NetData.ipaddr)), RPL_DAO_MSGTYPE, (char *)(&rpkt), 1500-ETH_HDR_LEN- RPL_SIM_HDR_LEN);
                 }
                 else{
@@ -202,7 +211,7 @@ void rpl_process_path_timeout(){
 #endif
 #ifdef LOWPAN_BORDER_ROUTER
         rpl_dao_timeout += (RPL_MYINFO.pathlifetime + 5)*1000;
-        //processPathlifetimeTimeout();
+        processPathlifetimeTimeout();
 
        kprintf("In Border router timeout value is : %d\r\n", rpl_dao_timeout); 
 
@@ -216,8 +225,6 @@ void rpl_process_dis_timeout(){
         return;
 #endif
 #ifdef LOWPAN_NODE
-        return;
-#endif
         rpl_dis_timeout += 10*1000;
         struct icmpv6_sim_packet pkt;
         int i = 0;
@@ -230,4 +237,5 @@ void rpl_process_dis_timeout(){
                 }
                 i++;
         }while(rpl_link_local_neighbors[i].iface_addr != -1);
+#endif
 }

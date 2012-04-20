@@ -21,6 +21,7 @@ void computepaths(void) {
 
 void printpaths (){
 
+        return;
         kprintf("In %s\r\n", __FUNCTION__);
         int i = 0, j = 0, k = 0;
 
