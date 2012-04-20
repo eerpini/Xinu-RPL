@@ -153,7 +153,7 @@ struct route_info{
  */
 
 //uint32   rpl_link_local_neighbors[LOWPAN_MAX_NODES];
-struct n_list rpl_link_local_neighbors[LOWPAN_MAX_NODES];
+extern struct n_list rpl_link_local_neighbors[LOWPAN_MAX_NODES];
 
 
 
@@ -198,6 +198,7 @@ struct	rpl_info	RPL_MYINFO;
 /*      Global variable to allow for timeout on the path lifetime
  *      in ms   */
 extern  int32   rpl_dao_timeout;
+extern  int32   rpl_dis_timeout;
 
 
 /*		RPL OPTION Messages	*/

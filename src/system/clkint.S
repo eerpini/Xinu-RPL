@@ -6,6 +6,7 @@ count1000:	.word	1000
 		.globl	sltop
 		.globl	clkint
 		.globl	rpl_dao_timeout
+		.globl	rpl_dis_timeout
 clkint:
 		pushal
 		cli
@@ -18,7 +19,12 @@ clkint:
 		incl	clktime
 		movw	$1000,count1000
 cl1:
-                movl    rpl_dao_timeout, %eax
+                movl    rpl_dis_timeout, %eax
+                decl    %eax 
+                movl     %eax, rpl_dis_timeout
+                jg      pr_dao_tout 
+                call    rpl_process_dis_timeout
+pr_dao_tout:    movl    rpl_dao_timeout, %eax
                 decl    %eax 
                 movl     %eax, rpl_dao_timeout
                 jg      clwakeup
