@@ -59,27 +59,52 @@ void encodedio(struct icmpv6_sim_packet *rpldiomsg) {
 }
 
 
-void processdio (struct icmpv6_sim_packet *rpldiomsg) {
+void processdio (struct icmpv6_sim_packet *rpldiomsg, uint32 sender, byte *parent_changed) {
 
 	struct 	rpl_dio_msg		*diomsg;
 	struct	rpl_opt_dodag_conf	*dagconf;
 	int				pos = 0;
+        int i;
 
         kprintf(" Inside processdio \r\n");
 	if (rpldiomsg->net_iccode ==  RPL_DIO_MSGTYPE) {
 		diomsg = (struct rpl_dio_msg *) rpldiomsg->net_icdata;
                 if(RPL_MYINFO.rank == 0){
                         RPL_MYINFO.rank = diomsg->rank + 1;
+                        //set sender as parent
                 }
                 else if(RPL_MYINFO.rank > diomsg->rank + 1){
 
 			//base message
 			RPL_MYINFO.rank = diomsg->rank + 1;
+                        //set sender as parent
                 }
                 else{
 			kprintf (" Ignoring the dio message, since my rank is less \r\n");
                         return ;
                 }
+                /*
+                 * Setting the sender as our parent
+                 */
+                if(RPL_MYINFO.parent_index >= 0){
+                        rpl_link_local_neighbors[RPL_MYINFO.parent_index].is_parent = 0;
+                        RPL_MYINFO.parent_index = -1;
+                }
+                for(i=0; i<LOWPAN_MAX_NODES; i++){
+                       if(rpl_link_local_neighbors[i].iface_addr == sender){
+                              rpl_link_local_neighbors[i].is_parent = 1;
+                              break;
+                       }
+                }
+                if(i >= LOWPAN_MAX_NODES){
+                        kprintf("We could not locate the sender [%04x] to set it as parent, this should not HAPPEN\r\n", sender);
+                        return;
+                }
+                else{
+                        RPL_MYINFO.parent_index = i;
+                        *parent_changed = 1;
+                }
+                        
                 
                 RPL_MYINFO.dtsn = diomsg->dtsn;
                 memcpy(RPL_MYINFO.dodagid, diomsg->dodagid, RPL_DODAGID_LEN);

@@ -495,7 +495,7 @@ extern void encodedis(struct icmpv6_sim_packet *);
 extern void decodedis(struct icmpv6_sim_packet *);
 extern void encodedao(struct icmpv6_sim_packet *);
 extern void encodedio(struct icmpv6_sim_packet *);
-extern void processdio(struct icmpv6_sim_packet *);
+extern void processdio(struct icmpv6_sim_packet *, uint32 , byte *);
 extern void send_init_messages(void );
 #ifdef LOWPAN_BORDER_ROUTER
         extern void processdao(struct icmpv6_sim_packet *);

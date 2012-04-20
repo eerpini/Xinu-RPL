@@ -16,7 +16,8 @@ extern struct rpl_info RPL_MYINFO;
 
 #endif
 
-uint32   rpl_link_local_neighbors[LOWPAN_MAX_NODES];
+struct n_list   rpl_link_local_neighbors[LOWPAN_MAX_NODES];
+//uint32   rpl_link_local_neighbors[LOWPAN_MAX_NODES];
 int32    rpl_dao_timeout;
 
 void    rpl_node_init();
@@ -35,10 +36,13 @@ void generate_link_local_neighbors(){
         rpl_link_local_neighbors[1] = (NetData.ipaddr - 1);
         */
         //dot2ip("128.10.3.113", &rpl_link_local_neighbors[0]);
-        dot2ip("128.10.3.114", &rpl_link_local_neighbors[0]);
-        dot2ip("128.10.3.112", &rpl_link_local_neighbors[1]);
-        dot2ip("128.10.3.113", &rpl_link_local_neighbors[2]);
-        rpl_link_local_neighbors[3] = -1;
+        dot2ip("128.10.3.114", &(rpl_link_local_neighbors[0].iface_addr));
+        dot2ip("128.10.3.112", &(rpl_link_local_neighbors[1].iface_addr));
+        dot2ip("128.10.3.113", &(rpl_link_local_neighbors[2].iface_addr));
+        rpl_link_local_neighbors[0].is_parent = 0;
+        rpl_link_local_neighbors[1].is_parent = 0;
+        rpl_link_local_neighbors[2].is_parent = 0;
+        rpl_link_local_neighbors[3].iface_addr = -1;
         /*
         int i=0;
         for(i=0; i < LOWPAN_MAX_NODES; i++){
@@ -79,6 +83,11 @@ void rpl_init(){
 
 void rpl_node_init(){
 
+        int i= 0;
+        for(i=0; i< LOWPAN_MAX_NODES; i++){
+                rpl_link_local_neighbors[i].is_parent = 0;
+                rpl_link_local_neighbors[i].iface_addr = -1;
+        }
  
         RPL_MYINFO.instance_id = 0;
         RPL_MYINFO.rank = RPL_INFINITE_RANK;
@@ -97,6 +106,7 @@ void rpl_node_init(){
         RPL_MYINFO.dioredundancy =  RPL_DEFAULT_DIO_REDUNDANCY_CONSTANT;
         RPL_MYINFO.maxrankincrease =  0;
         RPL_MYINFO.minhoprankinc =  0;
+        RPL_MYINFO.parent_index = -1;
         /*
          * FIXME Should the starting value not be the same as DEFAULT ?
          */
@@ -157,12 +167,12 @@ void send_init_messages(){
         int i = 0;
         do{
                 kprintf("[%d] Sending a packet to [%04x] from me[%04x]\r\n", i, rpl_link_local_neighbors[i], NetData.ipaddr);
-                if(rpl_link_local_neighbors[i] != NetData.ipaddr){
-                        rpl_send((char *) &rpl_link_local_neighbors[i], (char *)(&(NetData.ipaddr)), RPL_DIS_MSGTYPE, (char *)(&pkt),  
+                if(rpl_link_local_neighbors[i].iface_addr != NetData.ipaddr){
+                        rpl_send((char *) &(rpl_link_local_neighbors[i].iface_addr), (char *)(&(NetData.ipaddr)), RPL_DIS_MSGTYPE, (char *)(&pkt),  
                                         1500-ETH_HDR_LEN - RPL_SIM_HDR_LEN);
                 }
                 i++;
-        }while(rpl_link_local_neighbors[i] != -1);
+        }while(rpl_link_local_neighbors[i].iface_addr != -1);
 
 
 
@@ -176,7 +186,12 @@ void rpl_process_path_timeout(){
         struct icmpv6_sim_packet rpkt;
         encodedao(&rpkt);
         if(NetData.ipvalid && (*((uint32 *)(RPL_MYINFO.dodagid)) != 0)){
-                rpl_send((char *)(RPL_MYINFO.dodagid), (char *)(&(NetData.ipaddr)), RPL_DAO_MSGTYPE, (char *)(&rpkt), 1500-ETH_HDR_LEN- RPL_SIM_HDR_LEN);
+                if(RPL_MYINFO.parent_index > -1 && RPL_MYINFO.parent_index < LOWPAN_MAX_NODES){
+                        rpl_send((char *)(&(rpl_link_local_neighbors[RPL_MYINFO.parent_index].iface_addr)), (char *)(&(NetData.ipaddr)), RPL_DAO_MSGTYPE, (char *)(&rpkt), 1500-ETH_HDR_LEN- RPL_SIM_HDR_LEN);
+                }
+                else{
+                        kprintf("WARN : Cannot send DAO on path life time timeout since we don't know our parent\r\n");
+                }
         }
 #endif
 #ifdef LOWPAN_BORDER_ROUTER

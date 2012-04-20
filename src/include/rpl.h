@@ -101,7 +101,6 @@ struct rpl_dio_timer_const{
  * Node Specific Definitions and Data Structures
  */
 
-#ifdef LOWPAN_NODE
 
 /*      Neighbor List - Link Local Addresses    */
 struct n_list{
@@ -112,9 +111,8 @@ struct n_list{
          */
         byte    is_parent;
         /*      Link Local Address      */
-        int16   iface_addr;
+        uint32  iface_addr;
 };
-#endif
 
 /*      Definitions/Data Structures on the border router        */
 #ifdef  LOWPAN_BORDER_ROUTER
@@ -154,7 +152,9 @@ struct route_info{
  * Temporary definitions for testing puposes
  */
 
-uint32   rpl_link_local_neighbors[LOWPAN_MAX_NODES];
+//uint32   rpl_link_local_neighbors[LOWPAN_MAX_NODES];
+struct n_list rpl_link_local_neighbors[LOWPAN_MAX_NODES];
+
 
 
 /* 		RPL Message Types 		*/
@@ -191,6 +191,7 @@ struct		rpl_info {
 	uint16	maxrankincrease;
 	uint16	minhoprankinc;
         byte    pathlifetime;
+        int32   parent_index;
 };
 struct	rpl_info	RPL_MYINFO;
 

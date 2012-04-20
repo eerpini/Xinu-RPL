@@ -245,6 +245,7 @@ status rpl_receive(){
                 }
                 else{
                         struct icmpv6_sim_packet rpkt;
+                        byte parent_changed = 0;
                         switch(pkt->msg_type){
                                 case RPL_DIS_MSGTYPE:
                                         /*
@@ -257,10 +258,18 @@ status rpl_receive(){
                                         break;
                                 case RPL_DIO_MSGTYPE:
                                         kprintf("DIO Received\r\n");
-                                        processdio((struct icmpv6_sim_packet *)(pkt->data));
-                                        encodedao(&rpkt);
+                                        parent_changed = 0;
+                                        processdio((struct icmpv6_sim_packet *)(pkt->data), *((uint32 *)(pkt->src_node)), &parent_changed);
+                                        if(parent_changed != 0){
+                                                encodedao(&rpkt);
+                                        }
                                         kprintf("Sending DAO to [%04x]\r\n", *((uint32 *)(RPL_MYINFO.dodagid)));
-                                        rpl_send((char *)(RPL_MYINFO.dodagid), (char *)(&NetData.ipaddr), RPL_DAO_MSGTYPE, (char *)(&rpkt), 1500-ETH_HDR_LEN- RPL_SIM_HDR_LEN);
+                                        if(RPL_MYINFO.parent_index > -1 && RPL_MYINFO.parent_index < LOWPAN_MAX_NODES){
+                                                rpl_send((char *)(&(rpl_link_local_neighbors[RPL_MYINFO.parent_index].iface_addr)), (char *)(&NetData.ipaddr), RPL_DAO_MSGTYPE, (char *)(&rpkt), 1500-ETH_HDR_LEN- RPL_SIM_HDR_LEN);
+                                        }
+                                        else{
+                                                kprintf("WARN : Cannot send the DAO message after receiving DIO message since we do not know the parent\r\n");
+                                        }
 
                                         break;
                                 case RPL_DAO_MSGTYPE:
@@ -269,7 +278,12 @@ status rpl_receive(){
                                         processdao((struct icmpv6_sim_packet *)(pkt->data));
 #endif
 #ifdef LOWPAN_NODE
-                                        rpl_send((char *)(RPL_MYINFO.dodagid), (char *)(&NetData.ipaddr), RPL_DIO_MSGTYPE, (char *)(&pkt), 1500-ETH_HDR_LEN- RPL_SIM_HDR_LEN);
+                                        if(RPL_MYINFO.parent_index > -1 && RPL_MYINFO.parent_index < LOWPAN_MAX_NODES){
+                                                rpl_send((char *)(&(rpl_link_local_neighbors[RPL_MYINFO.parent_index].iface_addr)), (char *)(&NetData.ipaddr), RPL_DIO_MSGTYPE, (char *)(&pkt), 1500-ETH_HDR_LEN- RPL_SIM_HDR_LEN);
+                                        }
+                                        else{
+                                                kprintf("WARN : Cannot forward the DAO message since we do not know the parent\r\n");
+                                        }
 #endif
 
 
