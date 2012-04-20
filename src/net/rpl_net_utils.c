@@ -248,9 +248,11 @@ status rpl_receive(){
                         byte parent_changed = 0;
                         switch(pkt->msg_type){
                                 case RPL_DIS_MSGTYPE:
-                                        /*
-                                         */
                                         kprintf("DIS Received\r\n");
+                                        if(RPL_MYINFO.parent_index < 0){
+                                                kprintf("WARN : Ignoring DIS Message since I don't know my parent\r\n");
+                                                break;
+                                        }
                                         decodedis((struct icmpv6_sim_packet *)(pkt->data));
                                         encodedio(&rpkt);
                                         rpl_send((char *)(pkt->src_node), (char *)(&NetData.ipaddr), RPL_DIO_MSGTYPE, (char *)(&rpkt), 1500-ETH_HDR_LEN- RPL_SIM_HDR_LEN);
@@ -262,15 +264,14 @@ status rpl_receive(){
                                         processdio((struct icmpv6_sim_packet *)(pkt->data), *((uint32 *)(pkt->src_node)), &parent_changed);
                                         if(parent_changed != 0){
                                                 encodedao(&rpkt);
+                                                kprintf("Sending DAO to [%04x]\r\n", *((uint32 *)(RPL_MYINFO.dodagid)));
+                                                if(RPL_MYINFO.parent_index > -1 && RPL_MYINFO.parent_index < LOWPAN_MAX_NODES){
+                                                        rpl_send((char *)(&(rpl_link_local_neighbors[RPL_MYINFO.parent_index].iface_addr)), (char *)(&NetData.ipaddr), RPL_DAO_MSGTYPE, (char *)(&rpkt), 1500-ETH_HDR_LEN- RPL_SIM_HDR_LEN);
+                                                }
+                                                else{
+                                                        kprintf("WARN : Cannot send the DAO message after receiving DIO message since we do not know the parent\r\n");
+                                                }
                                         }
-                                        kprintf("Sending DAO to [%04x]\r\n", *((uint32 *)(RPL_MYINFO.dodagid)));
-                                        if(RPL_MYINFO.parent_index > -1 && RPL_MYINFO.parent_index < LOWPAN_MAX_NODES){
-                                                rpl_send((char *)(&(rpl_link_local_neighbors[RPL_MYINFO.parent_index].iface_addr)), (char *)(&NetData.ipaddr), RPL_DAO_MSGTYPE, (char *)(&rpkt), 1500-ETH_HDR_LEN- RPL_SIM_HDR_LEN);
-                                        }
-                                        else{
-                                                kprintf("WARN : Cannot send the DAO message after receiving DIO message since we do not know the parent\r\n");
-                                        }
-
                                         break;
                                 case RPL_DAO_MSGTYPE:
                                         kprintf("DAO Received\r\n");
@@ -285,8 +286,6 @@ status rpl_receive(){
                                                 kprintf("WARN : Cannot forward the DAO message since we do not know the parent\r\n");
                                         }
 #endif
-
-
                                         break;
                                 default:
                                         kprintf("Received an unknown RPL message type\r\n");

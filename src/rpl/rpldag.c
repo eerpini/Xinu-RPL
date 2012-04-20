@@ -24,7 +24,8 @@ void printpaths (){
         kprintf("In %s\r\n", __FUNCTION__);
         int i = 0, j = 0, k = 0;
 
-        for (i = 1; i < LOWPAN_MAX_NODES; i++) {
+        //for (i = 1; i < LOWPAN_MAX_NODES; i++) {
+        for (i = 1; i < 8; i++) {
                 kprintf (" Path from %d to 0 is : ", i);
                 k = state[i].dist;
 
