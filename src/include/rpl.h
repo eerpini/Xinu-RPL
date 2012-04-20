@@ -227,7 +227,7 @@ struct	rpl_opt_routeinfo{
 };
 
 #define		RPL_OPT_TYPE_DODAG_CONF		0x04
-#define		RPL_OPT_DEFAULT_PATH_LIFETIME   10
+#define		RPL_OPT_DEFAULT_PATH_LIFETIME   30
 #define		RPL_OPT_LIFETIME_UNIT		1
 struct	rpl_opt_dodag_conf {
 	byte	type;
