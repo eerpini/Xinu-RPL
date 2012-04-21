@@ -21,7 +21,6 @@ void computepaths(void) {
 
 void printpaths (){
 
-        return;
         kprintf("In %s\r\n", __FUNCTION__);
         int i = 0, j = 0, k = 0;
 
@@ -29,6 +28,14 @@ void printpaths (){
         for (i = 1; i < 8; i++) {
                 kprintf (" Path from %d to 0 is : ", i);
                 k = state[i].dist;
+
+		/* Was accessing incorrect memory here. Might have been a TRAP
+		 * adding an additional check, to bound k to the max array length
+		 */
+		if ((k >= RPL_INF_DIST) || (k >= RPL_MAX_NODES)){
+			kprintf (" No path from %d to RPL_ROOT \n", i);
+			continue;
+		}
 
                 for (j = k; j >= 0; j--)
                         kprintf (" %d ", rplpath[i][j]);
