@@ -1,4 +1,20 @@
 #include <xinu.h>
+//128.10.3.108
+#define node8 0x800a036c
+//128.10.3.107
+#define node7 0x800a036b
+//128.10.3.106
+#define node6 0x800a036a
+//128.10.3.105
+#define node5 0x800a0369
+//128.10.3.104
+#define node4 0x800a0368
+//128.10.3.103
+#define node3 0x800a0367
+//128.10.3.102 
+#define node2 0x800a0366
+//128.10.3.108
+#define node1
 
 extern struct rpl_info RPL_MYINFO;
 #ifdef LOWPAN_BORDER_ROUTER
@@ -37,6 +53,7 @@ void generate_link_local_neighbors(){
         rpl_link_local_neighbors[1] = (NetData.ipaddr - 1);
         */
         //dot2ip("128.10.3.113", &rpl_link_local_neighbors[0]);
+        /*
         dot2ip("128.10.3.114", &(rpl_link_local_neighbors[0].iface_addr));
         dot2ip("128.10.3.112", &(rpl_link_local_neighbors[1].iface_addr));
         dot2ip("128.10.3.113", &(rpl_link_local_neighbors[2].iface_addr));
@@ -47,6 +64,67 @@ void generate_link_local_neighbors(){
         rpl_link_local_neighbors[1].is_parent = 0;
         rpl_link_local_neighbors[2].is_parent = 0;
         rpl_link_local_neighbors[3].iface_addr = -1;
+        */
+        //128.10.3.113 is 0x800a0371
+        switch(NetData.ipaddr){
+                /*
+                 * node2 or 128.10.3.102 is the root, we
+                 * don't really need neighbor information for it
+                 */
+                case node4:
+                        rpl_link_local_neighbors[0].iface_addr = node3;
+                        rpl_link_local_neighbors[0].is_parent = 0;
+                        rpl_link_local_neighbors[1].iface_addr = node5;
+                        rpl_link_local_neighbors[1].is_parent = 0;
+                        rpl_link_local_neighbors[2].iface_addr = -1;
+                        kprintf("I am node 2 My neighbors are node3 and node5\r\n");
+                        break;
+                case node5:
+                        rpl_link_local_neighbors[0].iface_addr = node6;
+                        rpl_link_local_neighbors[0].is_parent = 0;
+                        rpl_link_local_neighbors[1].iface_addr = node7;
+                        rpl_link_local_neighbors[1].is_parent = 0;
+                        rpl_link_local_neighbors[2].iface_addr = node4;
+                        rpl_link_local_neighbors[2].is_parent = 0;
+                        rpl_link_local_neighbors[3].iface_addr = -1;
+                        kprintf(" I am node 5 My neighbors are node6 and node7 and node4\r\n");
+                        break;
+                case node3:
+                        rpl_link_local_neighbors[0].iface_addr = node4;
+                        rpl_link_local_neighbors[0].is_parent = 0;
+                        rpl_link_local_neighbors[1].iface_addr = node2;
+                        rpl_link_local_neighbors[1].is_parent = 0;
+                        rpl_link_local_neighbors[2].iface_addr = -1;
+                        kprintf("I am node 3 My neighbors are node4 and node2\r\n");
+                        break;
+                case node2:
+                        rpl_link_local_neighbors[0].iface_addr = node3;
+                        rpl_link_local_neighbors[0].is_parent = 0;
+                        rpl_link_local_neighbors[1].iface_addr = -1;
+                        kprintf(" I am node 2 My neighbors are node3 \r\n");
+                        break;
+                case node6:
+                        rpl_link_local_neighbors[0].iface_addr = node5;
+                        rpl_link_local_neighbors[0].is_parent = 0;
+                        rpl_link_local_neighbors[1].iface_addr = -1;
+                        kprintf(" I am node 6 My neighbors are node5 \r\n");
+                        break;
+                case node7:
+                        rpl_link_local_neighbors[0].iface_addr = node5;
+                        rpl_link_local_neighbors[0].is_parent = 0;
+                        rpl_link_local_neighbors[1].iface_addr = -1;
+                        kprintf(" I am node 7 My neighbors are node5 \r\n");
+                        break;
+                default : 
+                        kprintf("I did not find a neighbor assignment for myself, I must be the border router or the gateway\r\n");
+        }
+
+        kprintf("The first neighbor is : %04x\r\n", rpl_link_local_neighbors[0].iface_addr);
+        kprintf("The first neighbor is : %04x\r\n", rpl_link_local_neighbors[1].iface_addr);
+        kprintf("The first neighbor is : %04x\r\n", rpl_link_local_neighbors[2].iface_addr);
+
+
+
         /*
         int i=0;
         for(i=0; i < LOWPAN_MAX_NODES; i++){

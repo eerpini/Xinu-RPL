@@ -114,6 +114,8 @@ void processdao(struct icmpv6_sim_packet *rpldaomsg) {
 	//NOTE THIS IS A 128 bit field, use only the first four bytes
 	target = *((uint32 *)(opttarget->target));
 
+        kprintf("***********PROCESSING DAO FROM %04x\r\n", target);
+
         // RPL OPTION TRANSIT INFO
         pos += sizeof (struct  rpl_opt_target);
         opttransit = (struct  rpl_opt_transitinf *)&rpldaomsg->net_icdata[pos];

@@ -32,7 +32,7 @@ void printpaths (){
 		/* Was accessing incorrect memory here. Might have been a TRAP
 		 * adding an additional check, to bound k to the max array length
 		 */
-		if ((k >= RPL_INF_DIST) || (k >= RPL_MAX_NODES)){
+		if ((k >= RPL_INF_DIST) || (k >= LOWPAN_MAX_NODES)){
 			kprintf (" No path from %d to RPL_ROOT \n", i);
 			continue;
 		}
@@ -87,12 +87,6 @@ void shortestpath (void) {
 	//initialite the node info structures
 	for (i = 0; i < LOWPAN_MAX_NODES; i++){
 		state[i].pred = -1;	
-                /*
-                 * FIXME 13 for Sudhir, 
-                 * We have dist defined as a byte ( for optimization reasons I guess)
-                 * and have RPL_INF_DIST defined as 9999
-                 * this throws a warning during compilation, but might be more harmful
-                 */
 		state[i].dist = RPL_INF_DIST;
 		state[i].label = TENTATIVE;
 	}

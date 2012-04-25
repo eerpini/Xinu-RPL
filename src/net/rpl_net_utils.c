@@ -281,11 +281,13 @@ status rpl_receive(){
                                 case RPL_DAO_MSGTYPE:
                                         kprintf("DAO Received\r\n");
 #ifdef LOWPAN_BORDER_ROUTER
+                                        kprintf("**********DAO RECEIVED from %04x ", *((uint32 *)(pkt->src_node)));
                                         processdao((struct icmpv6_sim_packet *)(pkt->data));
 #endif
 #ifdef LOWPAN_NODE
                                         if(RPL_MYINFO.parent_index > -1 && RPL_MYINFO.parent_index < LOWPAN_MAX_NODES){
-                                                rpl_send((char *)(&(rpl_link_local_neighbors[RPL_MYINFO.parent_index].iface_addr)), (char *)(&NetData.ipaddr), RPL_DIO_MSGTYPE, (char *)(&pkt), 1500-ETH_HDR_LEN- RPL_SIM_HDR_LEN);
+                                                kprintf("**********FORWARDING DAO MESSAGE TO %04x from %04x\r\n",rpl_link_local_neighbors[RPL_MYINFO.parent_index].iface_addr,  *((uint32 *)(pkt->src_node)));
+                                                rpl_send((char *)(&(rpl_link_local_neighbors[RPL_MYINFO.parent_index].iface_addr)), (char *)(&NetData.ipaddr), RPL_DAO_MSGTYPE, (char *)(pkt->data), 1500-ETH_HDR_LEN- RPL_SIM_HDR_LEN);
                                         }
                                         else{
                                                 kprintf("WARN : Cannot forward the DAO message since we do not know the parent\r\n");
