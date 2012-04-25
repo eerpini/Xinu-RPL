@@ -24,6 +24,17 @@ void printpaths (){
         kprintf("In %s\r\n", __FUNCTION__);
         int i = 0, j = 0, k = 0;
 
+	kprintf (" Adjacency list --> \n");
+	for (i = 0; i < 8; i++){
+		for (j = 0; j < 8; j++) {
+			kprintf (" %d ", rpladjlist[i][j]);
+		}
+		kprintf (" \n");
+	}
+	
+	for (i = 0; i < 8; i++)
+		kprintf (" (Node : %d, pred: %d -- distance %d)\n", i, state[i].pred, state[i].dist);
+
         //for (i = 1; i < LOWPAN_MAX_NODES; i++) {
         for (i = 1; i < 8; i++) {
                 kprintf (" Path from %d to 0 is : ", i);
