@@ -30,7 +30,7 @@ void encodedao (struct icmpv6_sim_packet *rpldaomsg) {
         /*
          * FIXME : Need to fetch the parent from the neighbor list
          */
-	memcpy (opttransit.parent, RPL_MYINFO.dodagid, RPL_DODAGID_LEN);
+	memcpy (opttransit.parent,rpl_link_local_neighbors[RPL_MYINFO.parent_index].iface_addr , RPL_DODAGID_LEN);
 
 	//build the message into the icmpv6_sim_packet
         rpldaomsg->net_ictype = RPL_CONTROL_MSGTYPE_ICMP;
