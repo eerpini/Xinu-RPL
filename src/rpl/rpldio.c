@@ -7,7 +7,9 @@ void encodedio(struct icmpv6_sim_packet *rpldiomsg) {
 	struct	rpl_opt_dodag_conf	dagconf;
 	int				len = 0;
 
+#ifdef DEBUG
         kprintf("Encoding DIO Message \r\n");
+#endif
 	diomsg.rpl_instance_id 	= RPL_DEFAULT_INSTANCE;
 	diomsg.version		= RPL_MYINFO.version; 
 	diomsg.rank		= RPL_MYINFO.rank;
@@ -18,7 +20,9 @@ void encodedio(struct icmpv6_sim_packet *rpldiomsg) {
 	diomsg.reserved		 = 0;
 
 	memcpy (diomsg.dodagid, RPL_MYINFO.dodagid, RPL_DODAGID_LEN);
+#ifdef DEBUG
         kprintf("The dodagid being sent is : [%04x]\r\n", *((uint32 *)(diomsg.dodagid)));
+#endif
 	
 	//encode options here
 	//Route information
@@ -55,7 +59,9 @@ void encodedio(struct icmpv6_sim_packet *rpldiomsg) {
 	//copy options here
 	//DAG Configuration
 	memcpy (&rpldiomsg->net_icdata[len], &dagconf, sizeof (struct rpl_opt_dodag_conf));
+#ifdef DEBUG
         kprintf("Encoding DIO Message done\r\n");
+#endif
 }
 
 
@@ -66,23 +72,31 @@ void processdio (struct icmpv6_sim_packet *rpldiomsg, uint32 sender, byte *paren
 	int				pos = 0;
         int i;
 
+#ifdef DEBUG
         kprintf(" Inside processdio \r\n");
+#endif
 	if (rpldiomsg->net_iccode ==  RPL_DIO_MSGTYPE) {
 		diomsg = (struct rpl_dio_msg *) rpldiomsg->net_icdata;
                 if(RPL_MYINFO.rank == 0){
                         RPL_MYINFO.rank = diomsg->rank + 1;
+#ifdef DEBUG
                         kprintf("My Rank is 0 and I set it to : [%d]\r\n", RPL_MYINFO.rank);
+#endif
                         //set sender as parent
                 }
                 else if(RPL_MYINFO.rank > diomsg->rank + 1){
 
 			//base message
 			RPL_MYINFO.rank = diomsg->rank + 1;
+#ifdef DEBUG
                         kprintf("My Rank is greater than the senders [%d] and I set it to : [%d]\r\n", diomsg->rank, RPL_MYINFO.rank);
+#endif
                         //set sender as parent
                 }
                 else{
+#ifdef DEBUG
 			kprintf (" Ignoring the dio message, since the rank need not be changed\r\n");
+#endif
                         *parent_changed = 0;
                         return ;
                 }
@@ -100,7 +114,9 @@ void processdio (struct icmpv6_sim_packet *rpldiomsg, uint32 sender, byte *paren
                        }
                 }
                 if(i >= LOWPAN_MAX_NODES){
+#ifdef DEBUG
                         kprintf("We could not locate the sender [%04x] to set it as parent, this should not HAPPEN\r\n", sender);
+#endif
                         return;
                 }
                 else{
@@ -123,13 +139,15 @@ void processdio (struct icmpv6_sim_packet *rpldiomsg, uint32 sender, byte *paren
                         RPL_MYINFO.maxrankincrease = dagconf->maxrankincrease;
                         RPL_MYINFO.minhoprankinc = dagconf->minhoprankinc;
                         RPL_MYINFO.pathlifetime = dagconf->lifetime;
+#ifdef DEBUG
                         kprintf("The dodagid was set to : [%04x]\r\n", *((uint32 *)(RPL_MYINFO.dodagid)));
+#endif
                 } else {
-                        kprintf (" Unexpected option in the DIO Message --> %02x <--\r\n", rpldiomsg->net_icdata[pos]);
+                        kprintf ("WARN : Unexpected option in the DIO Message --> %02x <--\r\n", rpldiomsg->net_icdata[pos]);
                 }
 
 	} else {
-		kprintf (" This message is NOT DIO message \r\n");
+		kprintf ("WARN : This message is NOT DIO message \r\n");
 	}
 }
 
@@ -140,13 +158,16 @@ void decodedio(struct icmpv6_sim_packet *rpldiomsg) {
 	int				pos = 0;
 
 	//1. icmp type
+#ifdef DEBUG
 	kprintf (" ICMP Message Type %02x \n", rpldiomsg->net_ictype);
 	kprintf (" ICMP Code %02x \n", rpldiomsg->net_iccode);
 	kprintf (" ICMP Checksum %04x \n", rpldiomsg->net_iccksum);
+#endif
 
 	if (rpldiomsg->net_iccode ==  RPL_DIO_MSGTYPE) {
 		diomsg = (struct rpl_dio_msg *) rpldiomsg->net_icdata;
 
+#ifdef DEBUG
 		kprintf(" DIO Msg Inst ID %02x \n", diomsg->rpl_instance_id);
 		kprintf (" DIO Msg Version %02 \n", diomsg->version);
 		kprintf (" DIO Msg Rank %02x \n", diomsg->rank);
@@ -157,11 +178,13 @@ void decodedio(struct icmpv6_sim_packet *rpldiomsg) {
 
 		kprintf (" DIO Msg dodagid %04x: %04x: %04x %04x \n", 
 			(uint32)diomsg->dodagid, (uint32)diomsg->dodagid[4], (uint32)diomsg->dodagid[8], (uint32)diomsg->dodagid[12]);
+#endif
 
 		//check for the options here.
 		pos += sizeof (struct rpl_opt_dodag_conf);
 		dagconf = (struct rpl_opt_dodag_conf *)&rpldiomsg->net_icdata[pos];
 
+#ifdef DEBUG
 		kprintf (" DIO Msg Type %02x \n", dagconf->type);
 		kprintf (" DIO Msg Len %02x \n", dagconf->len);
 		kprintf (" DIO Msg Flags %02x \n", dagconf->flags);
@@ -174,8 +197,9 @@ void decodedio(struct icmpv6_sim_packet *rpldiomsg) {
 		kprintf (" DIO Msg reserved %02x \n", dagconf->reserved);
 		kprintf (" DIO Msg lifetime %04x \n", dagconf->lifetime);
 		kprintf (" DIO Msg lifetime unit %04x \n", dagconf->lifetime_unit);
+#endif
 
 	} else {
-		kprintf (" This is not a DIO message \n");
+		kprintf ("WARN : This is not a DIO message \n");
 	}
 }

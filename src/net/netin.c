@@ -57,14 +57,11 @@ process	netin(void) {
 	/* Do forever: read packets from the network and process */
 
 	while(1) {
-                //kprintf("Reading in netin\r\n");
 	    	retval = read(ETHER0, (char *)currpkt, PACKLEN);
-                //kprintf("Read a packet from ethernet\r\n");
 	    	if (retval == SYSERR) {
 			panic("Ethernet read error");
 	    	}
 
-                //pdump(currpkt);
 		/* Convert Ethernet Type to host order */
 		eth_ntoh(currpkt);
 		/* Demultiplex on Ethernet type */
@@ -95,14 +92,12 @@ process	netin(void) {
                                 if ( (ippkt->net_ipdst != IP_BCAST) &&
 				     (NetData.ipvalid) &&
 				     (ippkt->net_ipdst != NetData.ipaddr) ) {
-                                        //kprintf("IP Packet not destined for us\r\n");
 					continue;
 				}
 
 				/* Demultiplex UDP and ignore others */
 
 				if (ippkt->net_ipproto == IP_UDP) {
-                                        //kprintf("Trying to handle a UDP packet\r\n");
 					udp_in();/* Handle a UDP packet	*/
 				}else if (ippkt->net_ipproto == IP_ICMP){
                                         kprintf("ICMP Packet \r\n");
@@ -111,16 +106,19 @@ process	netin(void) {
 				continue;
 
                         case 0x1000:
+#ifdef DEBUG
                                 kprintf("Received a simulator packet\r\n");
+#endif
                                 wait(rpl_sim_write_sem);
                                 memcpy((char *)&sim_queue[i], currpkt->net_ethdata, sizeof(struct rpl_sim_packet));
+#ifdef DEBUG
                                 kprintf("Netin working with iter [%d] message type : %d dest : %04x source : %04x\r\n",i, sim_queue[i].msg_type, *((uint32 *)(sim_queue[i].dest_node)), *((uint32 *)(sim_queue[i].src_node)));
+#endif
                                 signal(rpl_sim_read_sem);
                                 i = (i+1)%RPL_SIM_RECV_QUEUE_LEN;
                                 continue;
 
 			default: /* Ignore all other Ethernet types */
-                                kprintf("Nothing \r\n");
 				continue;		
 		}
 	}

@@ -5,7 +5,9 @@ struct nodeinfo state [ LOWPAN_MAX_NODES];
 
 void computepaths(void) {
 	
+#ifdef DEBUG
         kprintf("In %s\r\n", __FUNCTION__);
+#endif
 	int i = 0, j = 0, k = 0;
 
 	for (i = 1; i < LOWPAN_MAX_NODES; i++) {
@@ -21,9 +23,12 @@ void computepaths(void) {
 
 void printpaths (){
 
+#ifdef DEBUG
         kprintf("In %s\r\n", __FUNCTION__);
+#endif
         int i = 0, j = 0, k = 0;
 
+#ifdef DEBUG
 	kprintf (" Adjacency list --> \n");
 	for (i = 0; i < 8; i++){
 		for (j = 0; j < 8; j++) {
@@ -31,6 +36,7 @@ void printpaths (){
 		}
 		kprintf (" \n");
 	}
+#endif
 	
 	for (i = 0; i < 8; i++)
 		kprintf (" (Node : %d, pred: %d -- distance %d)\n", i, state[i].pred, state[i].dist);
@@ -57,7 +63,9 @@ void printpaths (){
 
 int getpath (uint32 target, uint32 *arr) {
 
+#ifdef DEBUG
         kprintf("In %s\r\n", __FUNCTION__);
+#endif
         int j = 0, k = 0;
 	int index = 0;
 
@@ -70,7 +78,9 @@ int getpath (uint32 target, uint32 *arr) {
 
 int getsourceroutehdr (uint32 target, uint32 *arr) {
 
+#ifdef DEBUG
         kprintf("In %s\r\n", __FUNCTION__);
+#endif
 	struct sourceroute 	srcheader;
 	int			index = 0;
 
@@ -91,7 +101,9 @@ int getsourceroutehdr (uint32 target, uint32 *arr) {
 
 void shortestpath (void) {
 
+#ifdef DEBUG
         kprintf("In %s\r\n", __FUNCTION__);
+#endif
 	int i, k, min;
 	//struct state *ptr;
 

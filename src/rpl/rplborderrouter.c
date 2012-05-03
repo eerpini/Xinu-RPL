@@ -40,33 +40,44 @@ void processroute (uint32 target, uint32 parent) {
 	//check if the parent exists
 	pindex = getindex (parent);
 	if (pindex == SYSERR) {
+#ifdef DEBUG
 		kprintf (" DAO Message-> Parent does not exist in the map %05x \n", parent);
+#endif
 		return;
 	}
         else{
+#ifdef DEBUG
                 kprintf("The index returned for parent : [%04x] is %d\r\n", parent, pindex);
+#endif
         }
 
 
         tindex = getindex (target);
 	if (tindex == SYSERR) {
 		tindex = assignindex (target);
+#ifdef DEBUG
                 kprintf("Target [%04x] not already present, assigned the index : %d\r\n", target, tindex);
+#endif
         }
         else{
+#ifdef DEBUG
                 kprintf("The index returned for target : [%04x] is %d\r\n", target, tindex);
+#endif
         }
 	
 
 	//Update the freshness of the path here. 
-        //FIXME : For Sudhir, what is being done here ?
+#ifdef DEBUG
         kprintf("INFO : Incrmenting the freshness[%d] for index [%d]\r\n", iface_freshness[tindex], tindex);
+#endif
 	iface_freshness[tindex] = (iface_freshness[tindex] +1) ;
 
 	//check if the mapping already exists or it is a new mapping
 	//ignore if the mapping already exists.
 	if (rpladjlist[tindex][pindex] || rpladjlist[pindex][tindex]){
+#ifdef DEBUG
 		kprintf (" DAO Message-> Mapping already exists (target - parent)%04x - %04x \n", target, parent);
+#endif
 		return;
 	}
 
@@ -94,12 +105,16 @@ void processdao(struct icmpv6_sim_packet *rpldaomsg) {
 	// parent is present in the rpl transit option
 
         if (rpldaomsg->net_ictype != RPL_CONTROL_MSGTYPE_ICMP){
+#ifdef DEBUG
                 kprintf (" This is NOT a RPL Control message %02x \n", rpldaomsg->net_ictype);
+#endif
                 return;
         }
 
         if (rpldaomsg->net_iccode != RPL_DAO_MSGTYPE){
+#ifdef DEBUG
                 kprintf (" This is NOT a RPL DAO message %02x \n", rpldaomsg->net_iccode);
+#endif
                 return;
         }
 
@@ -107,27 +122,35 @@ void processdao(struct icmpv6_sim_packet *rpldaomsg) {
         pos += sizeof (struct rpl_dao_msg);
         opttarget = (struct rpl_opt_target *) &rpldaomsg->net_icdata[pos];
         if (opttarget->type != RPL_OPT_TYPE_TARGET){
+#ifdef DEBUG
                 kprintf (" DAO Message: DAO message does not have an RPL OPTION TARGET %02x\n", opttarget->type);
+#endif
                 return;
         }
 
 	//NOTE THIS IS A 128 bit field, use only the first four bytes
 	target = *((uint32 *)(opttarget->target));
 
+#ifdef DEBUG
         kprintf("***********PROCESSING DAO FROM %04x\r\n", target);
+#endif
 
         // RPL OPTION TRANSIT INFO
         pos += sizeof (struct  rpl_opt_target);
         opttransit = (struct  rpl_opt_transitinf *)&rpldaomsg->net_icdata[pos];
         if (opttransit->type != RPL_OPT_TYPE_TRANSIT){
+#ifdef DEBUG
                 kprintf (" DAO Message: DAO message does not have an RPL OPTION TRANSIT INFO %02x\n", opttransit->type);
+#endif
                 return;
         }
 
 	//NOTE THIS IS A 128 bit field, use only the first four bytes
 	parent = *((uint32 *)( opttransit->parent));
 
+#ifdef DEBUG
         kprintf("Calling process route with parent : [%04x] target : [%04x]\r\n", parent, target);
+#endif
         
 
 	//compute the shortest paths if necessary
@@ -144,7 +167,9 @@ void processPathlifetimeTimeout () {
 	byte	recompute = 0;
 	int	index = 0, j = 0;
 
+#ifdef DEBUG
 	kprintf (" In the %s --> \n\r", __FUNCTION__);
+#endif
 
         /*
          * NOTE : We only check the freshness for the nodes in the 
@@ -157,7 +182,9 @@ void processPathlifetimeTimeout () {
 			//invalidate here.
 			iface_freshness[index] = 0;
 			recompute = 1;
+#ifdef DEBUG
 			kprintf (" %s: did not receive DAO update from node %04x \n\r", __FUNCTION__, getaddress(index));
+#endif
 
 			for (j = 0; j < LOWPAN_MAX_NODES; j ++) {
 				rpladjlist[index][j] = 0;

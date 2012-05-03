@@ -21,7 +21,7 @@ void decodedis (struct icmpv6_sim_packet *rpldis) {
 	struct	rpl_dis_msg	*dismsg;
 
 	dismsg = (struct rpl_dis_msg *) rpldis->net_icdata;
-
+#ifdef DEBUG
 	kprintf (" ICMP Type %02x \n", rpldis->net_ictype);
 	kprintf (" ICMP code %02x \n", rpldis->net_iccode);
 
@@ -32,4 +32,5 @@ void decodedis (struct icmpv6_sim_packet *rpldis) {
 	kprintf (" DIS Reserved %02x \n", dismsg->reserved );
 
 	//3. Options -- Ignore the options for the time being
+#endif
 }

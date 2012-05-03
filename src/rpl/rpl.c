@@ -13,8 +13,6 @@
 #define node3 0x800a0367
 //128.10.3.102 
 #define node2 0x800a0366
-//128.10.3.108
-#define node1
 
 extern struct rpl_info RPL_MYINFO;
 #ifdef LOWPAN_BORDER_ROUTER
@@ -47,24 +45,12 @@ void    rpl_node_init();
  */
 
 void generate_link_local_neighbors(){
+        /*
+         * Static assignment of the neighbors
+         * This should be picked up from the neighbor list 
+         * which will be supplied by the radio layer
+         */
 
-        /*
-        rpl_link_local_neighbors[0] = (NetData.ipaddr + 1);
-        rpl_link_local_neighbors[1] = (NetData.ipaddr - 1);
-        */
-        //dot2ip("128.10.3.113", &rpl_link_local_neighbors[0]);
-        /*
-        dot2ip("128.10.3.114", &(rpl_link_local_neighbors[0].iface_addr));
-        dot2ip("128.10.3.112", &(rpl_link_local_neighbors[1].iface_addr));
-        dot2ip("128.10.3.113", &(rpl_link_local_neighbors[2].iface_addr));
-        kprintf("The first neighbor is : %04x\r\n", rpl_link_local_neighbors[0].iface_addr);
-        kprintf("The first neighbor is : %04x\r\n", rpl_link_local_neighbors[1].iface_addr);
-        kprintf("The first neighbor is : %04x\r\n", rpl_link_local_neighbors[2].iface_addr);
-        rpl_link_local_neighbors[0].is_parent = 0;
-        rpl_link_local_neighbors[1].is_parent = 0;
-        rpl_link_local_neighbors[2].is_parent = 0;
-        rpl_link_local_neighbors[3].iface_addr = -1;
-        */
         //128.10.3.113 is 0x800a0371
         switch(NetData.ipaddr){
                 /*
@@ -77,7 +63,9 @@ void generate_link_local_neighbors(){
                         rpl_link_local_neighbors[1].iface_addr = node5;
                         rpl_link_local_neighbors[1].is_parent = 0;
                         rpl_link_local_neighbors[2].iface_addr = -1;
+#ifdef DEBUG
                         kprintf("I am node 2 My neighbors are node3 and node5\r\n");
+#endif
                         break;
                 case node5:
                         rpl_link_local_neighbors[0].iface_addr = node6;
@@ -87,7 +75,9 @@ void generate_link_local_neighbors(){
                         rpl_link_local_neighbors[2].iface_addr = node4;
                         rpl_link_local_neighbors[2].is_parent = 0;
                         rpl_link_local_neighbors[3].iface_addr = -1;
+#ifdef DEBUG
                         kprintf(" I am node 5 My neighbors are node6 and node7 and node4\r\n");
+#endif
                         break;
                 case node3:
                         rpl_link_local_neighbors[0].iface_addr = node4;
@@ -95,42 +85,45 @@ void generate_link_local_neighbors(){
                         rpl_link_local_neighbors[1].iface_addr = node2;
                         rpl_link_local_neighbors[1].is_parent = 0;
                         rpl_link_local_neighbors[2].iface_addr = -1;
+#ifdef DEBUG
                         kprintf("I am node 3 My neighbors are node4 and node2\r\n");
+#endif
                         break;
                 case node2:
                         rpl_link_local_neighbors[0].iface_addr = node3;
                         rpl_link_local_neighbors[0].is_parent = 0;
                         rpl_link_local_neighbors[1].iface_addr = -1;
+#ifdef DEBUG
                         kprintf(" I am node 2 My neighbors are node3 \r\n");
+#endif
                         break;
                 case node6:
                         rpl_link_local_neighbors[0].iface_addr = node5;
                         rpl_link_local_neighbors[0].is_parent = 0;
                         rpl_link_local_neighbors[1].iface_addr = -1;
+#ifdef DEBUG
                         kprintf(" I am node 6 My neighbors are node5 \r\n");
+#endif
                         break;
                 case node7:
                         rpl_link_local_neighbors[0].iface_addr = node5;
                         rpl_link_local_neighbors[0].is_parent = 0;
                         rpl_link_local_neighbors[1].iface_addr = -1;
+#ifdef DEBUG
                         kprintf(" I am node 7 My neighbors are node5 \r\n");
+#endif
                         break;
                 default : 
                         kprintf("I did not find a neighbor assignment for myself, I must be the border router or the gateway\r\n");
         }
 
+#ifdef DEBUG
         kprintf("The first neighbor is : %04x\r\n", rpl_link_local_neighbors[0].iface_addr);
         kprintf("The first neighbor is : %04x\r\n", rpl_link_local_neighbors[1].iface_addr);
         kprintf("The first neighbor is : %04x\r\n", rpl_link_local_neighbors[2].iface_addr);
+#endif
 
 
-
-        /*
-        int i=0;
-        for(i=0; i < LOWPAN_MAX_NODES; i++){
-                rpl_link_local_neighbors[i] = i;
-        }
-        */
 
 }
 
@@ -226,7 +219,7 @@ void rpl_border_router_init(){
 
         if(!NetData.ipvalid){
                if( getlocalip() == SYSERR){
-                       kprintf("rpl_border_router_init :getting the IP address failed, init will fail !!\r\n");
+                       kprintf("WARN : rpl_border_router_init :getting the IP address failed, init will fail !!\r\n");
                }
                my_index = assignindex(NetData.ipaddr);
                
@@ -234,7 +227,9 @@ void rpl_border_router_init(){
         else{
                my_index = assignindex(NetData.ipaddr);
         }
+#ifdef DEBUG
         kprintf("I was assigned the index : %d\r\n", my_index);
+#endif
         memcpy(RPL_MYINFO.dodagid, &(NetData.ipaddr), RPL_DODAGID_LEN);
         /*
          * FIXME : Setting the rank here
@@ -248,23 +243,31 @@ void send_init_messages(){
 
 #ifdef LOWPAN_NODE
         
+#ifdef DEBUG
         kprintf("The first neighbor is : %04x\r\n", rpl_link_local_neighbors[0].iface_addr);
         kprintf("The first neighbor is : %04x\r\n", rpl_link_local_neighbors[1].iface_addr);
         kprintf("The first neighbor is : %04x\r\n", rpl_link_local_neighbors[2].iface_addr);
+#endif
         struct icmpv6_sim_packet pkt;
         encodedis( &pkt );
 
+#ifdef DEBUG
         kprintf("Done encoding the dis packet\r\n");
+#endif
         int i = 0;
         do{
+#ifdef DEBUG
                 kprintf("[%d] Sending a packet to [%04x] from me[%04x]\r\n", i, rpl_link_local_neighbors[i].iface_addr, NetData.ipaddr);
+#endif
                 if(rpl_link_local_neighbors[i].iface_addr != NetData.ipaddr){
                         rpl_send((char *) &(rpl_link_local_neighbors[i].iface_addr), (char *)(&(NetData.ipaddr)), RPL_DIS_MSGTYPE, (char *)(&pkt),  
                                         1500-ETH_HDR_LEN - RPL_SIM_HDR_LEN);
                 }
                 i++;
         }while(rpl_link_local_neighbors[i].iface_addr != -1);
+#ifdef DEBUG
         kprintf("We stopped at i [%d] and the corressponding iface_addr [%04x]\r\n",i, rpl_link_local_neighbors[i].iface_addr);
+#endif
 
 
 
@@ -279,7 +282,9 @@ void rpl_process_path_timeout(){
         encodedao(&rpkt);
         if(NetData.ipvalid && (*((uint32 *)(RPL_MYINFO.dodagid)) != 0)){
                 if(RPL_MYINFO.parent_index > -1 && RPL_MYINFO.parent_index < LOWPAN_MAX_NODES){
+#ifdef DEBUG
                         kprintf("Sending a TIMEOUT DAO Message \r\n");
+#endif
                         rpl_send((char *)(&(rpl_link_local_neighbors[RPL_MYINFO.parent_index].iface_addr)), (char *)(&(NetData.ipaddr)), RPL_DAO_MSGTYPE, (char *)(&rpkt), 1500-ETH_HDR_LEN- RPL_SIM_HDR_LEN);
                 }
                 else{
@@ -291,7 +296,9 @@ void rpl_process_path_timeout(){
         rpl_dao_timeout += (RPL_MYINFO.pathlifetime + 5)*1000;
         processPathlifetimeTimeout();
 
+#ifdef DEBUG
        kprintf("In Border router timeout value is : %d\r\n", rpl_dao_timeout); 
+#endif
 
 #endif
 
@@ -308,7 +315,9 @@ void rpl_process_dis_timeout(){
         int i = 0;
         encodedis( &pkt );
         do{
+#ifdef DEBUG
                 kprintf("[%d] Sending a packet to [%04x] from me[%04x]\r\n", i, rpl_link_local_neighbors[i].iface_addr, NetData.ipaddr);
+#endif
                 if(rpl_link_local_neighbors[i].iface_addr != NetData.ipaddr){
                         rpl_send((char *) &(rpl_link_local_neighbors[i].iface_addr), (char *)(&(NetData.ipaddr)), RPL_DIS_MSGTYPE, (char *)(&pkt),  
                                         1500-ETH_HDR_LEN - RPL_SIM_HDR_LEN);

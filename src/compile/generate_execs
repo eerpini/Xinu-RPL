@@ -4,7 +4,15 @@
 make clean 
 
 make -f Makefile.node
+if [ $? -ne 0 ]; then
+        echo "Compiling the node version of Xinu failed"
+        exit 1
+fi
 mv xinu xinu.n
 make clean 
 make -f Makefile.router 
+if [ $? -ne 0 ]; then
+        echo "Compiling the node version of Xinu failed"
+        exit 1
+fi
 mv xinu xinu.r
