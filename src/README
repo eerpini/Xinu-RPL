@@ -1,1 +1,32 @@
-Realse code for the virtual memory related assignment.
+RPL Implementation - Spring 2012
+
+
+Satish Kumar Eerpini
+Sudhir Kylasa
+
+
+
+Details
+-------
+
+The RPL implementation is according to the RFC. Please take a look at the document "presenation.pdf" for more details on the RPL related things, like RFC number etc. All the rpl concerned files are in rpl/.
+The simulator code is in rpl_net_utils.c , we use a reader/writer buffer, the netin process fills this buffer and the rpl_recieve process reads from this buffer and takes the appropriate action. NOTE that these functions are purely for simulation and should be replaced with the lower layer networking calls once the lower layer networking stack is ready. 
+For simulation, every packet first goes to the simulator, this is done by calling the rpl_send function, the simulator uses the rpl_send_with_ip function to send every packet it receives to the appropriate destination. We use ARP to figure out the MAC address of the destination and then send the packet directly to the concerned xinu backend. 
+We use a special packet type above the ethernet layer, it is defined in rpl.h and rpl_net.h and is the rpl_sim_pkt, this contains the uint32 destination and source addresses. For addressing only (and not for sending/receiving packets) we use 32 bit ipv4 addresses. 
+rpl_sim_pkt contains a data buffer which contains the rpl packet (dio/dao/dis) which is nothing but a  icmp packet, this will be passed down to the lower networking layers during integration. 
+Currently, the simulator is defined as the FORWARDING GATEWAY in rpl_net.h. This is the ip address for the simulator. The code based on compiler flags LOWPAN_NODE and LOWPAN_BORDER_ROUTER is compiled into different binaries, the "generate_execs" script in compile/ does this compilation and copies the binaries as xinu.n and xinu.r. xinu.r should be loaded and run on the simulator node and the root node. On every other node xinu.n should be loaded and run.
+Based on the compiler flags, if the code is for a normal node (xinu.n) then during init DIS messages are sent to everyone in the neighbor list. Right now the neighbor list is statically populated using a stub in rpl_init and contains 32 bit ipv4 addresses. This should ideally however be available from the radio layer and should contain 64 bit addresses for the radio device. 
+
+During initialization , the border router (root node) related stuff is done separately in rpl_border_router_init. Another key point to note is that the timeout values are set to high values in system/initialize.c this is to make sure that the timeout does not happen before rpl_init() is called. Right now rpl_init() is being called in the main process, but we need to figure out a better way to do this. 
+
+
+Also , based on the spec (refer to presentation.pdf) we have two timeouts, the path timeout , after which if we are a node we should be sending a dao message to the root. And the second one is the dis timeout which should send dis messages to all the neighbors at regular intervals, the second timer should be using the trickle timer but in the current implementation we have a constant timer. 
+The functions handling the timeouts are towards the end in rpl/rpl.c and they are called from the clock interrupt handler system/clkint.S .
+
+A few important things to note when integrating is that the addresses for nodes need to be changed everywhere from 32 bits to 64 bits (radio physical addresses) and where the ip layer is going to be used to 128 bits. 
+All the DAG generation and updation code is in rpldag.c and rplborderrouter.c, these files are only compiled when the compiler flag LOWPAN_BORDER_ROUTER is specified.
+
+All the relevant constants are defined in the include/rpl.h and include/rpl_net.h header files. The ICMP specific packet header types is also defined in the rpl_net.h file.
+
+I have tried to include as much information as possible, please let me know if you need more information. 
+
